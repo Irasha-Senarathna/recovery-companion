@@ -1,0 +1,33 @@
+{
+  "_status": "TO BE VERIFIED BY USER — copy this file to helplines.json and fill it in from official sources. Claude cannot edit helplines.json.",
+  "country": "LK",
+  "entries": [
+    {
+      "id": "emergency",
+      "type": "emergency",
+      "name": { "en": "", "si": "", "ta": "" },
+      "phone": "1927",
+      "hours": "24 hours",
+      "source_url": "https://nddcb.gov.lk/",
+      "last_verified": null
+    },
+    {
+      "id": "drug-helpline",
+      "type": "helpline",
+      "name": { "en": "", "si": "", "ta": "" },
+      "phone": "+94 11 2868794 - 6",
+      "hours": "24 hours",
+      "source_url": "https://nddcb.gov.lk/",
+      "last_verified": null
+    },
+    {
+      "id": "mental-health",
+      "type": "helpline",
+      "name": { "en": "", "si": "", "ta": "" },
+      "phone": "011 309 1394",
+      "hours": "24 hours",
+      "source_url": "https://nddcb.gov.lk/",
+      "last_verified": null
+    }
+  ]
+}

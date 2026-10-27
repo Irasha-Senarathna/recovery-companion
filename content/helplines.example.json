@@ -1,0 +1,33 @@
+{
+  "_status": "TO BE VERIFIED BY USER — copy this file to helplines.json and fill it in from official sources. Claude cannot edit helplines.json.",
+  "country": "LK",
+  "entries": [
+    {
+      "id": "emergency",
+      "type": "emergency",
+      "name": { "en": "", "si": "", "ta": "" },
+      "phone": "",
+      "hours": "",
+      "source_url": "",
+      "last_verified": null
+    },
+    {
+      "id": "drug-helpline",
+      "type": "helpline",
+      "name": { "en": "", "si": "", "ta": "" },
+      "phone": "",
+      "hours": "",
+      "source_url": "",
+      "last_verified": null
+    },
+    {
+      "id": "mental-health",
+      "type": "helpline",
+      "name": { "en": "", "si": "", "ta": "" },
+      "phone": "",
+      "hours": "",
+      "source_url": "",
+      "last_verified": null
+    }
+  ]
+}

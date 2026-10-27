@@ -1,0 +1,24 @@
+{
+  "_meta": { "status": "source" },
+  "app": { "name": "Recovery Companion" },
+  "common": {
+    "webDemoBanner": "Web demo — not for real data. Nothing here is stored securely."
+  },
+  "help": {
+    "button": "Get help",
+    "buttonHint": "Opens help and emergency contacts",
+    "title": "Help is here",
+    "emergency": "If you are in danger or might hurt yourself, contact your local emergency services now.",
+    "notSetUp": "Help contacts have not been set up yet."
+  },
+  "home": {
+    "title": "Welcome",
+    "subtitle": "One step at a time. You can come back here whenever you need.",
+    "settings": "Settings"
+  },
+  "settings": {
+    "title": "Settings",
+    "language": "Language",
+    "languages": { "en": "English", "si": "සිංහල", "ta": "தமிழ்" }
+  }
+}

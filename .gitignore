@@ -1,0 +1,26 @@
+# Secrets and local config
+.env
+google-services.json
+*.keystore
+
+# Node / Expo
+node_modules/
+app/.expo/
+app/dist/
+app/web-build/
+app/android/
+app/ios/
+app/expo-env.d.ts
+
+# Python
+.venv/
+__pycache__/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# Synthetic data (regenerate with `make ml`)
+ml/data/
+
+# OS
+.DS_Store

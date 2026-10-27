@@ -1,0 +1,6 @@
+# Files EAS Build must never upload
+.env
+../.env
+google-services.json
+node_modules/
+.expo/
