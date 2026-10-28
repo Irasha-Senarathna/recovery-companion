@@ -4,7 +4,7 @@ Claude cannot edit disclaimer.md. -->
 
 # About this app
 
-Last reviewed: YYYY-MM-DD
+Last reviewed: 2026-10-27
 
 Recovery Companion supports you between treatment sessions. It does **not**
 replace treatment, counselling or medical care, and it does not give medical

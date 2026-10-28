@@ -1,24 +1,104 @@
 {
-  "_meta": { "status": "source" },
-  "app": { "name": "Recovery Companion" },
+  "_meta": {
+    "status": "source"
+  },
+  "app": {
+    "name": "Recovery Companion"
+  },
   "common": {
-    "webDemoBanner": "Web demo — not for real data. Nothing here is stored securely."
+    "webDemoBanner": "Web demo — not for real data. Nothing here is stored securely.",
+    "continue": "Continue",
+    "cancel": "Cancel",
+    "loading": "Loading",
+    "phoneOnly": "This works on the phone only.",
+    "back": "Back"
   },
   "help": {
     "button": "Get help",
     "buttonHint": "Opens help and emergency contacts",
     "title": "Help is here",
     "emergency": "If you are in danger or might hurt yourself, contact your local emergency services now.",
-    "notSetUp": "Help contacts have not been set up yet."
+    "crisis": "You don't have to face this alone. If you might hurt yourself, or someone may have taken too much, call emergency services or a helpline below now.",
+    "notSetUp": "Help contacts have not been set up yet.",
+    "call": "Call {{name}}",
+    "callHint": "Opens your phone app with this number",
+    "hours": "Hours: {{hours}}",
+    "lastVerified": "Last checked: {{date}}",
+    "unverified": "Not yet checked. Please confirm this number before relying on it.",
+    "stale": "Last checked more than 6 months ago ({{date}}). It may be out of date.",
+    "types": {
+      "emergency": "Emergency services",
+      "helpline": "Helpline",
+      "treatment": "Treatment service",
+      "other": "Support contact"
+    }
   },
   "home": {
-    "title": "Welcome",
+    "title": "Welcome, {{nickname}}",
     "subtitle": "One step at a time. You can come back here whenever you need.",
     "settings": "Settings"
+  },
+  "hide": {
+    "button": "Hide",
+    "buttonHint": "Switches to a neutral screen straight away",
+    "title": "Notes",
+    "empty": "No notes yet.",
+    "returnHint": "Press and hold to return",
+    "returnAction": "Return"
+  },
+  "lock": {
+    "title": "Welcome back",
+    "pinLabel": "Enter your PIN",
+    "unlock": "Unlock",
+    "wrongPin": "That PIN didn't match. Please try again.",
+    "wait": "Too many tries. Please wait {{seconds}} seconds and try again.",
+    "biometric": "Use fingerprint or face",
+    "biometricPrompt": "Unlock the app",
+    "forgotTitle": "Forgot your PIN?",
+    "forgotInfo": "For your privacy, the PIN cannot be recovered. You can delete all data on this phone and set the app up again.",
+    "blocked": "For your safety, PIN entry is paused after too many tries. You can unlock with your fingerprint or face if it is turned on, or delete all data on this phone and set the app up again."
+  },
+  "onboarding": {
+    "languageTitle": "Choose your language",
+    "disclaimerTitle": "Before you begin",
+    "translationNote": "This text is shown in English until a reviewed translation is ready.",
+    "agree": "I understand",
+    "nicknameTitle": "What should we call you?",
+    "nicknameLabel": "Nickname",
+    "nicknameHint": "Any name you like. No real name needed. It stays on this phone.",
+    "nicknameInvalid": "Please enter a nickname of up to 30 characters.",
+    "pinTitle": "Set a PIN",
+    "pinInfo": "Your PIN keeps the app private. Use 4 to 6 digits. It cannot be recovered, so choose one you will remember.",
+    "pinLabel": "New PIN",
+    "pinConfirmLabel": "Type the PIN again",
+    "pinInvalid": "Please use 4 to 6 digits.",
+    "pinMismatch": "The two PINs are different. Please try again.",
+    "finish": "Finish setup",
+    "pinWeak": "That PIN is easy to guess. Please avoid repeated digits, simple runs of digits, and common PINs."
   },
   "settings": {
     "title": "Settings",
     "language": "Language",
-    "languages": { "en": "English", "si": "සිංහල", "ta": "தமிழ்" }
+    "languages": {
+      "en": "English",
+      "si": "සිංහල",
+      "ta": "தமிழ்"
+    },
+    "security": "Privacy and security",
+    "biometric": "Unlock with fingerprint or face",
+    "shakeToHide": "Shake the phone to hide the app",
+    "data": "Your data",
+    "dataInfo": "Everything you enter stays on this phone, encrypted."
+  },
+  "deleteAll": {
+    "button": "Delete all my data",
+    "explain": "This permanently removes everything this app stores on this phone: your nickname, PIN, settings and all entries. It cannot be undone.",
+    "confirm": "Yes, delete everything",
+    "partial": "Some data could not be removed, but it is locked and can no longer be read. Please try again.",
+    "incomplete": "Deleting did not finish, so some data may still be readable. Please try again now."
+  },
+  "problem": {
+    "title": "Your data could not be opened",
+    "info": "The saved data on this phone could not be opened. You can delete it and set the app up again."
   }
 }

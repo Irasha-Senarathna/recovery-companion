@@ -1,24 +1,28 @@
 import type { ReactNode } from 'react';
 import { ScrollView, StyleSheet, Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import { QuickHideButton } from '../features/hide/QuickHideButton';
 import { WebDemoBanner } from '../platform/WebDemoBanner';
 import { useTheme } from '../theme';
 import { HelpButton } from './HelpButton';
 
-type Props = { title: string; children?: ReactNode };
+type Props = { title: string; children?: ReactNode; testID?: string };
 
 /** Every route renders inside this, so the help button is always visible. */
-export function ScreenLayout({ title, children }: Props) {
+export function ScreenLayout({ title, children, testID }: Props) {
   const theme = useTheme();
 
   return (
-    <SafeAreaView style={[styles.root, { backgroundColor: theme.background }]}>
+    <SafeAreaView testID={testID} style={[styles.root, { backgroundColor: theme.background }]}>
       <WebDemoBanner />
       <View style={styles.header}>
         <Text accessibilityRole="header" style={[styles.title, { color: theme.text }]}>
           {title}
         </Text>
-        <HelpButton />
+        <View style={styles.actions}>
+          <QuickHideButton />
+          <HelpButton />
+        </View>
       </View>
       <ScrollView contentContainerStyle={styles.content}>{children}</ScrollView>
     </SafeAreaView>
@@ -35,6 +39,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 16,
     paddingVertical: 12,
   },
+  actions: { flexDirection: 'row', gap: 8 },
   title: { flexShrink: 1, fontSize: 24, fontWeight: '700' },
   content: { padding: 16, gap: 16 },
 });

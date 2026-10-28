@@ -102,11 +102,13 @@ whom) · A4 coach conversations · A5 the integrity of the help-resources conten
 
 | ID | Threat | Asset | Mitigation | Residual risk |
 |---|---|---|---|---|
-| TH1 | T-Close opens the app | A1, A2 | App lock (PIN/biometric). Re-locks after 1 minute in the background. Quick-hide button (and optional shake) switches to a neutral screen. | Shoulder-surfing while the app is open. |
-| TH2 | T-Close sees the app-switcher preview or takes a screenshot | A1 | `FLAG_SECURE` through `expo-screen-capture` on sensitive screens, so previews are blank and screenshots are blocked. | Camera photo of the screen. |
+| TH1 | T-Close opens the app | A1, A2 | App lock (PIN/biometric). Locks on launch and after 1 minute in the background. PIN: 4–6 digits, weak PINs (repeats, runs, common PINs) refused, stored as a PBKDF2-SHA256 hash (100k iterations, random salt) in the secure store. Wrong PINs: a growing wait after 5 tries, and PIN entry is switched off after 15 failures in total (then only biometrics or delete-all), because the wait uses the phone clock, which someone holding the phone can change. Biometrics: no passcode fallback, and unlock reads a token stored with `requireAuthentication`, which Android invalidates when a new fingerprint or face is enrolled (biometric unlock then turns itself off). Quick-hide button (and optional shake) switches to a neutral screen; leaving it always needs the PIN. | Shoulder-surfing while the app is open. The PIN is an app lock, not the database key: someone who can read the Keystore of an unlocked, rooted phone does not need it (see TH4). |
+| TH2 | T-Close sees the app-switcher preview or takes a screenshot | A1 | `FLAG_SECURE` through `expo-screen-capture` on **every** screen, so previews are blank and screenshots are blocked. | Camera photo of the screen. |
 | TH3 | T-Close reads lock-screen notifications | A2 | All notification text comes from a dedicated i18n namespace. A test bans terms such as drug, craving, relapse, slip, recovery and addiction there. Lock-screen visibility is set to "private". | The app's name and icon are visible. A neutral app name is future work. |
 | TH4 | T-Lost extracts files from the device | A1 | SQLCipher DB. Key in the hardware-backed Keystore. Media kept as BLOBs inside the DB. `allowBackup=false`. | A rooted device with the app unlocked. |
-| TH5 | T-Close forces the user to unlock | A1, A2 | Quick-hide. Delete-all is reachable in 2 taps from settings. | Coercion cannot be fully prevented. Documented as a limitation. |
+| TH5 | T-Close forces the user to unlock | A1, A2 | Quick-hide. Delete-all is reachable in 2 taps from settings, and from the lock screen ("forgot PIN"). | Coercion cannot be fully prevented. Documented as a limitation. Because delete-all works from the lock screen without the PIN, someone holding the phone can wipe the data (they cannot read it). |
+| TH5b | The quick-hide screen gives the app away | A2 | The neutral "Notes" screen shows nothing personal. | **Deliberate trade-off:** it keeps the "Get help" button, because safety rule 2 (help on every screen) comes first. Do not remove it "for discretion". |
+| TH5c | The keyboard learns private words | A1, A2 | Every text field is `SafeTextInput`, which turns off autocorrect, spell-check, autofill and suggestions. | Some third-party keyboards ignore these hints. |
 | TH6 | T-Net intercepts traffic to the laptop server | A3, A4 | Bearer-token auth. Demo runs on a private Wi-Fi. HTTPS through a local reverse proxy (Caddy, internal CA) is documented in `deploy.md`. Payloads hold no personal data. | Plain HTTP on a trusted home Wi-Fi in development. Documented. |
 | TH7 | T-Server dumps the DB | A3 | Only random IDs, hashes and 7-day signals. No names or contacts. Token hashes, not tokens. | The link graph between random IDs is visible. |
 | TH8 | T-Invite brute-forces invite codes | A3 | 10-character base32 codes (~50 bits), single use, 24 h expiry, stored hashed. Rate limit on redemption. The member must approve each new supporter. Max 3 supporters. | Social engineering. |
@@ -114,14 +116,19 @@ whom) · A4 coach conversations · A5 the integrity of the help-resources conten
 | TH10 | Signal spam / abuse | A3 | Rate limit of 3 signals per day per member, plus per-IP limits on the API. | — |
 | TH11 | The coach service logs or keeps chat text | A4 | Stateless design. Body logging is off and a test checks it. No DB in the coach container. Off by default. | Ollama or OS-level swap. Documented. |
 | TH12 | The coach gives harmful advice | user safety | Crisis detection on the device and on the server. Topic guard. Output checker. Safety eval suite with 100% required on crisis, self-harm, overdose and dosing cases. | LLM unpredictability. The coach stays optional and clearly labelled as not a therapist. |
-| TH13 | Help resources are wrong or out of date | A5 | `helplines.json` is edited only by the developer (hook-protected) and carries a "last verified" date. The app shows a warning when an entry is over 6 months old. | Human error in verification. |
+| TH13 | Help resources are wrong or out of date | A5 | `helplines.json` is edited only by the developer (hook-protected) and carries a "last verified" date. The app warns when an entry is unverified or over 6 months old. An entry is shown as red "emergency services" only if it has a name and a checked date. | Human error in verification. |
 | TH14 | T-Dev adds tracking or logs personal data | A1 | No analytics SDKs. A dependency allow-list test in CI. A lint rule bans `console.log` in `app/src`. The privacy-reviewer subagent runs on storage, server and notification changes. | Review gaps. |
-| TH15 | Delete-all is incomplete | A1, A3 | Delete-all removes the DB file, deletes the key, cancels notifications, calls `DELETE /account` (cascades links and signals) and clears the secure store. An integration test checks each step. If the server cannot be reached, deletion is queued and the user is told. | The server account lingers if the user never comes back online. Signals still auto-expire after 7 days. |
+| TH15 | Delete-all is incomplete | A1, A3 | Delete-all deletes the DB key **first** (retried once), then closes and deletes the DB file, clears the secure store and the biometric token, cancels notifications, and (from M6) calls `DELETE /account` (cascades links and signals). Every step runs even if one fails. If the key could not be deleted, the user is told the data may still be readable; otherwise that the leftovers are unreadable. If the server cannot be reached, deletion is queued and the user is told. | The server account lingers if the user never comes back online. Signals still auto-expire after 7 days. |
 
 ### Out of scope (documented limitations)
 
 - Compromised or rooted devices, and OS-level malware.
-- iOS (not built in this project).
+- iOS (not built in this project). On iOS the app-switcher snapshot would not be blanked.
+- The web demo (`npx expo start`, press `w`) is unencrypted and in memory only, with a
+  "not for real data" banner. It is never shipped; the Android bundle does not contain it.
+- The SQLCipher encryption test runs against a test double of expo-sqlite. On a
+  development build, check once by hand that `recovery.db` does not start with
+  `SQLite format 3` (the app also refuses to start on a build without SQLCipher).
 - Real-world clinical validation of the risk model.
 - Legal and regulatory compliance for real deployment (not done; demo only).
 
@@ -129,7 +136,9 @@ whom) · A4 coach conversations · A5 the integrity of the help-resources conten
 
 | Check | Milestone |
 |---|---|
-| DB file is unreadable without the key (opening with no key fails) | 2 |
+| DB file is unreadable without the key (opening with no key, a wrong key, or without SQLCipher fails) | 2 |
+| PIN: salted slow hash, attempt limits, clock tampering, corrupt state | 2 |
+| Crisis words (en/si/ta and romanised) open help from any text field | 2 |
 | Delete-all removes DB, key, notifications and server account | 2, 6 |
 | Only `src/net/*` may make network calls | 2 |
 | No phone-number patterns in `app/src` (helplines come from content only) | 2 |

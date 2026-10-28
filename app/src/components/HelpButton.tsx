@@ -1,4 +1,4 @@
-import { useRouter } from 'expo-router';
+import { usePathname, useRouter } from 'expo-router';
 import { Pressable, StyleSheet, Text } from 'react-native';
 import { useTranslation } from 'react-i18next';
 import { MIN_TAP, useTheme } from '../theme';
@@ -8,6 +8,7 @@ export function HelpButton() {
   const { t } = useTranslation();
   const theme = useTheme();
   const router = useRouter();
+  const onHelp = usePathname() === '/help';
 
   return (
     <Pressable
@@ -15,7 +16,9 @@ export function HelpButton() {
       accessibilityRole="button"
       accessibilityLabel={t('help.button')}
       accessibilityHint={t('help.buttonHint')}
-      onPress={() => router.push('/help')}
+      onPress={() => {
+        if (!onHelp) router.push('/help');
+      }}
       style={({ pressed }) => [
         styles.button,
         { backgroundColor: theme.help, opacity: pressed ? 0.8 : 1 },

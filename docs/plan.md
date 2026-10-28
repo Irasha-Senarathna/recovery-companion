@@ -77,7 +77,7 @@ Each milestone is built with `/milestone N`: plan → tests first → implement 
 **Result (M1):** 26 app tests + 3 server tests pass; ESLint, tsc, ruff and mypy
 (strict) are clean; web export builds; `GET /health` → 200 in Docker.
 
-## M2 — Secure foundation · TODO
+## M2 — Secure foundation · DONE
 
 **Goal:** encrypted storage, app lock, quick-hide, delete-all, onboarding, and a working help button.
 
@@ -103,6 +103,17 @@ Each milestone is built with `/milestone N`: plan → tests first → implement 
   `deleteAll.test.ts`, `helplines.test.ts` (including the stale-date warning),
   `crisisDetector.test.ts` (3 languages), `noHardcodedNumbers.test.ts`,
   `networkBoundary.test.ts`. The privacy-reviewer reports no Critical or High findings.
+
+**Result (M2):** 384 app tests + 3 server tests pass; ESLint, tsc, ruff and mypy
+clean; web and Android bundles build. Onboarding order is language → disclaimer →
+nickname → PIN (language first so the disclaimer can be read). Extra screens:
+`/loading`, `/problem` (data cannot be opened → delete and set up again). Review
+fixes: PIN cap after 15 failures (clock-tamper safe), biometric token invalidated
+on new enrolment, weak-PIN check, keyboard learning off, wider crisis lists
+(stems, romanised si/ta), unnamed/unchecked entries never shown as emergency.
+Open items for the user: verify `content/helplines.json` (the "emergency" entry
+is 1927, which may not be an emergency number), native-speaker review of si/ta text
+and crisis lists, translated disclaimers.
 
 ## M3 — Craving SOS · TODO
 

@@ -18,6 +18,10 @@ module.exports = defineConfig([
     },
   },
   {
+    files: ['jest.setup.js'],
+    languageOptions: { globals: { jest: 'readonly', beforeEach: 'readonly' } },
+  },
+  {
     files: ['src/**/*.{ts,tsx}'],
     rules: {
       'no-console': 'error',
