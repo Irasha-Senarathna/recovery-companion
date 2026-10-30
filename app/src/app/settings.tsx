@@ -9,6 +9,8 @@ import { ToggleRow } from '../components/ToggleRow';
 import { ReminderSettings } from '../features/checkin/ReminderSettings';
 import { syncReminder } from '../features/checkin/reminder';
 import { useSession } from '../features/session/SessionProvider';
+import { NudgeToggle } from '../features/triggers/NudgeToggle';
+import { refreshNudge } from '../features/triggers/earlyWarning';
 import { SupportPersonForm } from '../features/sos/SupportPersonForm';
 import { disableBiometricUnlock, enableBiometricUnlock } from '../platform/biometrics';
 import { useTheme } from '../theme';
@@ -39,6 +41,12 @@ export default function SettingsScreen() {
           updateSettings({ language });
           // The reminder text is fixed when scheduled, so reschedule it in the new language.
           if (settings.reminderEnabled) await syncReminder(settings, i18n.t).catch(() => {});
+          if (db && settings.lastNudgeAt !== null && settings.lastNudgeAt > Date.now()) {
+            const pending = { ...settings, lastNudgeAt: null };
+            await refreshNudge({ db, settings: pending, updateSettings, t: i18n.t }).catch(
+              () => {},
+            );
+          }
         }}
       />
 
@@ -51,6 +59,7 @@ export default function SettingsScreen() {
         {t('settings.reminderTitle')}
       </Text>
       <ReminderSettings />
+      <NudgeToggle />
 
       <Text accessibilityRole="header" style={heading}>
         {t('settings.security')}

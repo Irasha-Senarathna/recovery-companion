@@ -174,11 +174,14 @@ flowchart LR
   P["Parity test: Python and TS<br/>give the same scores on fixtures"] -.-> INF
 ```
 
-- **Prediction target**: "craving level ≥ 3 (on the 0–4 check-in scale) or a slip
-  in the next 24 hours". The scale and tags are shared with the app through
-  `content/checkin.json`; the planted patterns are listed in `ml/README.md` (M4).
-- **Features** (draft): sleep (0–4), stress, mood, craving level, 3-day rolling averages, day of week, weekend flag, time-of-day bucket,
-  days since last slip, and flags for the most common tags.
+- **Prediction target** (M5): a "hard day": a slip that day, or a strong
+  craving (intensity ≥ 3 on the 0–4 scale) from 17:00 on, given that day's
+  check-in and earlier ones. The scale and tags are shared with the app through
+  `content/checkin.json`; the planted patterns are listed in `ml/README.md`.
+- **Features** (M5): mood, sleep, stress, craving (0–4), poor-sleep and
+  high-stress flags, weekend, the sleep + stress + weekend combination,
+  3-day craving and stress averages, and one flag per tag. Days since the last
+  slip arrives with slips in M7.
 - **Honesty note**: the model is trained and tested on synthetic data. Its
   metrics show the pipeline works. They do **not** show it predicts real
   relapse risk. The README and the trigger-map screen say this.

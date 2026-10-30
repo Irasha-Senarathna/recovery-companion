@@ -14,6 +14,10 @@ export type AppSettings = {
   reminderEnabled: boolean;
   reminderHour: number;
   reminderMinute: number;
+  /** Early-warning heads-up on harder days (off until the user turns it on). */
+  nudgesEnabled: boolean;
+  /** When today's heads-up was scheduled for; at most one a day. */
+  lastNudgeAt: number | null;
 };
 
 export type SettingKey = keyof AppSettings;
@@ -29,12 +33,19 @@ export const DEFAULT_SETTINGS: AppSettings = {
   reminderEnabled: false,
   reminderHour: 20,
   reminderMinute: 0,
+  nudgesEnabled: false,
+  lastNudgeAt: null,
 };
 
 /** A whole number in [0, max), or the fallback. */
 function parseInRange(value: string | undefined, max: number, fallback: number): number {
   const n = Number(value);
   return Number.isInteger(n) && n >= 0 && n < max ? n : fallback;
+}
+
+function parseTime(value: string | undefined): number | null {
+  const n = Number(value);
+  return value !== undefined && Number.isSafeInteger(n) && n > 0 ? n : null;
 }
 
 export async function getSetting(db: Database, key: SettingKey): Promise<string | null> {
@@ -66,6 +77,8 @@ export async function loadSettings(db: Database): Promise<AppSettings> {
     reminderEnabled: raw.get('reminderEnabled') === 'true',
     reminderHour: parseInRange(raw.get('reminderHour'), 24, DEFAULT_SETTINGS.reminderHour),
     reminderMinute: parseInRange(raw.get('reminderMinute'), 60, DEFAULT_SETTINGS.reminderMinute),
+    nudgesEnabled: raw.get('nudgesEnabled') === 'true',
+    lastNudgeAt: parseTime(raw.get('lastNudgeAt')),
   };
 }
 

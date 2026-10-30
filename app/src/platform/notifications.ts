@@ -4,6 +4,9 @@ import { AndroidImportance, AndroidNotificationVisibility } from 'expo-notificat
 /** The single daily check-in reminder (scheduled on the phone, never via a server). */
 export const REMINDER_ID = 'daily-checkin';
 const CHANNEL_ID = 'reminders';
+/** The single early-warning heads-up (M5). */
+export const NUDGE_ID = 'early-warning';
+const NUDGE_CHANNEL_ID = 'nudges';
 
 export type DailyReminder = {
   hour: number;
@@ -43,16 +46,48 @@ export async function scheduleDailyReminder(reminder: DailyReminder): Promise<vo
   });
 }
 
+export type OneTimeNudge = { at: number; title: string; body: string; channelName: string };
+
+export async function scheduleNudge(nudge: OneTimeNudge): Promise<void> {
+  await Notifications.setNotificationChannelAsync(NUDGE_CHANNEL_ID, {
+    name: nudge.channelName,
+    importance: AndroidImportance.DEFAULT,
+    lockscreenVisibility: AndroidNotificationVisibility.PRIVATE,
+    showBadge: false,
+  });
+  await cancelNudge();
+  await Notifications.scheduleNotificationAsync({
+    identifier: NUDGE_ID,
+    content: { title: nudge.title, body: nudge.body },
+    trigger: {
+      type: Notifications.SchedulableTriggerInputTypes.DATE,
+      date: nudge.at,
+      channelId: NUDGE_CHANNEL_ID,
+    },
+  });
+}
+
+/** Cancels a pending heads-up and removes one already in the notification shade. */
+export async function cancelNudge(): Promise<void> {
+  await Notifications.cancelScheduledNotificationAsync(NUDGE_ID);
+  await Notifications.dismissNotificationAsync(NUDGE_ID);
+}
+
 export async function cancelDailyReminder(): Promise<void> {
   await Notifications.cancelScheduledNotificationAsync(REMINDER_ID);
 }
 
 /**
  * Used by delete-all: future reminders, any already in the notification shade,
- * and the channel in Android settings. (M5's early-warning nudges go too.)
+ * and both channels in Android settings (daily reminder and heads-up).
  */
 export async function cancelAllScheduledNotifications(): Promise<void> {
-  await Notifications.cancelAllScheduledNotificationsAsync();
-  await Notifications.dismissAllNotificationsAsync();
-  await Notifications.deleteNotificationChannelAsync(CHANNEL_ID);
+  // Every step runs even if one fails, so no channel is left behind.
+  const results = await Promise.allSettled([
+    Notifications.cancelAllScheduledNotificationsAsync(),
+    Notifications.dismissAllNotificationsAsync(),
+    Notifications.deleteNotificationChannelAsync(CHANNEL_ID),
+    Notifications.deleteNotificationChannelAsync(NUDGE_CHANNEL_ID),
+  ]);
+  if (results.some((r) => r.status === 'rejected')) throw new Error('notifications');
 }

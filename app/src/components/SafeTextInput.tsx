@@ -1,5 +1,4 @@
 import { useRouter } from 'expo-router';
-import { useRef } from 'react';
 import { StyleSheet, Text, TextInput, View, type TextInputProps } from 'react-native';
 import { detectCrisis } from '../safety/crisisDetector';
 import { MIN_TAP, RADIUS, useTheme } from '../theme';
@@ -20,15 +19,14 @@ type Props = Omit<TextInputProps, 'onChangeText' | 'value' | 'style'> & {
 export function SafeTextInput({ label, value, onChangeText, hint, error, ...rest }: Props) {
   const theme = useTheme();
   const router = useRouter();
-  const inCrisis = useRef(false);
 
+  // Only newly typed crisis words open help, so editing saved text that
+  // already mentions a hard moment does not send the user away each time.
   const handleChange = (text: string) => {
     onChangeText(text);
-    const crisis = detectCrisis(text);
-    if (crisis && !inCrisis.current) {
+    if (detectCrisis(text) && !detectCrisis(value)) {
       router.push({ pathname: '/help', params: { reason: 'crisis' } });
     }
-    inCrisis.current = crisis;
   };
 
   return (

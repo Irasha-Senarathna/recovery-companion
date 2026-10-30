@@ -3,9 +3,15 @@ import { isLevel, isTag, MEASURES, type Measure, type Tag } from './tags';
 
 export type Levels = Record<Measure, number>;
 export type CheckInInput = Levels & { tags: Tag[] };
-export type CheckIn = CheckInInput & { id: number; day: string; createdAt: number };
+export type CheckIn = CheckInInput & {
+  id: number;
+  day: string;
+  createdAt: number;
+  /** Made-up row from the dev menu (development builds only). */
+  demo: boolean;
+};
 
-type Row = Levels & { id: number; day: string; created_at: number; tags: string };
+type Row = Levels & { id: number; day: string; created_at: number; tags: string; demo: number };
 
 /** The phone's local calendar day as YYYY-MM-DD. */
 export function localDay(time = Date.now()): string {
@@ -70,10 +76,11 @@ function toCheckIn(row: Row): CheckIn {
     craving: row.craving,
     // A tag removed from the list in a later version is dropped quietly.
     tags: Array.isArray(tags) ? tags.filter(isTag) : [],
+    demo: row.demo === 1,
   };
 }
 
-const COLUMNS = 'id, day, created_at, mood, sleep, stress, craving, tags';
+const COLUMNS = 'id, day, created_at, mood, sleep, stress, craving, tags, demo';
 
 export async function getCheckIn(db: Database, day: string): Promise<CheckIn | null> {
   const row = await db.getFirst<Row>(`SELECT ${COLUMNS} FROM check_ins WHERE day = ?`, [day]);

@@ -18,7 +18,7 @@ const BANNED: Record<string, RegExp[]> = {
     /sober|sobriety|clean/i,
     /\b(use|using|used)\b/i,
     /substance|rehab|treatment|pill|dose/i,
-    /urge|trigger|risk/i,
+    /urge|trigger|risk|harder|warning/i,
   ],
   si: [/මත්/, /ඇබ්බැහි/, /මත්පැන්/, /සුවවීම/, /ඖෂධ/, /ප්‍රතිකාර/, /ආශාව/],
   ta: [/போதை/, /அடிமை/, /மது/, /மீட்பு/, /மருந்து/, /சிகிச்சை/, /ஏக்கம்/],
@@ -30,6 +30,12 @@ describe.each(Object.keys(locales) as (keyof typeof locales)[])(
   'reminder notification text (%s)',
   (lang) => {
     const texts = Object.values(locales[lang].notifications);
+
+    it('covers the reminder and the harder-day heads-up', () => {
+      expect(Object.keys(locales[lang].notifications)).toEqual(
+        expect.arrayContaining(['reminderTitle', 'reminderBody', 'nudgeTitle', 'nudgeBody']),
+      );
+    });
 
     it('has a title and body', () => {
       expect(locales[lang].notifications.reminderTitle.trim()).not.toBe('');

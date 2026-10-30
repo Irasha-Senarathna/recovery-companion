@@ -1,0 +1,2153 @@
+[
+  {
+    "today": {
+      "day": "2026-01-14",
+      "mood": 1,
+      "sleep": 0,
+      "stress": 3,
+      "craving": 1,
+      "tags": ["tired"]
+    },
+    "previous": [
+      {
+        "day": "2026-01-07",
+        "mood": 3,
+        "sleep": 3,
+        "stress": 3,
+        "craving": 0,
+        "tags": ["conflict", "work_stress"]
+      },
+      {
+        "day": "2026-01-08",
+        "mood": 1,
+        "sleep": 1,
+        "stress": 4,
+        "craving": 2,
+        "tags": ["bored", "work_stress"]
+      },
+      {
+        "day": "2026-01-09",
+        "mood": 1,
+        "sleep": 0,
+        "stress": 3,
+        "craving": 1,
+        "tags": ["tired"]
+      },
+      {
+        "day": "2026-01-12",
+        "mood": 3,
+        "sleep": 3,
+        "stress": 3,
+        "craving": 2,
+        "tags": ["bored", "work_stress", "money_worries"]
+      },
+      {
+        "day": "2026-01-13",
+        "mood": 3,
+        "sleep": 4,
+        "stress": 2,
+        "craving": 1,
+        "tags": []
+      }
+    ],
+    "features": [
+      1.0, 0.0, 3.0, 1.0, 1.0, 1.0, 0.0, 0.0, 1.5, 2.5, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0,
+      0.0, 0.0
+    ],
+    "score": 0.42059994437839904
+  },
+  {
+    "today": {
+      "day": "2026-02-03",
+      "mood": 1,
+      "sleep": 0,
+      "stress": 3,
+      "craving": 2,
+      "tags": []
+    },
+    "previous": [
+      {
+        "day": "2026-01-28",
+        "mood": 2,
+        "sleep": 2,
+        "stress": 3,
+        "craving": 1,
+        "tags": []
+      },
+      {
+        "day": "2026-01-29",
+        "mood": 2,
+        "sleep": 1,
+        "stress": 2,
+        "craving": 1,
+        "tags": ["tired"]
+      },
+      {
+        "day": "2026-01-31",
+        "mood": 2,
+        "sleep": 3,
+        "stress": 4,
+        "craving": 1,
+        "tags": ["conflict", "pain"]
+      },
+      {
+        "day": "2026-02-01",
+        "mood": 2,
+        "sleep": 2,
+        "stress": 3,
+        "craving": 0,
+        "tags": ["alone"]
+      },
+      {
+        "day": "2026-02-02",
+        "mood": 2,
+        "sleep": 1,
+        "stress": 3,
+        "craving": 1,
+        "tags": ["tired"]
+      }
+    ],
+    "features": [
+      1.0, 0.0, 3.0, 2.0, 1.0, 1.0, 0.0, 0.0, 0.6666666666666666, 3.3333333333333335, 0.0, 0.0, 0.0,
+      0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0
+    ],
+    "score": 0.4302470470669217
+  },
+  {
+    "today": {
+      "day": "2026-02-01",
+      "mood": 1,
+      "sleep": 3,
+      "stress": 3,
+      "craving": 2,
+      "tags": []
+    },
+    "previous": [
+      {
+        "day": "2026-01-26",
+        "mood": 2,
+        "sleep": 2,
+        "stress": 4,
+        "craving": 1,
+        "tags": []
+      },
+      {
+        "day": "2026-01-28",
+        "mood": 2,
+        "sleep": 4,
+        "stress": 3,
+        "craving": 2,
+        "tags": ["tired"]
+      },
+      {
+        "day": "2026-01-29",
+        "mood": 1,
+        "sleep": 2,
+        "stress": 4,
+        "craving": 0,
+        "tags": ["alone", "work_stress"]
+      },
+      {
+        "day": "2026-01-30",
+        "mood": 1,
+        "sleep": 2,
+        "stress": 3,
+        "craving": 2,
+        "tags": ["work_stress", "old_routine"]
+      },
+      {
+        "day": "2026-01-31",
+        "mood": 3,
+        "sleep": 3,
+        "stress": 1,
+        "craving": 2,
+        "tags": ["pain", "old_routine"]
+      }
+    ],
+    "features": [
+      1.0, 3.0, 3.0, 2.0, 0.0, 1.0, 1.0, 0.0, 1.3333333333333333, 2.6666666666666665, 0.0, 0.0, 0.0,
+      0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0
+    ],
+    "score": 0.25127651196496814
+  },
+  {
+    "today": {
+      "day": "2026-01-16",
+      "mood": 2,
+      "sleep": 4,
+      "stress": 4,
+      "craving": 1,
+      "tags": []
+    },
+    "previous": [
+      {
+        "day": "2026-01-10",
+        "mood": 1,
+        "sleep": 2,
+        "stress": 4,
+        "craving": 3,
+        "tags": ["alone", "payday", "old_routine"]
+      },
+      {
+        "day": "2026-01-12",
+        "mood": 2,
+        "sleep": 3,
+        "stress": 4,
+        "craving": 0,
+        "tags": []
+      },
+      {
+        "day": "2026-01-13",
+        "mood": 2,
+        "sleep": 2,
+        "stress": 4,
+        "craving": 2,
+        "tags": ["bored", "money_worries"]
+      },
+      {
+        "day": "2026-01-14",
+        "mood": 2,
+        "sleep": 3,
+        "stress": 4,
+        "craving": 1,
+        "tags": ["work_stress", "pain"]
+      },
+      {
+        "day": "2026-01-15",
+        "mood": 2,
+        "sleep": 3,
+        "stress": 2,
+        "craving": 1,
+        "tags": []
+      }
+    ],
+    "features": [
+      2.0, 4.0, 4.0, 1.0, 0.0, 1.0, 0.0, 0.0, 1.3333333333333333, 3.3333333333333335, 0.0, 0.0, 0.0,
+      0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0
+    ],
+    "score": 0.10719244161385078
+  },
+  {
+    "today": {
+      "day": "2026-01-12",
+      "mood": 4,
+      "sleep": 4,
+      "stress": 1,
+      "craving": 1,
+      "tags": []
+    },
+    "previous": [
+      {
+        "day": "2026-01-06",
+        "mood": 4,
+        "sleep": 3,
+        "stress": 1,
+        "craving": 0,
+        "tags": ["conflict"]
+      },
+      {
+        "day": "2026-01-07",
+        "mood": 1,
+        "sleep": 1,
+        "stress": 2,
+        "craving": 3,
+        "tags": []
+      },
+      {
+        "day": "2026-01-08",
+        "mood": 3,
+        "sleep": 3,
+        "stress": 1,
+        "craving": 0,
+        "tags": []
+      },
+      {
+        "day": "2026-01-10",
+        "mood": 2,
+        "sleep": 3,
+        "stress": 1,
+        "craving": 1,
+        "tags": ["conflict", "work_stress"]
+      },
+      {
+        "day": "2026-01-11",
+        "mood": 4,
+        "sleep": 3,
+        "stress": 0,
+        "craving": 2,
+        "tags": ["old_routine"]
+      }
+    ],
+    "features": [
+      4.0, 4.0, 1.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.5, 0.5, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0,
+      0.0, 0.0
+    ],
+    "score": 0.020600025897320733
+  },
+  {
+    "today": {
+      "day": "2026-02-07",
+      "mood": 2,
+      "sleep": 3,
+      "stress": 3,
+      "craving": 2,
+      "tags": ["alone", "money_worries"]
+    },
+    "previous": [
+      {
+        "day": "2026-02-01",
+        "mood": 4,
+        "sleep": 2,
+        "stress": 2,
+        "craving": 0,
+        "tags": ["celebration"]
+      },
+      {
+        "day": "2026-02-02",
+        "mood": 2,
+        "sleep": 0,
+        "stress": 1,
+        "craving": 1,
+        "tags": ["tired"]
+      },
+      {
+        "day": "2026-02-03",
+        "mood": 3,
+        "sleep": 3,
+        "stress": 2,
+        "craving": 0,
+        "tags": ["pain"]
+      },
+      {
+        "day": "2026-02-05",
+        "mood": 4,
+        "sleep": 4,
+        "stress": 1,
+        "craving": 1,
+        "tags": []
+      },
+      {
+        "day": "2026-02-06",
+        "mood": 1,
+        "sleep": 2,
+        "stress": 2,
+        "craving": 1,
+        "tags": []
+      }
+    ],
+    "features": [
+      2.0, 3.0, 3.0, 2.0, 0.0, 1.0, 1.0, 0.0, 1.0, 1.5, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0,
+      0.0, 0.0
+    ],
+    "score": 0.23380726095689366
+  },
+  {
+    "today": {
+      "day": "2026-01-24",
+      "mood": 1,
+      "sleep": 1,
+      "stress": 4,
+      "craving": 2,
+      "tags": ["celebration", "pain"]
+    },
+    "previous": [
+      {
+        "day": "2026-01-19",
+        "mood": 2,
+        "sleep": 2,
+        "stress": 2,
+        "craving": 0,
+        "tags": []
+      },
+      {
+        "day": "2026-01-20",
+        "mood": 2,
+        "sleep": 3,
+        "stress": 2,
+        "craving": 1,
+        "tags": ["bored"]
+      },
+      {
+        "day": "2026-01-21",
+        "mood": 0,
+        "sleep": 1,
+        "stress": 4,
+        "craving": 3,
+        "tags": ["tired", "work_stress"]
+      },
+      {
+        "day": "2026-01-22",
+        "mood": 2,
+        "sleep": 2,
+        "stress": 4,
+        "craving": 1,
+        "tags": ["money_worries", "old_routine"]
+      },
+      {
+        "day": "2026-01-23",
+        "mood": 1,
+        "sleep": 2,
+        "stress": 4,
+        "craving": 0,
+        "tags": ["alone"]
+      }
+    ],
+    "features": [
+      1.0, 1.0, 4.0, 2.0, 1.0, 1.0, 1.0, 1.0, 1.3333333333333333, 4.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0,
+      0.0, 1.0, 1.0, 0.0, 0.0
+    ],
+    "score": 0.7457521413143686
+  },
+  {
+    "today": {
+      "day": "2026-02-12",
+      "mood": 3,
+      "sleep": 3,
+      "stress": 3,
+      "craving": 0,
+      "tags": ["work_stress"]
+    },
+    "previous": [
+      {
+        "day": "2026-02-05",
+        "mood": 0,
+        "sleep": 1,
+        "stress": 4,
+        "craving": 2,
+        "tags": ["bored", "tired", "work_stress"]
+      },
+      {
+        "day": "2026-02-06",
+        "mood": 2,
+        "sleep": 2,
+        "stress": 3,
+        "craving": 1,
+        "tags": ["money_worries"]
+      },
+      {
+        "day": "2026-02-08",
+        "mood": 4,
+        "sleep": 3,
+        "stress": 1,
+        "craving": 0,
+        "tags": []
+      },
+      {
+        "day": "2026-02-09",
+        "mood": 1,
+        "sleep": 1,
+        "stress": 3,
+        "craving": 1,
+        "tags": ["alone", "tired"]
+      },
+      {
+        "day": "2026-02-10",
+        "mood": 1,
+        "sleep": 1,
+        "stress": 4,
+        "craving": 2,
+        "tags": ["bored", "tired", "payday"]
+      }
+    ],
+    "features": [
+      3.0, 3.0, 3.0, 0.0, 0.0, 1.0, 0.0, 0.0, 1.5, 3.5, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0,
+      0.0, 0.0
+    ],
+    "score": 0.10047703607650317
+  },
+  {
+    "today": {
+      "day": "2026-02-02",
+      "mood": 2,
+      "sleep": 0,
+      "stress": 1,
+      "craving": 1,
+      "tags": ["tired"]
+    },
+    "previous": [
+      {
+        "day": "2026-01-28",
+        "mood": 4,
+        "sleep": 3,
+        "stress": 2,
+        "craving": 0,
+        "tags": ["bored", "old_routine"]
+      },
+      {
+        "day": "2026-01-29",
+        "mood": 2,
+        "sleep": 3,
+        "stress": 2,
+        "craving": 0,
+        "tags": ["alone"]
+      },
+      {
+        "day": "2026-01-30",
+        "mood": 3,
+        "sleep": 3,
+        "stress": 3,
+        "craving": 0,
+        "tags": []
+      },
+      {
+        "day": "2026-01-31",
+        "mood": 2,
+        "sleep": 3,
+        "stress": 2,
+        "craving": 1,
+        "tags": ["bored", "celebration"]
+      },
+      {
+        "day": "2026-02-01",
+        "mood": 4,
+        "sleep": 2,
+        "stress": 2,
+        "craving": 0,
+        "tags": ["celebration"]
+      }
+    ],
+    "features": [
+      2.0, 0.0, 1.0, 1.0, 1.0, 0.0, 0.0, 0.0, 0.3333333333333333, 2.3333333333333335, 0.0, 0.0, 1.0,
+      0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0
+    ],
+    "score": 0.10495973919864421
+  },
+  {
+    "today": {
+      "day": "2026-02-06",
+      "mood": 3,
+      "sleep": 3,
+      "stress": 1,
+      "craving": 1,
+      "tags": ["work_stress"]
+    },
+    "previous": [
+      {
+        "day": "2026-01-29",
+        "mood": 2,
+        "sleep": 2,
+        "stress": 1,
+        "craving": 1,
+        "tags": []
+      },
+      {
+        "day": "2026-01-30",
+        "mood": 2,
+        "sleep": 2,
+        "stress": 1,
+        "craving": 0,
+        "tags": []
+      },
+      {
+        "day": "2026-01-31",
+        "mood": 4,
+        "sleep": 3,
+        "stress": 0,
+        "craving": 1,
+        "tags": ["tired", "conflict"]
+      },
+      {
+        "day": "2026-02-02",
+        "mood": 3,
+        "sleep": 3,
+        "stress": 1,
+        "craving": 0,
+        "tags": ["bored", "money_worries", "payday"]
+      },
+      {
+        "day": "2026-02-05",
+        "mood": 4,
+        "sleep": 3,
+        "stress": 1,
+        "craving": 2,
+        "tags": []
+      }
+    ],
+    "features": [
+      3.0, 3.0, 1.0, 1.0, 0.0, 0.0, 0.0, 0.0, 2.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0,
+      0.0, 0.0
+    ],
+    "score": 0.019400018466328547
+  },
+  {
+    "today": {
+      "day": "2026-01-13",
+      "mood": 4,
+      "sleep": 3,
+      "stress": 2,
+      "craving": 1,
+      "tags": []
+    },
+    "previous": [
+      {
+        "day": "2026-01-07",
+        "mood": 2,
+        "sleep": 2,
+        "stress": 3,
+        "craving": 0,
+        "tags": ["alone", "tired"]
+      },
+      {
+        "day": "2026-01-09",
+        "mood": 2,
+        "sleep": 2,
+        "stress": 1,
+        "craving": 2,
+        "tags": ["old_routine"]
+      },
+      {
+        "day": "2026-01-10",
+        "mood": 2,
+        "sleep": 3,
+        "stress": 2,
+        "craving": 0,
+        "tags": ["bored"]
+      },
+      {
+        "day": "2026-01-11",
+        "mood": 3,
+        "sleep": 1,
+        "stress": 1,
+        "craving": 2,
+        "tags": ["tired", "pain"]
+      },
+      {
+        "day": "2026-01-12",
+        "mood": 3,
+        "sleep": 3,
+        "stress": 1,
+        "craving": 1,
+        "tags": []
+      }
+    ],
+    "features": [
+      4.0, 3.0, 2.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 1.3333333333333333, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0,
+      0.0, 0.0, 0.0, 0.0, 0.0
+    ],
+    "score": 0.01969710779628799
+  },
+  {
+    "today": {
+      "day": "2026-01-31",
+      "mood": 2,
+      "sleep": 3,
+      "stress": 1,
+      "craving": 2,
+      "tags": ["old_routine"]
+    },
+    "previous": [
+      {
+        "day": "2026-01-25",
+        "mood": 3,
+        "sleep": 3,
+        "stress": 2,
+        "craving": 2,
+        "tags": ["alone", "bored", "risky_place"]
+      },
+      {
+        "day": "2026-01-26",
+        "mood": 3,
+        "sleep": 2,
+        "stress": 1,
+        "craving": 1,
+        "tags": ["risky_place"]
+      },
+      {
+        "day": "2026-01-27",
+        "mood": 2,
+        "sleep": 2,
+        "stress": 2,
+        "craving": 1,
+        "tags": []
+      },
+      {
+        "day": "2026-01-28",
+        "mood": 3,
+        "sleep": 4,
+        "stress": 1,
+        "craving": 2,
+        "tags": []
+      },
+      {
+        "day": "2026-01-29",
+        "mood": 4,
+        "sleep": 4,
+        "stress": 0,
+        "craving": 1,
+        "tags": ["alone"]
+      }
+    ],
+    "features": [
+      2.0, 3.0, 1.0, 2.0, 0.0, 0.0, 1.0, 0.0, 1.5, 0.5, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0,
+      1.0, 0.0
+    ],
+    "score": 0.17973394566240392
+  },
+  {
+    "today": {
+      "day": "2026-01-08",
+      "mood": 3,
+      "sleep": 3,
+      "stress": 1,
+      "craving": 0,
+      "tags": []
+    },
+    "previous": [
+      {
+        "day": "2026-01-05",
+        "mood": 3,
+        "sleep": 3,
+        "stress": 1,
+        "craving": 0,
+        "tags": ["celebration"]
+      },
+      {
+        "day": "2026-01-06",
+        "mood": 4,
+        "sleep": 3,
+        "stress": 1,
+        "craving": 0,
+        "tags": ["conflict"]
+      },
+      {
+        "day": "2026-01-07",
+        "mood": 1,
+        "sleep": 1,
+        "stress": 2,
+        "craving": 3,
+        "tags": []
+      }
+    ],
+    "features": [
+      3.0, 3.0, 1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 1.3333333333333333, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0,
+      0.0, 0.0, 0.0, 0.0, 0.0
+    ],
+    "score": 0.018550721091027605
+  },
+  {
+    "today": {
+      "day": "2026-01-15",
+      "mood": 2,
+      "sleep": 2,
+      "stress": 4,
+      "craving": 0,
+      "tags": ["work_stress"]
+    },
+    "previous": [
+      {
+        "day": "2026-01-08",
+        "mood": 4,
+        "sleep": 4,
+        "stress": 2,
+        "craving": 0,
+        "tags": ["alone", "money_worries"]
+      },
+      {
+        "day": "2026-01-09",
+        "mood": 2,
+        "sleep": 2,
+        "stress": 2,
+        "craving": 1,
+        "tags": ["bored", "conflict"]
+      },
+      {
+        "day": "2026-01-10",
+        "mood": 4,
+        "sleep": 4,
+        "stress": 2,
+        "craving": 1,
+        "tags": []
+      },
+      {
+        "day": "2026-01-13",
+        "mood": 2,
+        "sleep": 4,
+        "stress": 3,
+        "craving": 1,
+        "tags": ["conflict"]
+      },
+      {
+        "day": "2026-01-14",
+        "mood": 2,
+        "sleep": 2,
+        "stress": 4,
+        "craving": 1,
+        "tags": []
+      }
+    ],
+    "features": [
+      2.0, 2.0, 4.0, 0.0, 0.0, 1.0, 0.0, 0.0, 1.0, 3.5, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0,
+      0.0, 0.0
+    ],
+    "score": 0.09248924000435897
+  },
+  {
+    "today": {
+      "day": "2026-01-29",
+      "mood": 2,
+      "sleep": 3,
+      "stress": 2,
+      "craving": 1,
+      "tags": []
+    },
+    "previous": [
+      {
+        "day": "2026-01-23",
+        "mood": 2,
+        "sleep": 2,
+        "stress": 4,
+        "craving": 1,
+        "tags": ["bored"]
+      },
+      {
+        "day": "2026-01-24",
+        "mood": 2,
+        "sleep": 3,
+        "stress": 4,
+        "craving": 3,
+        "tags": ["conflict", "celebration"]
+      },
+      {
+        "day": "2026-01-25",
+        "mood": 2,
+        "sleep": 4,
+        "stress": 4,
+        "craving": 2,
+        "tags": ["conflict"]
+      },
+      {
+        "day": "2026-01-26",
+        "mood": 2,
+        "sleep": 3,
+        "stress": 3,
+        "craving": 1,
+        "tags": ["work_stress"]
+      },
+      {
+        "day": "2026-01-27",
+        "mood": 2,
+        "sleep": 2,
+        "stress": 3,
+        "craving": 1,
+        "tags": ["work_stress"]
+      }
+    ],
+    "features": [
+      2.0, 3.0, 2.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 3.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0,
+      0.0, 0.0
+    ],
+    "score": 0.01946947706571341
+  },
+  {
+    "today": {
+      "day": "2026-01-27",
+      "mood": 2,
+      "sleep": 1,
+      "stress": 3,
+      "craving": 1,
+      "tags": ["tired", "work_stress", "money_worries"]
+    },
+    "previous": [
+      {
+        "day": "2026-01-22",
+        "mood": 1,
+        "sleep": 2,
+        "stress": 3,
+        "craving": 2,
+        "tags": ["alone", "conflict", "work_stress"]
+      },
+      {
+        "day": "2026-01-23",
+        "mood": 2,
+        "sleep": 3,
+        "stress": 3,
+        "craving": 2,
+        "tags": ["work_stress"]
+      },
+      {
+        "day": "2026-01-24",
+        "mood": 3,
+        "sleep": 3,
+        "stress": 2,
+        "craving": 2,
+        "tags": []
+      },
+      {
+        "day": "2026-01-25",
+        "mood": 4,
+        "sleep": 3,
+        "stress": 1,
+        "craving": 1,
+        "tags": ["tired"]
+      },
+      {
+        "day": "2026-01-26",
+        "mood": 3,
+        "sleep": 4,
+        "stress": 0,
+        "craving": 0,
+        "tags": ["work_stress", "money_worries"]
+      }
+    ],
+    "features": [
+      2.0, 1.0, 3.0, 1.0, 1.0, 1.0, 0.0, 0.0, 1.0, 1.0, 0.0, 0.0, 1.0, 0.0, 1.0, 1.0, 0.0, 0.0, 0.0,
+      0.0, 0.0
+    ],
+    "score": 0.3834448773903434
+  },
+  {
+    "today": {
+      "day": "2026-02-09",
+      "mood": 4,
+      "sleep": 3,
+      "stress": 0,
+      "craving": 0,
+      "tags": []
+    },
+    "previous": [
+      {
+        "day": "2026-02-02",
+        "mood": 1,
+        "sleep": 0,
+        "stress": 4,
+        "craving": 2,
+        "tags": ["tired"]
+      },
+      {
+        "day": "2026-02-04",
+        "mood": 3,
+        "sleep": 1,
+        "stress": 1,
+        "craving": 1,
+        "tags": []
+      },
+      {
+        "day": "2026-02-05",
+        "mood": 3,
+        "sleep": 2,
+        "stress": 2,
+        "craving": 1,
+        "tags": []
+      },
+      {
+        "day": "2026-02-07",
+        "mood": 4,
+        "sleep": 3,
+        "stress": 0,
+        "craving": 0,
+        "tags": []
+      },
+      {
+        "day": "2026-02-08",
+        "mood": 3,
+        "sleep": 3,
+        "stress": 1,
+        "craving": 2,
+        "tags": ["alone", "old_routine"]
+      }
+    ],
+    "features": [
+      4.0, 3.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.5, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0,
+      0.0, 0.0
+    ],
+    "score": 0.019419394849455453
+  },
+  {
+    "today": {
+      "day": "2026-01-12",
+      "mood": 2,
+      "sleep": 3,
+      "stress": 4,
+      "craving": 0,
+      "tags": []
+    },
+    "previous": [
+      {
+        "day": "2026-01-06",
+        "mood": 3,
+        "sleep": 3,
+        "stress": 3,
+        "craving": 0,
+        "tags": ["work_stress"]
+      },
+      {
+        "day": "2026-01-07",
+        "mood": 2,
+        "sleep": 2,
+        "stress": 3,
+        "craving": 1,
+        "tags": ["tired"]
+      },
+      {
+        "day": "2026-01-08",
+        "mood": 0,
+        "sleep": 2,
+        "stress": 4,
+        "craving": 1,
+        "tags": ["alone", "work_stress"]
+      },
+      {
+        "day": "2026-01-09",
+        "mood": 3,
+        "sleep": 3,
+        "stress": 4,
+        "craving": 1,
+        "tags": ["conflict"]
+      },
+      {
+        "day": "2026-01-10",
+        "mood": 1,
+        "sleep": 2,
+        "stress": 4,
+        "craving": 3,
+        "tags": ["alone", "payday", "old_routine"]
+      }
+    ],
+    "features": [
+      2.0, 3.0, 4.0, 0.0, 0.0, 1.0, 0.0, 0.0, 2.0, 4.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0,
+      0.0, 0.0
+    ],
+    "score": 0.10564152788434833
+  },
+  {
+    "today": {
+      "day": "2026-01-24",
+      "mood": 4,
+      "sleep": 3,
+      "stress": 2,
+      "craving": 1,
+      "tags": ["bored"]
+    },
+    "previous": [
+      {
+        "day": "2026-01-19",
+        "mood": 4,
+        "sleep": 3,
+        "stress": 1,
+        "craving": 0,
+        "tags": []
+      },
+      {
+        "day": "2026-01-20",
+        "mood": 2,
+        "sleep": 2,
+        "stress": 2,
+        "craving": 2,
+        "tags": []
+      },
+      {
+        "day": "2026-01-21",
+        "mood": 3,
+        "sleep": 3,
+        "stress": 1,
+        "craving": 2,
+        "tags": []
+      },
+      {
+        "day": "2026-01-22",
+        "mood": 4,
+        "sleep": 4,
+        "stress": 1,
+        "craving": 1,
+        "tags": ["risky_place"]
+      },
+      {
+        "day": "2026-01-23",
+        "mood": 0,
+        "sleep": 2,
+        "stress": 3,
+        "craving": 2,
+        "tags": ["pain"]
+      }
+    ],
+    "features": [
+      4.0, 3.0, 2.0, 1.0, 0.0, 0.0, 1.0, 0.0, 1.6666666666666667, 1.6666666666666667, 0.0, 1.0, 0.0,
+      0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0
+    ],
+    "score": 0.04109319503052605
+  },
+  {
+    "today": {
+      "day": "2026-01-28",
+      "mood": 2,
+      "sleep": 3,
+      "stress": 3,
+      "craving": 2,
+      "tags": ["bored", "risky_place"]
+    },
+    "previous": [
+      {
+        "day": "2026-01-22",
+        "mood": 4,
+        "sleep": 4,
+        "stress": 0,
+        "craving": 2,
+        "tags": []
+      },
+      {
+        "day": "2026-01-24",
+        "mood": 2,
+        "sleep": 2,
+        "stress": 1,
+        "craving": 0,
+        "tags": ["old_routine"]
+      },
+      {
+        "day": "2026-01-25",
+        "mood": 1,
+        "sleep": 1,
+        "stress": 3,
+        "craving": 2,
+        "tags": ["conflict", "payday", "celebration"]
+      },
+      {
+        "day": "2026-01-26",
+        "mood": 1,
+        "sleep": 0,
+        "stress": 2,
+        "craving": 3,
+        "tags": ["bored", "old_routine"]
+      },
+      {
+        "day": "2026-01-27",
+        "mood": 1,
+        "sleep": 1,
+        "stress": 2,
+        "craving": 1,
+        "tags": ["tired"]
+      }
+    ],
+    "features": [
+      2.0, 3.0, 3.0, 2.0, 0.0, 1.0, 0.0, 0.0, 2.0, 2.3333333333333335, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0,
+      0.0, 0.0, 0.0, 0.0, 1.0
+    ],
+    "score": 0.2846211684404212
+  },
+  {
+    "today": {
+      "day": "2026-01-20",
+      "mood": 2,
+      "sleep": 4,
+      "stress": 3,
+      "craving": 0,
+      "tags": ["work_stress"]
+    },
+    "previous": [
+      {
+        "day": "2026-01-14",
+        "mood": 2,
+        "sleep": 2,
+        "stress": 4,
+        "craving": 1,
+        "tags": []
+      },
+      {
+        "day": "2026-01-15",
+        "mood": 2,
+        "sleep": 2,
+        "stress": 4,
+        "craving": 0,
+        "tags": ["work_stress"]
+      },
+      {
+        "day": "2026-01-17",
+        "mood": 1,
+        "sleep": 3,
+        "stress": 4,
+        "craving": 2,
+        "tags": []
+      },
+      {
+        "day": "2026-01-18",
+        "mood": 1,
+        "sleep": 3,
+        "stress": 3,
+        "craving": 1,
+        "tags": []
+      },
+      {
+        "day": "2026-01-19",
+        "mood": 2,
+        "sleep": 3,
+        "stress": 2,
+        "craving": 0,
+        "tags": []
+      }
+    ],
+    "features": [
+      2.0, 4.0, 3.0, 0.0, 0.0, 1.0, 0.0, 0.0, 1.0, 3.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0,
+      0.0, 0.0
+    ],
+    "score": 0.09417655987538968
+  },
+  {
+    "today": {
+      "day": "2026-01-06",
+      "mood": 4,
+      "sleep": 3,
+      "stress": 1,
+      "craving": 0,
+      "tags": ["bored"]
+    },
+    "previous": [
+      {
+        "day": "2026-01-05",
+        "mood": 2,
+        "sleep": 2,
+        "stress": 2,
+        "craving": 3,
+        "tags": ["bored", "old_routine"]
+      }
+    ],
+    "features": [
+      4.0, 3.0, 1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 3.0, 2.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0,
+      0.0, 0.0
+    ],
+    "score": 0.017165401912792356
+  },
+  {
+    "today": {
+      "day": "2026-01-29",
+      "mood": 2,
+      "sleep": 2,
+      "stress": 2,
+      "craving": 2,
+      "tags": []
+    },
+    "previous": [
+      {
+        "day": "2026-01-24",
+        "mood": 3,
+        "sleep": 3,
+        "stress": 2,
+        "craving": 2,
+        "tags": []
+      },
+      {
+        "day": "2026-01-25",
+        "mood": 4,
+        "sleep": 3,
+        "stress": 1,
+        "craving": 1,
+        "tags": ["tired"]
+      },
+      {
+        "day": "2026-01-26",
+        "mood": 3,
+        "sleep": 4,
+        "stress": 0,
+        "craving": 0,
+        "tags": ["work_stress", "money_worries"]
+      },
+      {
+        "day": "2026-01-27",
+        "mood": 2,
+        "sleep": 1,
+        "stress": 3,
+        "craving": 1,
+        "tags": ["tired", "work_stress", "money_worries"]
+      },
+      {
+        "day": "2026-01-28",
+        "mood": 2,
+        "sleep": 2,
+        "stress": 3,
+        "craving": 2,
+        "tags": []
+      }
+    ],
+    "features": [
+      2.0, 2.0, 2.0, 2.0, 0.0, 0.0, 0.0, 0.0, 1.0, 2.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0,
+      0.0, 0.0
+    ],
+    "score": 0.020573972189495165
+  },
+  {
+    "today": {
+      "day": "2026-01-16",
+      "mood": 3,
+      "sleep": 3,
+      "stress": 1,
+      "craving": 0,
+      "tags": []
+    },
+    "previous": [
+      {
+        "day": "2026-01-09",
+        "mood": 1,
+        "sleep": 2,
+        "stress": 4,
+        "craving": 2,
+        "tags": ["pain"]
+      },
+      {
+        "day": "2026-01-10",
+        "mood": 2,
+        "sleep": 2,
+        "stress": 1,
+        "craving": 2,
+        "tags": ["pain"]
+      },
+      {
+        "day": "2026-01-12",
+        "mood": 3,
+        "sleep": 2,
+        "stress": 2,
+        "craving": 0,
+        "tags": []
+      },
+      {
+        "day": "2026-01-13",
+        "mood": 3,
+        "sleep": 2,
+        "stress": 2,
+        "craving": 0,
+        "tags": ["bored", "work_stress"]
+      },
+      {
+        "day": "2026-01-15",
+        "mood": 3,
+        "sleep": 2,
+        "stress": 2,
+        "craving": 0,
+        "tags": ["bored"]
+      }
+    ],
+    "features": [
+      3.0, 3.0, 1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 2.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0,
+      0.0, 0.0
+    ],
+    "score": 0.017786885843216395
+  },
+  {
+    "today": {
+      "day": "2026-01-19",
+      "mood": 4,
+      "sleep": 2,
+      "stress": 1,
+      "craving": 1,
+      "tags": []
+    },
+    "previous": [
+      {
+        "day": "2026-01-14",
+        "mood": 3,
+        "sleep": 2,
+        "stress": 0,
+        "craving": 1,
+        "tags": []
+      },
+      {
+        "day": "2026-01-15",
+        "mood": 2,
+        "sleep": 3,
+        "stress": 2,
+        "craving": 3,
+        "tags": []
+      },
+      {
+        "day": "2026-01-16",
+        "mood": 2,
+        "sleep": 2,
+        "stress": 2,
+        "craving": 2,
+        "tags": ["tired"]
+      },
+      {
+        "day": "2026-01-17",
+        "mood": 1,
+        "sleep": 1,
+        "stress": 2,
+        "craving": 3,
+        "tags": ["bored", "tired", "celebration", "old_routine"]
+      },
+      {
+        "day": "2026-01-18",
+        "mood": 3,
+        "sleep": 2,
+        "stress": 1,
+        "craving": 1,
+        "tags": ["old_routine"]
+      }
+    ],
+    "features": [
+      4.0, 2.0, 1.0, 1.0, 0.0, 0.0, 0.0, 0.0, 2.0, 1.6666666666666667, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0,
+      0.0, 0.0, 0.0, 0.0, 0.0
+    ],
+    "score": 0.021978875910947996
+  },
+  {
+    "today": {
+      "day": "2026-01-30",
+      "mood": 3,
+      "sleep": 3,
+      "stress": 3,
+      "craving": 0,
+      "tags": []
+    },
+    "previous": [
+      {
+        "day": "2026-01-25",
+        "mood": 3,
+        "sleep": 2,
+        "stress": 1,
+        "craving": 0,
+        "tags": ["payday"]
+      },
+      {
+        "day": "2026-01-26",
+        "mood": 0,
+        "sleep": 3,
+        "stress": 3,
+        "craving": 1,
+        "tags": ["work_stress", "payday"]
+      },
+      {
+        "day": "2026-01-27",
+        "mood": 3,
+        "sleep": 3,
+        "stress": 3,
+        "craving": 2,
+        "tags": ["bored", "work_stress"]
+      },
+      {
+        "day": "2026-01-28",
+        "mood": 4,
+        "sleep": 3,
+        "stress": 2,
+        "craving": 0,
+        "tags": ["bored", "old_routine"]
+      },
+      {
+        "day": "2026-01-29",
+        "mood": 2,
+        "sleep": 3,
+        "stress": 2,
+        "craving": 0,
+        "tags": ["alone"]
+      }
+    ],
+    "features": [
+      3.0, 3.0, 3.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.6666666666666666, 2.3333333333333335, 0.0, 0.0, 0.0,
+      0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0
+    ],
+    "score": 0.10084710286521986
+  },
+  {
+    "today": {
+      "day": "2026-02-08",
+      "mood": 4,
+      "sleep": 3,
+      "stress": 0,
+      "craving": 1,
+      "tags": ["bored"]
+    },
+    "previous": [
+      {
+        "day": "2026-02-03",
+        "mood": 3,
+        "sleep": 4,
+        "stress": 1,
+        "craving": 2,
+        "tags": ["bored", "money_worries"]
+      },
+      {
+        "day": "2026-02-04",
+        "mood": 3,
+        "sleep": 2,
+        "stress": 2,
+        "craving": 0,
+        "tags": []
+      },
+      {
+        "day": "2026-02-05",
+        "mood": 1,
+        "sleep": 2,
+        "stress": 2,
+        "craving": 1,
+        "tags": ["bored"]
+      },
+      {
+        "day": "2026-02-06",
+        "mood": 4,
+        "sleep": 3,
+        "stress": 1,
+        "craving": 0,
+        "tags": ["alone"]
+      },
+      {
+        "day": "2026-02-07",
+        "mood": 4,
+        "sleep": 4,
+        "stress": 1,
+        "craving": 2,
+        "tags": ["bored", "conflict"]
+      }
+    ],
+    "features": [
+      4.0, 3.0, 0.0, 1.0, 0.0, 0.0, 1.0, 0.0, 1.0, 1.3333333333333333, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0,
+      0.0, 0.0, 0.0, 0.0, 0.0
+    ],
+    "score": 0.042463070111759545
+  },
+  {
+    "today": {
+      "day": "2026-01-30",
+      "mood": 3,
+      "sleep": 2,
+      "stress": 2,
+      "craving": 1,
+      "tags": ["work_stress"]
+    },
+    "previous": [
+      {
+        "day": "2026-01-25",
+        "mood": 4,
+        "sleep": 3,
+        "stress": 1,
+        "craving": 1,
+        "tags": ["tired"]
+      },
+      {
+        "day": "2026-01-26",
+        "mood": 3,
+        "sleep": 4,
+        "stress": 0,
+        "craving": 0,
+        "tags": ["work_stress", "money_worries"]
+      },
+      {
+        "day": "2026-01-27",
+        "mood": 2,
+        "sleep": 1,
+        "stress": 3,
+        "craving": 1,
+        "tags": ["tired", "work_stress", "money_worries"]
+      },
+      {
+        "day": "2026-01-28",
+        "mood": 2,
+        "sleep": 2,
+        "stress": 3,
+        "craving": 2,
+        "tags": []
+      },
+      {
+        "day": "2026-01-29",
+        "mood": 2,
+        "sleep": 2,
+        "stress": 2,
+        "craving": 2,
+        "tags": []
+      }
+    ],
+    "features": [
+      3.0, 2.0, 2.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.6666666666666667, 2.6666666666666665, 0.0, 0.0, 0.0,
+      0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0
+    ],
+    "score": 0.019099216023658484
+  },
+  {
+    "today": {
+      "day": "2026-02-02",
+      "mood": 3,
+      "sleep": 3,
+      "stress": 1,
+      "craving": 0,
+      "tags": ["bored", "money_worries", "payday"]
+    },
+    "previous": [
+      {
+        "day": "2026-01-27",
+        "mood": 3,
+        "sleep": 3,
+        "stress": 2,
+        "craving": 1,
+        "tags": []
+      },
+      {
+        "day": "2026-01-28",
+        "mood": 4,
+        "sleep": 4,
+        "stress": 2,
+        "craving": 1,
+        "tags": ["bored"]
+      },
+      {
+        "day": "2026-01-29",
+        "mood": 2,
+        "sleep": 2,
+        "stress": 1,
+        "craving": 1,
+        "tags": []
+      },
+      {
+        "day": "2026-01-30",
+        "mood": 2,
+        "sleep": 2,
+        "stress": 1,
+        "craving": 0,
+        "tags": []
+      },
+      {
+        "day": "2026-01-31",
+        "mood": 4,
+        "sleep": 3,
+        "stress": 0,
+        "craving": 1,
+        "tags": ["tired", "conflict"]
+      }
+    ],
+    "features": [
+      3.0, 3.0, 1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.5, 0.5, 0.0, 1.0, 0.0, 0.0, 0.0, 1.0, 1.0, 0.0, 0.0,
+      0.0, 0.0
+    ],
+    "score": 0.04324089104822
+  },
+  {
+    "today": {
+      "day": "2026-01-05",
+      "mood": 3,
+      "sleep": 3,
+      "stress": 1,
+      "craving": 2,
+      "tags": ["bored"]
+    },
+    "previous": [],
+    "features": [
+      3.0, 3.0, 1.0, 2.0, 0.0, 0.0, 0.0, 0.0, 2.0, 1.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0,
+      0.0, 0.0
+    ],
+    "score": 0.017907471112678725
+  },
+  {
+    "today": {
+      "day": "2026-01-10",
+      "mood": 4,
+      "sleep": 4,
+      "stress": 0,
+      "craving": 1,
+      "tags": ["alone", "bored"]
+    },
+    "previous": [
+      {
+        "day": "2026-01-05",
+        "mood": 2,
+        "sleep": 2,
+        "stress": 2,
+        "craving": 3,
+        "tags": ["bored", "old_routine"]
+      },
+      {
+        "day": "2026-01-06",
+        "mood": 4,
+        "sleep": 3,
+        "stress": 1,
+        "craving": 0,
+        "tags": ["bored"]
+      },
+      {
+        "day": "2026-01-07",
+        "mood": 4,
+        "sleep": 4,
+        "stress": 1,
+        "craving": 1,
+        "tags": []
+      },
+      {
+        "day": "2026-01-09",
+        "mood": 4,
+        "sleep": 4,
+        "stress": 0,
+        "craving": 1,
+        "tags": ["money_worries"]
+      }
+    ],
+    "features": [
+      4.0, 4.0, 0.0, 1.0, 0.0, 0.0, 1.0, 0.0, 1.0, 0.5, 1.0, 1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0,
+      0.0, 0.0
+    ],
+    "score": 0.03977552606948006
+  },
+  {
+    "today": {
+      "day": "2026-02-04",
+      "mood": 3,
+      "sleep": 1,
+      "stress": 1,
+      "craving": 1,
+      "tags": []
+    },
+    "previous": [
+      {
+        "day": "2026-01-27",
+        "mood": 1,
+        "sleep": 1,
+        "stress": 2,
+        "craving": 1,
+        "tags": ["tired"]
+      },
+      {
+        "day": "2026-01-28",
+        "mood": 2,
+        "sleep": 3,
+        "stress": 3,
+        "craving": 2,
+        "tags": ["bored", "risky_place"]
+      },
+      {
+        "day": "2026-01-29",
+        "mood": 2,
+        "sleep": 2,
+        "stress": 2,
+        "craving": 0,
+        "tags": ["money_worries", "celebration"]
+      },
+      {
+        "day": "2026-01-31",
+        "mood": 2,
+        "sleep": 1,
+        "stress": 2,
+        "craving": 2,
+        "tags": ["bored"]
+      },
+      {
+        "day": "2026-02-02",
+        "mood": 1,
+        "sleep": 0,
+        "stress": 4,
+        "craving": 2,
+        "tags": ["tired"]
+      }
+    ],
+    "features": [
+      3.0, 1.0, 1.0, 1.0, 1.0, 0.0, 0.0, 0.0, 2.0, 4.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0,
+      0.0, 0.0
+    ],
+    "score": 0.1201375575162736
+  },
+  {
+    "today": {
+      "day": "2026-01-23",
+      "mood": 3,
+      "sleep": 3,
+      "stress": 1,
+      "craving": 1,
+      "tags": []
+    },
+    "previous": [
+      {
+        "day": "2026-01-18",
+        "mood": 4,
+        "sleep": 3,
+        "stress": 1,
+        "craving": 1,
+        "tags": []
+      },
+      {
+        "day": "2026-01-19",
+        "mood": 1,
+        "sleep": 1,
+        "stress": 2,
+        "craving": 2,
+        "tags": ["bored", "money_worries"]
+      },
+      {
+        "day": "2026-01-20",
+        "mood": 3,
+        "sleep": 3,
+        "stress": 2,
+        "craving": 0,
+        "tags": ["alone"]
+      },
+      {
+        "day": "2026-01-21",
+        "mood": 2,
+        "sleep": 2,
+        "stress": 4,
+        "craving": 1,
+        "tags": ["work_stress"]
+      },
+      {
+        "day": "2026-01-22",
+        "mood": 3,
+        "sleep": 2,
+        "stress": 1,
+        "craving": 1,
+        "tags": []
+      }
+    ],
+    "features": [
+      3.0, 3.0, 1.0, 1.0, 0.0, 0.0, 0.0, 0.0, 0.6666666666666666, 2.3333333333333335, 0.0, 0.0, 0.0,
+      0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0
+    ],
+    "score": 0.02007097615261679
+  },
+  {
+    "today": {
+      "day": "2026-02-04",
+      "mood": 3,
+      "sleep": 2,
+      "stress": 2,
+      "craving": 0,
+      "tags": []
+    },
+    "previous": [
+      {
+        "day": "2026-01-30",
+        "mood": 4,
+        "sleep": 2,
+        "stress": 1,
+        "craving": 1,
+        "tags": []
+      },
+      {
+        "day": "2026-01-31",
+        "mood": 4,
+        "sleep": 4,
+        "stress": 0,
+        "craving": 1,
+        "tags": ["bored"]
+      },
+      {
+        "day": "2026-02-01",
+        "mood": 4,
+        "sleep": 2,
+        "stress": 0,
+        "craving": 0,
+        "tags": ["alone"]
+      },
+      {
+        "day": "2026-02-02",
+        "mood": 4,
+        "sleep": 4,
+        "stress": 0,
+        "craving": 1,
+        "tags": ["celebration"]
+      },
+      {
+        "day": "2026-02-03",
+        "mood": 3,
+        "sleep": 4,
+        "stress": 1,
+        "craving": 2,
+        "tags": ["bored", "money_worries"]
+      }
+    ],
+    "features": [
+      3.0, 2.0, 2.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.3333333333333333, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0,
+      0.0, 0.0, 0.0, 0.0, 0.0
+    ],
+    "score": 0.017483526400876387
+  },
+  {
+    "today": {
+      "day": "2026-01-09",
+      "mood": 3,
+      "sleep": 3,
+      "stress": 2,
+      "craving": 0,
+      "tags": []
+    },
+    "previous": [
+      {
+        "day": "2026-01-05",
+        "mood": 3,
+        "sleep": 3,
+        "stress": 1,
+        "craving": 2,
+        "tags": ["bored"]
+      },
+      {
+        "day": "2026-01-06",
+        "mood": 3,
+        "sleep": 2,
+        "stress": 3,
+        "craving": 1,
+        "tags": ["conflict", "work_stress", "pain"]
+      },
+      {
+        "day": "2026-01-07",
+        "mood": 1,
+        "sleep": 1,
+        "stress": 3,
+        "craving": 2,
+        "tags": ["alone", "work_stress"]
+      },
+      {
+        "day": "2026-01-08",
+        "mood": 2,
+        "sleep": 4,
+        "stress": 2,
+        "craving": 2,
+        "tags": ["conflict"]
+      }
+    ],
+    "features": [
+      3.0, 3.0, 2.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.6666666666666667, 2.6666666666666665, 0.0, 0.0, 0.0,
+      0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0
+    ],
+    "score": 0.019114326838480595
+  },
+  {
+    "today": {
+      "day": "2026-01-18",
+      "mood": 4,
+      "sleep": 4,
+      "stress": 0,
+      "craving": 0,
+      "tags": ["alone"]
+    },
+    "previous": [
+      {
+        "day": "2026-01-12",
+        "mood": 4,
+        "sleep": 4,
+        "stress": 1,
+        "craving": 1,
+        "tags": []
+      },
+      {
+        "day": "2026-01-13",
+        "mood": 4,
+        "sleep": 4,
+        "stress": 0,
+        "craving": 0,
+        "tags": ["bored", "conflict", "risky_place"]
+      },
+      {
+        "day": "2026-01-14",
+        "mood": 3,
+        "sleep": 4,
+        "stress": 0,
+        "craving": 1,
+        "tags": ["risky_place"]
+      },
+      {
+        "day": "2026-01-15",
+        "mood": 4,
+        "sleep": 3,
+        "stress": 0,
+        "craving": 0,
+        "tags": []
+      },
+      {
+        "day": "2026-01-17",
+        "mood": 3,
+        "sleep": 3,
+        "stress": 1,
+        "craving": 1,
+        "tags": ["old_routine"]
+      }
+    ],
+    "features": [
+      4.0, 4.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.5, 0.5, 1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0,
+      0.0, 0.0
+    ],
+    "score": 0.045190036050558845
+  },
+  {
+    "today": {
+      "day": "2026-01-17",
+      "mood": 2,
+      "sleep": 3,
+      "stress": 3,
+      "craving": 2,
+      "tags": ["bored", "money_worries"]
+    },
+    "previous": [
+      {
+        "day": "2026-01-12",
+        "mood": 2,
+        "sleep": 3,
+        "stress": 4,
+        "craving": 0,
+        "tags": []
+      },
+      {
+        "day": "2026-01-13",
+        "mood": 2,
+        "sleep": 2,
+        "stress": 4,
+        "craving": 2,
+        "tags": ["bored", "money_worries"]
+      },
+      {
+        "day": "2026-01-14",
+        "mood": 2,
+        "sleep": 3,
+        "stress": 4,
+        "craving": 1,
+        "tags": ["work_stress", "pain"]
+      },
+      {
+        "day": "2026-01-15",
+        "mood": 2,
+        "sleep": 3,
+        "stress": 2,
+        "craving": 1,
+        "tags": []
+      },
+      {
+        "day": "2026-01-16",
+        "mood": 2,
+        "sleep": 4,
+        "stress": 4,
+        "craving": 1,
+        "tags": []
+      }
+    ],
+    "features": [
+      2.0, 3.0, 3.0, 2.0, 0.0, 1.0, 1.0, 0.0, 1.0, 3.3333333333333335, 0.0, 1.0, 0.0, 0.0, 0.0, 1.0,
+      0.0, 0.0, 0.0, 0.0, 0.0
+    ],
+    "score": 0.2078802308814656
+  },
+  {
+    "today": {
+      "day": "2026-01-08",
+      "mood": 2,
+      "sleep": 1,
+      "stress": 3,
+      "craving": 3,
+      "tags": ["bored", "tired"]
+    },
+    "previous": [
+      {
+        "day": "2026-01-05",
+        "mood": 1,
+        "sleep": 1,
+        "stress": 3,
+        "craving": 2,
+        "tags": ["conflict", "work_stress"]
+      },
+      {
+        "day": "2026-01-06",
+        "mood": 1,
+        "sleep": 2,
+        "stress": 2,
+        "craving": 0,
+        "tags": ["old_routine"]
+      }
+    ],
+    "features": [
+      2.0, 1.0, 3.0, 3.0, 1.0, 1.0, 0.0, 0.0, 1.0, 2.5, 0.0, 1.0, 1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0,
+      0.0, 0.0
+    ],
+    "score": 0.39772453146680337
+  },
+  {
+    "today": {
+      "day": "2026-02-02",
+      "mood": 4,
+      "sleep": 4,
+      "stress": 0,
+      "craving": 1,
+      "tags": ["celebration"]
+    },
+    "previous": [
+      {
+        "day": "2026-01-28",
+        "mood": 3,
+        "sleep": 3,
+        "stress": 3,
+        "craving": 3,
+        "tags": ["work_stress"]
+      },
+      {
+        "day": "2026-01-29",
+        "mood": 4,
+        "sleep": 3,
+        "stress": 1,
+        "craving": 0,
+        "tags": []
+      },
+      {
+        "day": "2026-01-30",
+        "mood": 4,
+        "sleep": 2,
+        "stress": 1,
+        "craving": 1,
+        "tags": []
+      },
+      {
+        "day": "2026-01-31",
+        "mood": 4,
+        "sleep": 4,
+        "stress": 0,
+        "craving": 1,
+        "tags": ["bored"]
+      },
+      {
+        "day": "2026-02-01",
+        "mood": 4,
+        "sleep": 2,
+        "stress": 0,
+        "craving": 0,
+        "tags": ["alone"]
+      }
+    ],
+    "features": [
+      4.0, 4.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 0.6666666666666666, 0.3333333333333333, 0.0, 0.0, 0.0,
+      0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0
+    ],
+    "score": 0.021096959105739374
+  },
+  {
+    "today": {
+      "day": "2026-01-15",
+      "mood": 2,
+      "sleep": 3,
+      "stress": 4,
+      "craving": 1,
+      "tags": []
+    },
+    "previous": [
+      {
+        "day": "2026-01-08",
+        "mood": 2,
+        "sleep": 3,
+        "stress": 3,
+        "craving": 1,
+        "tags": ["work_stress"]
+      },
+      {
+        "day": "2026-01-09",
+        "mood": 3,
+        "sleep": 3,
+        "stress": 3,
+        "craving": 1,
+        "tags": ["conflict", "work_stress"]
+      },
+      {
+        "day": "2026-01-11",
+        "mood": 2,
+        "sleep": 3,
+        "stress": 2,
+        "craving": 2,
+        "tags": ["payday", "celebration"]
+      },
+      {
+        "day": "2026-01-12",
+        "mood": 2,
+        "sleep": 2,
+        "stress": 4,
+        "craving": 2,
+        "tags": ["pain"]
+      },
+      {
+        "day": "2026-01-13",
+        "mood": 2,
+        "sleep": 3,
+        "stress": 3,
+        "craving": 2,
+        "tags": ["alone", "money_worries", "celebration", "risky_place"]
+      }
+    ],
+    "features": [
+      2.0, 3.0, 4.0, 1.0, 0.0, 1.0, 0.0, 0.0, 2.0, 3.5, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0,
+      0.0, 0.0
+    ],
+    "score": 0.11183466836712261
+  }
+]

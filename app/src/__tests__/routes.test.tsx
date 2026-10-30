@@ -28,6 +28,8 @@ const SESSION_FOR_ROUTE: Record<string, Partial<Session>> = {
   vault: { status: 'unlocked' },
   progress: { status: 'unlocked' },
   checkin: { status: 'unlocked' },
+  triggers: { status: 'unlocked' },
+  'coping-plan': { status: 'unlocked' },
 };
 
 describe('every screen', () => {

@@ -1,13 +1,13 @@
 # ml/
 
-Synthetic data generator (M4) and, from M5, the risk model. **Synthetic data
+Synthetic data generator (M4) and the risk model (M5). **Synthetic data
 only — never real user data.** Nothing here describes real people; the numbers
 are made-up assumptions chosen so a simple model has something to learn.
 
 ## Generate
 
 ```bash
-make ml                      # = uv run python generate.py --users 200 --days 180 --seed 42
+make ml                      # generate → train → evaluate → export (see below)
 uv run python generate.py --users 20 --days 30 --seed 7 --out /tmp/demo
 ```
 
@@ -51,17 +51,40 @@ days versus about **2%** on other days; the tests check it is more than 4×.
 - **Tags** follow the day: `tired` is likely after poor sleep, `work_stress` on
   stressful weekdays, `payday` on payday, `celebration`/`bored`/`old_routine`
   more at weekends. Fixed chances are in `generate.py`.
-- **Craving (check-in)** rises with the same drivers as risk (0.5 + lift, sd 0.7),
-  so strong cravings come before more slips.
+- **Craving (check-in)** is a noisy, partial view of the day's real pressure:
+  0.5 + 0.6 × lift, noise sd 1.0. Strong reported cravings still come before
+  more slips, but sleep, stress and weekends carry their own signal (in the
+  first version the report copied the risk almost exactly, so the model
+  learned nothing else).
 - **Mood** goes up with sleep, down with stress and craving.
 - **Missing data is not random:** on a slip day people are 25% less likely to
   check in. A model must not treat "no check-in" as "a good day".
-- **Craving moments:** Poisson with rate 0.15 + 0.6 × craving level, mostly in
-  the evening (mean 19:00); 35% use SOS; 85% pass with SOS, 70% without.
+- **Craving moments:** Poisson with rate 0.15 + 0.45 × (0.5 + lift), intensity
+  0.5 + lift (noise sd 0.9), mostly in the evening (mean 19:00); 35% use SOS;
+  85% pass with SOS, 70% without.
 - Days run from 2026-01-05 (a Monday) unless `--start` is given.
+
+## Risk model (M5)
+
+`train.py` reads `ml/data/`, builds one row per check-in with `features.py`
+(the app's `featureBuilder.ts` computes the same, checked by a parity test),
+and predicts a **hard day**: a slip that day, or a strong craving (intensity
+≥ 3) from 17:00 on.
+
+- **Split by day:** days 0–119 train, 120–149 validation (threshold = best F1),
+  150–179 test. No row from a later day is ever used to predict an earlier one.
+- **Models:** logistic regression (shipped, explainable) vs a small gradient-boosted
+  model, a base-rate baseline and a simple rule (strong craving, or poor sleep with
+  high stress).
+- **Results:** `ml/report.md` (PR-AUC, Brier, precision, recall, calibration table,
+  strongest features, honesty note). The tests require logistic regression to
+  beat both baselines on PR-AUC.
+- **Export:** `app/src/ml/model.json` (version, features, scaler, coefficients,
+  intercept, threshold) and `fixtures.json` (synthetic histories with expected
+  features and scores; app and Python must agree within 1e-6).
 
 ## Tests
 
 ```bash
-cd ml && uv run pytest -q     # shape, ranges, determinism, the pattern is measurable
+cd ml && uv run pytest -q     # generator, features, split, baselines, export
 ```

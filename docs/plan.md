@@ -196,7 +196,7 @@ fetch a push token only after the user opts in, and delete it on leave/delete-al
 
 ---
 
-## M5 — Trigger map + early warning · TODO
+## M5 — Trigger map + early warning · DONE
 
 **Goal:** an explainable on-device risk model, a trigger-map screen, and neutral nudges.
 
@@ -219,6 +219,32 @@ fetch a push token only after the user opts in, and delete it on leave/delete-al
 - **Tests pass:** `ml/tests/test_features.py`, `test_train.py`, `test_export.py`;
   `predict.parity.test.ts`, `explain.test.ts`, `patterns.test.ts`,
   `nudgeScheduler.test.ts`, `notificationText.test.ts`. The safety-reviewer reports no Critical or High findings.
+
+**Result (M5):** 800 app tests, 3 server tests and 21 ml tests pass; ESLint, tsc,
+ruff and mypy clean; Android and web bundles build. `make ml` now generates,
+trains, evaluates and exports. Test-day PR-AUC: logistic regression 0.53 vs
+gradient boosting 0.53, simple rule 0.28, base rate 0.15 (`ml/report.md`, with the
+honesty note). The synthetic check-in craving was made a noisy view of the day's
+real pressure, so sleep, stress, weekends and tags carry their own signal.
+App: `/triggers` "Your patterns" (plain sentences about the user's own past
+check-ins after 14 of them, bar charts read out as sentences, hardest time from
+SOS moments, demo label), a harder-day card on home and patterns (up to 3
+reasons, a "rough guess" caveat, "Open my plan" and "Talk to someone"),
+`/coping-plan` (early signs, what helps, who to contact; crisis words open help;
+reach-out actions), and an opt-in heads-up (≤ 1 a day, an hour before the
+user's usual hard time, never 22:00–08:00, neutral text, private channel).
+Python and app scores agree within 1e-6 on 40 fixtures. The "pain" tag is never
+given as a reason. Review fixes: wording describes the past ("In your
+check-ins…") rather than predicting, a fuller honesty note above the toggle,
+Tamil "forecast" word replaced, saved crisis words no longer re-open help on
+every edit, delete-all removes both channels even if a step fails, a shown
+heads-up is dismissed when turned off, the plan shows an error if saving fails.
+Needs the new phone build from M4 (no new native modules in M5).
+Carry-overs: **M7** add "days since last slip" to the features (both sides +
+parity fixtures); **M10** native-speaker review of the new si/ta text; consider
+a marker file so `model.json` can prove its data was synthetic.
+
+---
 
 ## M6 — Support circle · TODO
 

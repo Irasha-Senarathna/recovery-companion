@@ -2,15 +2,24 @@ import type { ReactNode } from 'react';
 import { StyleSheet, View, type ViewStyle } from 'react-native';
 import { RADIUS, useTheme } from '../theme';
 
-type Props = { children: ReactNode; tone?: 'surface' | 'soft' | 'accent'; style?: ViewStyle };
+type Props = {
+  children: ReactNode;
+  tone?: 'surface' | 'soft' | 'accent';
+  style?: ViewStyle;
+  testID?: string;
+};
 
 /** A soft, rounded panel that floats gently on the gradient. */
-export function Card({ children, tone = 'surface', style }: Props) {
+export function Card({ children, tone = 'surface', style, testID }: Props) {
   const theme = useTheme();
   const backgroundColor = { surface: theme.surface, soft: theme.surfaceSoft, accent: theme.accent }[
     tone
   ];
-  return <View style={[styles.card, { backgroundColor }, style]}>{children}</View>;
+  return (
+    <View testID={testID} style={[styles.card, { backgroundColor }, style]}>
+      {children}
+    </View>
+  );
 }
 
 const styles = StyleSheet.create({

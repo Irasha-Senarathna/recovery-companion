@@ -6,6 +6,8 @@ import { ActionButton } from '../components/ActionButton';
 import { CalmScene } from '../components/illustrations/CalmScene';
 import { ScreenLayout } from '../components/ScreenLayout';
 import { getCheckIn, localDay } from '../features/checkin/checkinRepo';
+import { assessToday, type Today } from '../features/triggers/earlyWarning';
+import { HarderDayCard } from '../features/triggers/HarderDayCard';
 import { useSession } from '../features/session/SessionProvider';
 import { SosButton } from '../features/sos/SosButton';
 import { useTheme } from '../theme';
@@ -16,12 +18,16 @@ export default function HomeScreen() {
   const theme = useTheme();
   const { settings, db } = useSession();
   const [doneToday, setDoneToday] = useState(false);
+  const [today, setToday] = useState<Today | null>(null);
 
   // Re-checked whenever home comes back into view (e.g. after saving a check-in).
   useFocusEffect(
     useCallback(() => {
       let active = true;
-      if (db) getCheckIn(db, localDay()).then((today) => active && setDoneToday(!!today));
+      if (db) {
+        getCheckIn(db, localDay()).then((saved) => active && setDoneToday(!!saved));
+        assessToday(db).then((assessed) => active && setToday(assessed));
+      }
       return () => {
         active = false;
       };
@@ -35,6 +41,7 @@ export default function HomeScreen() {
     >
       <Text style={[styles.subtitle, { color: theme.textMuted }]}>{t('home.subtitle')}</Text>
       <SosButton onPress={() => router.push('/sos')} />
+      {today?.harder ? <HarderDayCard testID="home-harder-day" reasons={today.reasons} /> : null}
       <View style={styles.grid}>
         <ActionButton
           testID="open-checkin"
@@ -47,6 +54,12 @@ export default function HomeScreen() {
             {t('home.checkinDone')}
           </Text>
         ) : null}
+        <ActionButton
+          testID="open-triggers"
+          tone="soft"
+          label={t('home.triggers')}
+          onPress={() => router.push('/triggers')}
+        />
         <ActionButton
           testID="open-vault"
           tone="soft"

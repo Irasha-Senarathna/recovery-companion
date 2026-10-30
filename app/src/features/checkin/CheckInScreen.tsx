@@ -12,6 +12,7 @@ import { StepScale } from '../../components/StepScale';
 import type { Database } from '../../storage/types';
 import { useTheme } from '../../theme';
 import { useSession } from '../session/SessionProvider';
+import { refreshNudge } from '../triggers/earlyWarning';
 import { getCheckIn, localDay, saveCheckIn, type Levels } from './checkinRepo';
 import { LEVELS, MEASURES, TAGS, type Tag } from './tags';
 
@@ -35,6 +36,7 @@ export function CheckInScreen() {
 
 function CheckInForm({ db }: { db: Database }) {
   const { t } = useTranslation();
+  const { settings, updateSettings } = useSession();
   const theme = useTheme();
   const [levels, setLevels] = useState<Partial<Levels>>({});
   const [tags, setTags] = useState<Tag[]>([]);
@@ -67,6 +69,8 @@ function CheckInForm({ db }: { db: Database }) {
     try {
       await saveCheckIn(db, { ...(levels as Levels), tags });
       Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success).catch(() => {});
+      // A missed heads-up must never block saving.
+      refreshNudge({ db, settings, updateSettings, t }).catch(() => {});
       setSaved(levels as Levels);
     } catch {
       setError(true);

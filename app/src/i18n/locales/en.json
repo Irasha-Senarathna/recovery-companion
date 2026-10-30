@@ -41,7 +41,8 @@
     "progress": "Your progress",
     "checkin": "Daily check-in",
     "checkinChange": "Change today's check-in",
-    "checkinDone": "Today's check-in is saved."
+    "checkinDone": "Today's check-in is saved.",
+    "triggers": "Your patterns"
   },
   "hide": {
     "button": "Hide",
@@ -320,7 +321,10 @@
   "notifications": {
     "reminderTitle": "A quiet moment",
     "reminderBody": "How are you today? Your daily note is ready when you are.",
-    "channelName": "Daily reminder"
+    "channelName": "Daily reminder",
+    "nudgeTitle": "A gentle note",
+    "nudgeBody": "Today might be a busy one. Your plan is there if you want it.",
+    "nudgeChannelName": "Gentle notes"
   },
   "dev": {
     "title": "Developer tools",
@@ -329,5 +333,82 @@
     "clear": "Clear demo data",
     "loaded": "Added {{checkIns}} check-ins and {{sessions}} SOS sessions.",
     "cleared": "Demo data cleared."
+  },
+  "triggers": {
+    "title": "Your patterns",
+    "harderToday": "Today might feel harder than usual. That's okay. It can help to keep your plan close by.",
+    "reasonsToday": "From today's check-in: {{reasons}}. Things like these can make a day feel heavier.",
+    "openPlan": "Open my plan",
+    "reasons": {
+      "poor_sleep": "short or poor sleep",
+      "high_stress": "high stress",
+      "weekend": "the weekend",
+      "low_mood": "a low mood",
+      "strong_craving": "the cravings you noted today",
+      "recent_cravings": "cravings over the last few days",
+      "recent_stress": "stress over the last few days",
+      "tag_alone": "being alone a lot",
+      "tag_bored": "boredom",
+      "tag_tired": "tiredness",
+      "tag_conflict": "an argument or conflict",
+      "tag_work_stress": "work or study pressure",
+      "tag_money_worries": "money worries",
+      "tag_payday": "payday",
+      "tag_celebration": "a party or celebration",
+      "tag_old_routine": "people from your old routine",
+      "tag_risky_place": "being near a place that's hard for you"
+    },
+    "notReady": "{{count}} of {{needed}} check-ins so far",
+    "notReadyInfo": "Patterns show up once there are enough check-ins to mean something. Keep going at your own pace.",
+    "patternsTitle": "What your check-ins show",
+    "hardestTime": {
+      "morning": "Most of your SOS moments were in the morning.",
+      "afternoon": "Most of your SOS moments were in the afternoon.",
+      "evening": "Most of your SOS moments were in the evening.",
+      "night": "Most of your SOS moments were at night."
+    },
+    "noPatterns": "Nothing clear stands out yet. That's useful to know too.",
+    "patternSentence": "In your check-ins, cravings were stronger on average {{condition}}.",
+    "conditions": {
+      "poor_sleep": "after poor sleep",
+      "high_stress": "on stressful days",
+      "low_mood": "on low days",
+      "weekend": "at weekends",
+      "tag_alone": "on days you're alone a lot",
+      "tag_bored": "on bored days",
+      "tag_tired": "on tired days",
+      "tag_conflict": "after an argument or conflict",
+      "tag_work_stress": "with work or study pressure",
+      "tag_money_worries": "with money worries",
+      "tag_payday": "around payday",
+      "tag_celebration": "around parties or celebrations",
+      "tag_old_routine": "after seeing people from your old routine",
+      "tag_risky_place": "near places that are hard for you"
+    },
+    "chartLabel": "Average craving {{condition}}: {{with}} out of 4. Other days: {{without}} out of 4.",
+    "withLabel": "These days",
+    "withoutLabel": "Other days",
+    "usesDemo": "Includes demo data (development build).",
+    "nudges": "Gentle heads-up on harder days",
+    "nudgesInfo": "At most one a day, before your usual harder time, never between 22:00 and 08:00. The note is worded neutrally, but someone who notices it may guess today is a harder day.",
+    "honesty": "These patterns come only from your own check-ins on this phone. They show what tended to go together, not what causes what. The heads-up is a rough guess from a simple model built on made-up data. It can be wrong both ways: a hard day can come without a heads-up. If today feels hard, trust that and use your plan or the help button. This is not medical advice.",
+    "cardNote": "A rough guess from a simple model. You know your day best.",
+    "talk": "Talk to someone",
+    "listSeparator": ", "
+  },
+  "plan": {
+    "title": "My plan",
+    "intro": "A few words for harder moments. Only you can see this. It stays on this phone.",
+    "signs": "My early signs",
+    "signsHint": "What do you notice when things start getting harder?",
+    "helps": "What helps me",
+    "helpsHint": "Things that have helped before, even small ones.",
+    "people": "Who I can contact",
+    "peopleHint": "People or services you can reach out to.",
+    "save": "Save my plan",
+    "saved": "Saved.",
+    "reachOut": "Reach out now",
+    "saveError": "That didn't save. Please try again.",
+    "urgentNote": "If anything you write here feels urgent, help is one tap away."
   }
 }

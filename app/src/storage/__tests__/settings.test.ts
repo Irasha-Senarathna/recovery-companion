@@ -54,6 +54,6 @@ describe('migrate', () => {
   it('is safe to run twice', async () => {
     const db = await freshDb();
     await migrate(db);
-    expect(await db.getFirst('PRAGMA user_version')).toEqual({ user_version: 3 });
+    expect(await db.getFirst('PRAGMA user_version')).toEqual({ user_version: 4 });
   });
 });

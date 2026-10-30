@@ -36,6 +36,14 @@ export const MIGRATIONS: readonly string[] = [
      demo       INTEGER NOT NULL DEFAULT 0
    );
    ALTER TABLE sos_sessions ADD COLUMN demo INTEGER NOT NULL DEFAULT 0;`,
+  // M5: the user's coping plan (a single row).
+  `CREATE TABLE coping_plan (
+     id         INTEGER PRIMARY KEY CHECK (id = 1),
+     signs      TEXT NOT NULL DEFAULT '',
+     helps      TEXT NOT NULL DEFAULT '',
+     people     TEXT NOT NULL DEFAULT '',
+     updated_at INTEGER NOT NULL
+   );`,
 ];
 
 /** Brings the schema up to date, tracking the version in PRAGMA user_version. */

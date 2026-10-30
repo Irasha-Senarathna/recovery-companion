@@ -31,6 +31,10 @@ AFTER_SLIP = 0.6  # the 3 days after a slip
 AFTER_SLIP_DAYS = 3
 TAG_RISK = {"conflict": 0.5, "old_routine": 0.8, "risky_place": 0.8}
 
+# The check-in craving reflects only part of the day's real pressure, with noise.
+REPORTED_SHARE = 0.6
+REPORT_NOISE = 1.0
+
 # People check in less on hard days (data missing not at random).
 SKIP_ON_SLIP_DAY = 0.25
 
@@ -120,7 +124,8 @@ def _user_days(
             + AFTER_SLIP * (days_since_slip <= AFTER_SLIP_DAYS)
             + sum(TAG_RISK.get(tag, 0) for tag in tags)
         )
-        craving = _level(0.5 + lift + rng.gauss(0, 0.7))
+        # What people report is a noisy, partial view of how hard the day really is.
+        craving = _level(0.5 + REPORTED_SHARE * lift + rng.gauss(0, REPORT_NOISE))
         mood = _level(
             2.6 + 0.45 * (sleep - 2) - 0.45 * (stress - 2) - 0.3 * craving + rng.gauss(0, 0.7)
         )
@@ -129,14 +134,14 @@ def _user_days(
         if rng.random() < adherence * (1 - SKIP_ON_SLIP_DAY * slipped):
             checkins.append(CheckIn(user.user_id, day, mood, sleep, stress, craving, tags))
 
-        for _ in range(_poisson(rng, 0.15 + 0.6 * craving)):
+        for _ in range(_poisson(rng, 0.15 + 0.45 * (0.5 + lift))):
             used_sos = rng.random() < 0.35
             cravings.append(
                 Craving(
                     user_id=user.user_id,
                     day=day,
                     hour=min(23, max(0, round(rng.gauss(19, 3.5)))),
-                    intensity=max(SCALE_MIN + 1, _level(craving + rng.gauss(0, 0.8))),
+                    intensity=max(SCALE_MIN + 1, _level(0.5 + lift + rng.gauss(0, 0.9))),
                     used_sos=used_sos,
                     passed=rng.random() < (0.85 if used_sos else 0.7),
                 )

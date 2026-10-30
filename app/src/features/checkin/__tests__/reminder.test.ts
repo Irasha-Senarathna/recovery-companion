@@ -68,5 +68,12 @@ describe('syncReminder', () => {
     expect(mocked.cancelAllScheduledNotificationsAsync).toHaveBeenCalled();
     expect(mocked.dismissAllNotificationsAsync).toHaveBeenCalled();
     expect(mocked.deleteNotificationChannelAsync).toHaveBeenCalledWith('reminders');
+    expect(mocked.deleteNotificationChannelAsync).toHaveBeenCalledWith('nudges');
+  });
+
+  it('delete-all still removes both channels when an earlier step fails', async () => {
+    mocked.cancelAllScheduledNotificationsAsync.mockRejectedValueOnce(new Error('x'));
+    await expect(cancelAllScheduledNotifications()).rejects.toThrow();
+    expect(mocked.deleteNotificationChannelAsync).toHaveBeenCalledWith('nudges');
   });
 });

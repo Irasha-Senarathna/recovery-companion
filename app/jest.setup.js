@@ -82,12 +82,13 @@ jest.mock('expo-file-system', () => ({
 jest.mock('expo-notifications', () => ({
   AndroidImportance: { DEFAULT: 5 },
   AndroidNotificationVisibility: { PRIVATE: 2 },
-  SchedulableTriggerInputTypes: { DAILY: 'daily' },
+  SchedulableTriggerInputTypes: { DAILY: 'daily', DATE: 'date' },
   setNotificationChannelAsync: jest.fn(async () => null),
   scheduleNotificationAsync: jest.fn(async () => 'daily-checkin'),
   cancelScheduledNotificationAsync: jest.fn(async () => {}),
   cancelAllScheduledNotificationsAsync: jest.fn(async () => {}),
   dismissAllNotificationsAsync: jest.fn(async () => {}),
+  dismissNotificationAsync: jest.fn(async () => {}),
   deleteNotificationChannelAsync: jest.fn(async () => {}),
   requestPermissionsAsync: jest.fn(async () => ({ granted: true })),
 }));

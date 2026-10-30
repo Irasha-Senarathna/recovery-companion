@@ -46,8 +46,8 @@ test-ml:
 lint-ml:
 	cd ml && uv run ruff check . && uv run ruff format --check . && uv run mypy
 
-ml:            ## synthetic data (M4); the risk model arrives in milestone 5
-	cd ml && uv run python generate.py --users 200 --days 180 --seed 42
+ml:            ## synthetic data, then train + evaluate + export the risk model
+	cd ml && uv run python generate.py --users 200 --days 180 --seed 42 && uv run python train.py
 
 safety-eval:
 	@echo "Not built yet: the AI coach safety eval arrives in milestone 9."

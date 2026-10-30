@@ -43,12 +43,13 @@ for diagrams.
 | Microphone and photo-library access | Craving SOS | — (OS permission, no stored data) | The Android system photo picker sees which photo is chosen | Until revoked in OS settings | OS settings |
 | Slips + gentle-question answers | Slips | Very high | No | Until deleted | Per item / delete-all |
 | Goals, money saved, progress | Goals | Medium | No | Until deleted | Delete-all |
-| Coping plan | Early warning | High | No | Until deleted | Delete-all |
-| Risk scores, trigger patterns | Trigger map | High | No | Recomputed; only the latest 30 days kept | Delete-all |
+| Coping plan: early signs, what helps, who to contact (free text, ≤ 1000 chars each, crisis words open help) | Early warning | High (may name people) | No | Until changed | Delete-all |
+| Risk score, reasons, trigger patterns | Trigger map | High | No. Computed on the phone from the user's own check-ins | **Not stored**: recomputed when a screen opens | Nothing to delete |
+| Heads-up settings: on/off, time of today's heads-up | Early warning | Medium (the time hints at a harder day) | No | Until changed | Delete-all |
 | Supporter local labels (e.g. "Sister") | Support circle | Medium | **No.** The label exists only on the phone that set it | Until removed | Revoke / delete-all |
 | Coach chat history | AI coach | Very high | Current turns are sent to the coach service when enabled | **Not stored by default.** Optional on-device history | Clear chat / delete-all |
 | Daily check-in reminder: on/off and time (settings); one scheduled local notification `daily-checkin` with fixed neutral text | Check-in | Medium (lock screen) | No: scheduled by the phone itself, no push service | Until turned off | Settings toggle / delete-all cancels it |
-| Scheduled local notifications | Early warning | Medium (lock screen) | No | Until fired/cancelled | Delete-all cancels them |
+| Scheduled heads-up `early-warning` (one-time, ≤ 1 a day, never 22:00–08:00, neutral text) | Early warning | Medium: its arrival itself hints at a harder day (said in the toggle's note). Android hides the text on a secure lock screen; iOS shows it unless the user picks "Show Previews: When Unlocked" | No: scheduled by the phone itself | Until fired, cancelled or no longer a harder day | Toggle off / delete-all cancels it and removes its channel |
 
 ### On the support-circle server (Postgres, laptop, only if circle is enabled)
 
@@ -153,6 +154,9 @@ whom) · A4 coach conversations · A5 the integrity of the help-resources conten
 | Check-ins saved in the encrypted DB; one per day; invalid levels and unknown tags refused | 4 |
 | Reminder text bans drug/craving/recovery terms in en/si/ta; channel lock-screen visibility is private | 4 |
 | Demo data is marked and clearing never removes the user's own rows | 4 |
+| Model parity (Python vs app within 1e-6); model trained on synthetic data only | 5 |
+| Heads-up: off by default, ≤ 1 a day, quiet hours, neutral text in en/si/ta | 5 |
+| Coping plan saved in the encrypted DB; crisis words in it open help | 5 |
 | Notification strings contain no banned terms, in all 3 languages | 4, 5 |
 | Server schema matches the column allow-list | 6 |
 | Signals older than 7 days are purged | 6 |
