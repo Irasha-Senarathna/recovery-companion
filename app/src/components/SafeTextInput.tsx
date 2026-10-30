@@ -2,7 +2,7 @@ import { useRouter } from 'expo-router';
 import { useRef } from 'react';
 import { StyleSheet, Text, TextInput, View, type TextInputProps } from 'react-native';
 import { detectCrisis } from '../safety/crisisDetector';
-import { MIN_TAP, useTheme } from '../theme';
+import { MIN_TAP, RADIUS, useTheme } from '../theme';
 
 type Props = Omit<TextInputProps, 'onChangeText' | 'value' | 'style'> & {
   label: string;
@@ -65,10 +65,10 @@ const styles = StyleSheet.create({
   field: { gap: 6 },
   label: { fontSize: 17, fontWeight: '600' },
   input: {
-    minHeight: MIN_TAP,
-    borderWidth: 2,
-    borderRadius: 12,
-    paddingHorizontal: 12,
+    minHeight: MIN_TAP + 8,
+    borderWidth: 1.5,
+    borderRadius: RADIUS.button,
+    paddingHorizontal: 16,
     fontSize: 18,
   },
   hint: { fontSize: 15, lineHeight: 22 },

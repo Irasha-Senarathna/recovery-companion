@@ -1,5 +1,5 @@
 import initSqlJs from 'sql.js/dist/sql-asm.js';
-import type { Database, SqlValue } from './types';
+import type { Database, RunResult, SqlValue } from './types';
 
 type SqlJs = Awaited<ReturnType<typeof initSqlJs>>;
 let sqlJs: Promise<SqlJs> | null = null;
@@ -29,8 +29,10 @@ export async function createMemoryDatabase(): Promise<Database> {
     exec: async (sql) => {
       db.exec(sql);
     },
-    run: async (sql, params = []) => {
+    run: async (sql, params = []): Promise<RunResult> => {
       db.run(sql, params);
+      const [row] = all<{ id: number }>('SELECT last_insert_rowid() AS id');
+      return { lastInsertRowId: row?.id ?? 0 };
     },
     getFirst: async <T>(sql: string, params?: SqlValue[]) => all<T>(sql, params)[0] ?? null,
     getAll: async <T>(sql: string, params?: SqlValue[]) => all<T>(sql, params),

@@ -11,6 +11,7 @@ import {
 import i18n, { deviceLanguage, type Language } from '../../i18n';
 import { canUseBiometrics, unlockWithBiometricToken } from '../../platform/biometrics';
 import { secureStore } from '../../platform/secureStore';
+import { stopVoice } from '../../platform/voice';
 import { deleteAllData, type DeleteAllResult } from '../../storage/deleteAll';
 import { DEFAULT_SETTINGS, saveSettings, type AppSettings } from '../../storage/settings';
 import type { Database } from '../../storage/types';
@@ -27,6 +28,8 @@ export type Session = {
   hidden: boolean;
   settings: AppSettings;
   biometricsAvailable: boolean;
+  /** The encrypted database; null until opened. Screens behind the lock only. */
+  db: Database | null;
   unlockWithPin: (pin: string) => Promise<PinCheck>;
   unlockWithBiometrics: (prompt: string) => Promise<boolean>;
   lock: () => void;
@@ -45,15 +48,23 @@ export function useSession(): Session {
   return session;
 }
 
+function lockedView(settings: AppSettings): AppSettings {
+  const { language, onboarded, biometricEnabled, shakeToHide } = settings;
+  return { ...DEFAULT_SETTINGS, language, onboarded, biometricEnabled, shakeToHide };
+}
+
 export function SessionProvider({ children }: { children: ReactNode }) {
   const db = useRef<Database | null>(null);
   const [status, setStatus] = useState<SessionStatus>('loading');
   const [hidden, setHidden] = useState(false);
   const [settings, setSettings] = useState<AppSettings>(DEFAULT_SETTINGS);
   const [biometricsAvailable, setBiometricsAvailable] = useState(false);
+  // The ref serves callbacks; the state is what screens see (and re-render on).
+  const [openDb, setOpenDb] = useState<Database | null>(null);
 
   const apply = useCallback((result: BootResult) => {
     db.current = result.db;
+    setOpenDb(result.db);
     setSettings(result.settings);
     if (result.settings.language) i18n.changeLanguage(result.settings.language);
     setHidden(false);
@@ -72,7 +83,10 @@ export function SessionProvider({ children }: { children: ReactNode }) {
     };
   }, [apply]);
 
-  const lock = useCallback(() => setStatus((s) => (s === 'unlocked' ? 'locked' : s)), []);
+  const lock = useCallback(() => {
+    stopVoice();
+    setStatus((s) => (s === 'unlocked' ? 'locked' : s));
+  }, []);
 
   const hide = useCallback(() => {
     setHidden(true);
@@ -107,7 +121,6 @@ export function SessionProvider({ children }: { children: ReactNode }) {
     [settings.biometricEnabled, updateSettings],
   );
 
-
   const completeOnboarding = useCallback(
     async ({ nickname, pin, language }: OnboardingInput) => {
       await savePin(secureStore, pin);
@@ -120,6 +133,7 @@ export function SessionProvider({ children }: { children: ReactNode }) {
   const deleteEverything = useCallback(async () => {
     const result = await deleteAllData({ db: db.current, store: secureStore });
     db.current = null;
+    setOpenDb(null);
     await i18n.changeLanguage(deviceLanguage());
     apply(await boot(secureStore));
     return result;
@@ -129,8 +143,10 @@ export function SessionProvider({ children }: { children: ReactNode }) {
     () => ({
       status,
       hidden,
-      settings,
+      // Personal settings (nickname, support person) only while unlocked.
+      settings: status === 'unlocked' ? settings : lockedView(settings),
       biometricsAvailable,
+      db: status === 'unlocked' ? openDb : null,
       unlockWithPin,
       unlockWithBiometrics,
       lock,
@@ -145,6 +161,7 @@ export function SessionProvider({ children }: { children: ReactNode }) {
       hidden,
       settings,
       biometricsAvailable,
+      openDb,
       unlockWithPin,
       unlockWithBiometrics,
       lock,

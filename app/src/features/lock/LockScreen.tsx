@@ -52,6 +52,7 @@ export function LockScreen() {
         autoComplete="off"
         onSubmitEditing={unlock}
       />
+      {busy ? <BodyText>{t('lock.checking')}</BodyText> : null}
       <ActionButton
         testID="unlock"
         label={t('lock.unlock')}

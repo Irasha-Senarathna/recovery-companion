@@ -1,0 +1,14 @@
+{
+  "id": "urge-surfing",
+  "type": "urge-surfing",
+  "title": "exercises.urgeSurfing.title",
+  "duration_seconds": 120,
+  "rounds": 1,
+  "steps": [
+    { "text": "exercises.urgeSurfing.notice", "seconds": 20 },
+    { "text": "exercises.urgeSurfing.where", "seconds": 20 },
+    { "text": "exercises.urgeSurfing.wave", "seconds": 30, "animation": "wave" },
+    { "text": "exercises.urgeSurfing.breathe", "seconds": 30, "animation": "wave" },
+    { "text": "exercises.urgeSurfing.check", "seconds": 20 }
+  ]
+}

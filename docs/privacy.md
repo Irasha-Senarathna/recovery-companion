@@ -33,16 +33,21 @@ for diagrams.
 | App-lock PIN hash (salted) | App lock | High | No | Until changed | Delete-all |
 | DB encryption key | Storage | Critical | No (secure store / Keystore) | App lifetime | Delete-all deletes the key |
 | Circle API account ID + token | Support circle | High | Sent only to the circle API, as auth | Until circle is disabled | Leaving the circle / delete-all |
-| Daily check-ins (mood, sleep, stress, craving) | Check-in | High | No | Until deleted | Delete-all |
-| Tags (places, people, situations) | Check-in, trigger map | High (may reveal location/people) | No | Until deleted | Delete-all |
+| Daily check-ins (mood, sleep, stress, craving; 0–4, one per local day) | Check-in | High | No | Until deleted | Delete-all |
+| Tags (fixed list from `content/checkin.json`; no free text, no GPS) | Check-in, trigger map | High (e.g. "near a risky place") | No | Until deleted | Delete-all |
+| Demo rows (`demo = 1`), development builds only | Dev menu | None (made up) | No | Until cleared | Dev menu "Clear" / delete-all |
 | Craving SOS sessions (start, end, exercise, outcome) | Craving SOS | High | No | Until deleted | Delete-all |
-| Reasons vault: text, photos, voice notes (BLOBs, size-limited) | Craving SOS | High | No | Until deleted | Per item / delete-all |
+| Reasons vault: text, photos, voice notes (BLOBs, size-limited: 500 chars, 1.5 MB photo, 2 MB / 60 s voice, 50 items) | Craving SOS | High | No | Until deleted (`secure_delete` overwrites removed items) | Per item / delete-all |
+| Support person: name and phone number | Craving SOS | High (third-party data; reveals a confidant) | No. Tapping "Call" hands the number to the phone app, so the call appears in the OS call log | Until removed | Remove button in Settings / delete-all |
+| Temporary unencrypted media: `cache/Audio` (recording), `cache/rc-voice` (playback copy), `cache/ImagePicker` (picker copy) | Craving SOS | High | No | Seconds: deleted right after use, swept at every launch | Immediately / launch sweep / delete-all |
+| Microphone and photo-library access | Craving SOS | — (OS permission, no stored data) | The Android system photo picker sees which photo is chosen | Until revoked in OS settings | OS settings |
 | Slips + gentle-question answers | Slips | Very high | No | Until deleted | Per item / delete-all |
 | Goals, money saved, progress | Goals | Medium | No | Until deleted | Delete-all |
 | Coping plan | Early warning | High | No | Until deleted | Delete-all |
 | Risk scores, trigger patterns | Trigger map | High | No | Recomputed; only the latest 30 days kept | Delete-all |
 | Supporter local labels (e.g. "Sister") | Support circle | Medium | **No.** The label exists only on the phone that set it | Until removed | Revoke / delete-all |
 | Coach chat history | AI coach | Very high | Current turns are sent to the coach service when enabled | **Not stored by default.** Optional on-device history | Clear chat / delete-all |
+| Daily check-in reminder: on/off and time (settings); one scheduled local notification `daily-checkin` with fixed neutral text | Check-in | Medium (lock screen) | No: scheduled by the phone itself, no push service | Until turned off | Settings toggle / delete-all cancels it |
 | Scheduled local notifications | Early warning | Medium (lock screen) | No | Until fired/cancelled | Delete-all cancels them |
 
 ### On the support-circle server (Postgres, laptop, only if circle is enabled)
@@ -102,10 +107,10 @@ whom) · A4 coach conversations · A5 the integrity of the help-resources conten
 
 | ID | Threat | Asset | Mitigation | Residual risk |
 |---|---|---|---|---|
-| TH1 | T-Close opens the app | A1, A2 | App lock (PIN/biometric). Locks on launch and after 1 minute in the background. PIN: 4–6 digits, weak PINs (repeats, runs, common PINs) refused, stored as a PBKDF2-SHA256 hash (100k iterations, random salt) in the secure store. Wrong PINs: a growing wait after 5 tries, and PIN entry is switched off after 15 failures in total (then only biometrics or delete-all), because the wait uses the phone clock, which someone holding the phone can change. Biometrics: no passcode fallback, and unlock reads a token stored with `requireAuthentication`, which Android invalidates when a new fingerprint or face is enrolled (biometric unlock then turns itself off). Quick-hide button (and optional shake) switches to a neutral screen; leaving it always needs the PIN. | Shoulder-surfing while the app is open. The PIN is an app lock, not the database key: someone who can read the Keystore of an unlocked, rooted phone does not need it (see TH4). |
+| TH1 | T-Close opens the app | A1, A2 | App lock (PIN/biometric). Locks on launch and after 1 minute in the background. PIN: 4–6 digits, weak PINs (repeats, runs, common PINs) refused, stored as a PBKDF2-SHA256 hash (5k rounds, random salt; plain JS is slow on phones, and the 15-failure cap, not the round count, is what limits guessing) in the secure store. Older records are re-saved on unlock. Wrong PINs: a growing wait after 5 tries, and PIN entry is switched off after 15 failures in total (then only biometrics or delete-all), because the wait uses the phone clock, which someone holding the phone can change. Biometrics: no passcode fallback, and unlock reads a token stored with `requireAuthentication`, which Android invalidates when a new fingerprint or face is enrolled (biometric unlock then turns itself off). Quick-hide button (and optional shake) switches to a neutral screen; leaving it always needs the PIN. | Shoulder-surfing while the app is open. The PIN is an app lock, not the database key: someone who can read the Keystore of an unlocked, rooted phone does not need it (see TH4). |
 | TH2 | T-Close sees the app-switcher preview or takes a screenshot | A1 | `FLAG_SECURE` through `expo-screen-capture` on **every** screen, so previews are blank and screenshots are blocked. | Camera photo of the screen. |
 | TH3 | T-Close reads lock-screen notifications | A2 | All notification text comes from a dedicated i18n namespace. A test bans terms such as drug, craving, relapse, slip, recovery and addiction there. Lock-screen visibility is set to "private". | The app's name and icon are visible. A neutral app name is future work. |
-| TH4 | T-Lost extracts files from the device | A1 | SQLCipher DB. Key in the hardware-backed Keystore. Media kept as BLOBs inside the DB. `allowBackup=false`. | A rooted device with the app unlocked. |
+| TH4 | T-Lost extracts files from the device | A1 | SQLCipher DB with `secure_delete`. Key in the hardware-backed Keystore. Media kept as BLOBs inside the DB; the recorder's and picker's unencrypted copies are deleted right after use and swept at every launch. Voice playback stops on lock, hide and delete-all, and never runs in the background. `allowBackup=false`. Camera and broad storage permissions are blocked. | A rooted device with the app unlocked. A few seconds' window while a recording or picked photo exists unencrypted in the cache. |
 | TH5 | T-Close forces the user to unlock | A1, A2 | Quick-hide. Delete-all is reachable in 2 taps from settings, and from the lock screen ("forgot PIN"). | Coercion cannot be fully prevented. Documented as a limitation. Because delete-all works from the lock screen without the PIN, someone holding the phone can wipe the data (they cannot read it). |
 | TH5b | The quick-hide screen gives the app away | A2 | The neutral "Notes" screen shows nothing personal. | **Deliberate trade-off:** it keeps the "Get help" button, because safety rule 2 (help on every screen) comes first. Do not remove it "for discretion". |
 | TH5c | The keyboard learns private words | A1, A2 | Every text field is `SafeTextInput`, which turns off autocorrect, spell-check, autofill and suggestions. | Some third-party keyboards ignore these hints. |
@@ -118,7 +123,7 @@ whom) · A4 coach conversations · A5 the integrity of the help-resources conten
 | TH12 | The coach gives harmful advice | user safety | Crisis detection on the device and on the server. Topic guard. Output checker. Safety eval suite with 100% required on crisis, self-harm, overdose and dosing cases. | LLM unpredictability. The coach stays optional and clearly labelled as not a therapist. |
 | TH13 | Help resources are wrong or out of date | A5 | `helplines.json` is edited only by the developer (hook-protected) and carries a "last verified" date. The app warns when an entry is unverified or over 6 months old. An entry is shown as red "emergency services" only if it has a name and a checked date. | Human error in verification. |
 | TH14 | T-Dev adds tracking or logs personal data | A1 | No analytics SDKs. A dependency allow-list test in CI. A lint rule bans `console.log` in `app/src`. The privacy-reviewer subagent runs on storage, server and notification changes. | Review gaps. |
-| TH15 | Delete-all is incomplete | A1, A3 | Delete-all deletes the DB key **first** (retried once), then closes and deletes the DB file, clears the secure store and the biometric token, cancels notifications, and (from M6) calls `DELETE /account` (cascades links and signals). Every step runs even if one fails. If the key could not be deleted, the user is told the data may still be readable; otherwise that the leftovers are unreadable. If the server cannot be reached, deletion is queued and the user is told. | The server account lingers if the user never comes back online. Signals still auto-expire after 7 days. |
+| TH15 | Delete-all is incomplete | A1, A3 | Delete-all deletes the DB key **first** (retried once), then closes and deletes the DB file, clears the secure store and the biometric token, stops voice playback, clears the media temp folders, cancels notifications, and (from M6) calls `DELETE /account` (cascades links and signals). Every step runs even if one fails. If the key could not be deleted, the user is told the data may still be readable; otherwise that the leftovers are unreadable. If the server cannot be reached, deletion is queued and the user is told. | The server account lingers if the user never comes back online. Signals still auto-expire after 7 days. |
 
 ### Out of scope (documented limitations)
 
@@ -142,6 +147,12 @@ whom) · A4 coach conversations · A5 the integrity of the help-resources conten
 | Delete-all removes DB, key, notifications and server account | 2, 6 |
 | Only `src/net/*` may make network calls | 2 |
 | No phone-number patterns in `app/src` (helplines come from content only) | 2 |
+| Vault BLOB round trip and size limits; SOS sessions saved in the encrypted DB | 3 |
+| Delete-all clears media temp folders | 3 |
+| App permissions: no camera, microphone kept for voice notes, no background playback, storage blocked | 3 |
+| Check-ins saved in the encrypted DB; one per day; invalid levels and unknown tags refused | 4 |
+| Reminder text bans drug/craving/recovery terms in en/si/ta; channel lock-screen visibility is private | 4 |
+| Demo data is marked and clearing never removes the user's own rows | 4 |
 | Notification strings contain no banned terms, in all 3 languages | 4, 5 |
 | Server schema matches the column allow-list | 6 |
 | Signals older than 7 days are purged | 6 |

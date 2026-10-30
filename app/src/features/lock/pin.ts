@@ -15,7 +15,16 @@ export type PinCheck =
 type Attempts = { failures: number; lastFailureAt: number };
 type HashOptions = { iterations?: number };
 
-const DEFAULT_ITERATIONS = 100_000;
+/**
+ * PBKDF2 runs in plain JavaScript, which is slow on phones (Hermes has no
+ * JIT): 100k rounds took about a minute on a real device. 5k keeps setup and
+ * unlock to about a second. The PIN guards against someone holding the phone:
+ * the hash lives in the hardware-backed secure store and PIN entry stops after
+ * MAX_TOTAL_FAILURES, so the round count is not what stops guessing.
+ */
+export const DEFAULT_ITERATIONS = 5_000;
+/** A stored record with fewer rounds is damaged or tampered with: treat it as missing. */
+const MIN_ITERATIONS = 1_000;
 const SALT_BYTES = 16;
 export const MAX_FREE_ATTEMPTS = 5;
 /**
@@ -93,13 +102,18 @@ export async function checkPin(store: KeyStore, pin: string, now = Date.now()): 
   const retryAt = since + lockoutMs(attempts.failures);
   if (now < retryAt) return { status: 'wait', retryAt };
 
-  if (await verifyPin(pin, await loadPinRecord(store))) {
+  // Counted before the slow check, so closing the app mid-check still counts.
+  const failures = attempts.failures + 1;
+  await store.set(SECURE_KEYS.pinAttempts, JSON.stringify({ failures, lastFailureAt: now }));
+
+  const record = await loadPinRecord(store);
+  if (await verifyPin(pin, record)) {
     await store.remove(SECURE_KEYS.pinAttempts);
+    // Re-save records made with older settings (e.g. the slow 100k rounds).
+    if (record && record.iterations !== DEFAULT_ITERATIONS) await savePin(store, pin);
     return { status: 'ok' };
   }
 
-  const failures = attempts.failures + 1;
-  await store.set(SECURE_KEYS.pinAttempts, JSON.stringify({ failures, lastFailureAt: now }));
   if (failures >= MAX_TOTAL_FAILURES) return { status: 'blocked' };
   const wait = lockoutMs(failures);
   return wait > 0 ? { status: 'wait', retryAt: now + wait } : { status: 'wrong' };
@@ -115,7 +129,8 @@ async function loadPinRecord(store: KeyStore): Promise<PinRecord | null> {
   return isRecord(record) &&
     typeof record.salt === 'string' &&
     typeof record.hash === 'string' &&
-    typeof record.iterations === 'number'
+    typeof record.iterations === 'number' &&
+    record.iterations >= MIN_ITERATIONS
     ? (record as PinRecord)
     : null;
 }

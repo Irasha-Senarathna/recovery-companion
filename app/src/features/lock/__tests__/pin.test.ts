@@ -3,6 +3,7 @@ import { SECURE_KEYS } from '../../../storage/secureKeys';
 import {
   checkPin,
   createPinRecord,
+  DEFAULT_ITERATIONS,
   hasPin,
   isValidPin,
   isWeakPin,
@@ -38,7 +39,8 @@ describe('isWeakPin', () => {
 describe('PIN hashing', () => {
   it('stores a salted hash, never the PIN itself', async () => {
     const record = await createPinRecord('2468', FAST);
-    expect(JSON.stringify(record)).not.toContain('2468');
+    // Random hex can contain "2468" by chance, so check no field *is* the PIN.
+    expect(Object.values(record)).not.toContain('2468');
     expect(record.salt).toMatch(/^[0-9a-f]{32}$/);
     expect(record.hash).toMatch(/^[0-9a-f]{64}$/);
     expect(record.iterations).toBe(1000);
@@ -51,9 +53,19 @@ describe('PIN hashing', () => {
     expect(a.hash).not.toBe(b.hash);
   });
 
-  it('uses a slow key-derivation function by default', async () => {
+  it('uses a key-derivation function with thousands of rounds by default', async () => {
     const record = await createPinRecord('2468');
-    expect(record.iterations).toBeGreaterThanOrEqual(100_000);
+    expect(record.iterations).toBe(DEFAULT_ITERATIONS);
+    expect(record.iterations).toBeGreaterThanOrEqual(5_000);
+  });
+
+  it('upgrades a PIN saved with old settings after a successful unlock', async () => {
+    const store = createMemoryKeyStore();
+    await savePin(store, '2468', { iterations: 1000 });
+    expect(await checkPin(store, '2468', 0)).toEqual({ status: 'ok' });
+    const record = JSON.parse((await store.get(SECURE_KEYS.pin)) ?? '{}');
+    expect(record.iterations).toBe(DEFAULT_ITERATIONS);
+    expect(await checkPin(store, '2468', 0)).toEqual({ status: 'ok' });
   });
 
   it('verifies the right PIN and rejects a wrong one', async () => {
@@ -69,7 +81,9 @@ describe('saved PIN and attempt limits', () => {
     expect(await hasPin(store)).toBe(false);
     await savePin(store, '2468', FAST);
     expect(await hasPin(store)).toBe(true);
-    expect(await store.get(SECURE_KEYS.pin)).not.toContain('2468');
+    expect(Object.values(JSON.parse((await store.get(SECURE_KEYS.pin)) ?? '{}'))).not.toContain(
+      '2468',
+    );
   });
 
   it('unlocks with the right PIN', async () => {

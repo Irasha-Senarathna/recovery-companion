@@ -1,10 +1,10 @@
 import { Pressable, StyleSheet, Text } from 'react-native';
-import { MIN_TAP, useTheme } from '../theme';
+import { MIN_TAP, RADIUS, useTheme } from '../theme';
 
 type Props = {
   label: string;
   onPress: () => void;
-  tone?: 'primary' | 'danger' | 'plain';
+  tone?: 'primary' | 'danger' | 'plain' | 'soft';
   disabled?: boolean;
   hint?: string;
   testID?: string;
@@ -12,8 +12,19 @@ type Props = {
 
 export function ActionButton({ label, onPress, tone = 'primary', disabled, hint, testID }: Props) {
   const theme = useTheme();
-  const background = { primary: theme.primary, danger: theme.help, plain: theme.surface }[tone];
-  const color = { primary: theme.onPrimary, danger: theme.onHelp, plain: theme.text }[tone];
+  const background = {
+    primary: theme.primary,
+    danger: theme.help,
+    plain: theme.surface,
+    soft: theme.surfaceSoft,
+  }[tone];
+  const color = {
+    primary: theme.onPrimary,
+    danger: theme.onHelp,
+    plain: theme.text,
+    soft: theme.text,
+  }[tone];
+  const borderColor = tone === 'plain' ? theme.border : background;
 
   return (
     <Pressable
@@ -26,8 +37,10 @@ export function ActionButton({ label, onPress, tone = 'primary', disabled, hint,
       onPress={onPress}
       style={({ pressed }) => [
         styles.button,
-        { backgroundColor: background, borderColor: theme.border },
-        { opacity: disabled ? 0.5 : pressed ? 0.8 : 1 },
+        { backgroundColor: background, borderColor },
+        { opacity: disabled ? 0.5 : pressed ? 0.85 : 1 },
+        // Instant feedback on touch-down, not on release.
+        pressed && !disabled ? styles.pressed : null,
       ]}
     >
       <Text style={[styles.label, { color }]}>{label}</Text>
@@ -37,12 +50,13 @@ export function ActionButton({ label, onPress, tone = 'primary', disabled, hint,
 
 const styles = StyleSheet.create({
   button: {
-    minHeight: MIN_TAP,
-    paddingHorizontal: 16,
-    borderRadius: 12,
-    borderWidth: 2,
+    minHeight: MIN_TAP + 8,
+    paddingHorizontal: 20,
+    borderRadius: RADIUS.button,
+    borderWidth: 1.5,
     alignItems: 'center',
     justifyContent: 'center',
   },
   label: { fontSize: 17, fontWeight: '700' },
+  pressed: { transform: [{ scale: 0.97 }] },
 });

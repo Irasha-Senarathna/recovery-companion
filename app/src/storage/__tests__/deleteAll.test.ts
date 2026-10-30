@@ -73,6 +73,21 @@ describe('delete all my data', () => {
     expect(result.failed).toContain('dbKey');
   });
 
+  it('clears temporary media files and reports if that step fails', async () => {
+    const db = await setUpUser();
+    const clearTempFiles = jest.fn(async () => {
+      throw new Error('busy');
+    });
+    const result = await deleteAllData({
+      db,
+      store: secureStore,
+      cancelNotifications: async () => {},
+      clearTempFiles,
+    });
+    expect(clearTempFiles).toHaveBeenCalledTimes(1);
+    expect(result.failed).toEqual(['tempFiles']);
+  });
+
   it('works when the database could not be opened', async () => {
     await setUpUser();
     const result = await deleteAllData({

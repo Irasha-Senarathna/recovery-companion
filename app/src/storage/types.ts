@@ -1,9 +1,11 @@
-export type SqlValue = string | number | null;
+export type SqlValue = string | number | null | Uint8Array;
+
+export type RunResult = { lastInsertRowId: number };
 
 /** The small SQL surface the app uses. Implemented by SQLCipher on the phone. */
 export interface Database {
   exec(sql: string): Promise<void>;
-  run(sql: string, params?: SqlValue[]): Promise<void>;
+  run(sql: string, params?: SqlValue[]): Promise<RunResult>;
   getFirst<T>(sql: string, params?: SqlValue[]): Promise<T | null>;
   getAll<T>(sql: string, params?: SqlValue[]): Promise<T[]>;
   close(): Promise<void>;

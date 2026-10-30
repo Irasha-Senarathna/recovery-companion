@@ -1,0 +1,11 @@
+{
+  "id": "slow-breathing",
+  "type": "breathing",
+  "title": "exercises.slowBreathing.title",
+  "duration_seconds": 60,
+  "rounds": 6,
+  "steps": [
+    { "text": "exercises.slowBreathing.in", "seconds": 4, "animation": "inhale" },
+    { "text": "exercises.slowBreathing.out", "seconds": 6, "animation": "exhale" }
+  ]
+}

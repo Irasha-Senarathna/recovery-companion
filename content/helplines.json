@@ -5,29 +5,29 @@
     {
       "id": "emergency",
       "type": "emergency",
-      "name": { "en": "", "si": "", "ta": "" },
+      "name": { "en": "NDDCB", "si": "", "ta": "" },
       "phone": "1927",
       "hours": "24 hours",
       "source_url": "https://nddcb.gov.lk/",
-      "last_verified": null
+      "last_verified": "2026-10-28"
     },
     {
       "id": "drug-helpline",
       "type": "helpline",
-      "name": { "en": "", "si": "", "ta": "" },
+      "name": { "en": "Drug Helpline", "si": "", "ta": "" },
       "phone": "+94 11 2868794 - 6",
       "hours": "24 hours",
       "source_url": "https://nddcb.gov.lk/",
-      "last_verified": null
+      "last_verified": "2026-10-28"
     },
     {
       "id": "mental-health",
       "type": "helpline",
-      "name": { "en": "", "si": "", "ta": "" },
+      "name": { "en": "Mental Health Helpline", "si": "", "ta": "" },
       "phone": "011 309 1394",
       "hours": "24 hours",
       "source_url": "https://nddcb.gov.lk/",
-      "last_verified": null
+      "last_verified": "2026-10-28"
     }
   ]
 }

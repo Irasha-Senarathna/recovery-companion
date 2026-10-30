@@ -7,6 +7,13 @@ export type AppSettings = {
   onboarded: boolean;
   biometricEnabled: boolean;
   shakeToHide: boolean;
+  /** "Call my support person": stays on this phone, never sent anywhere. */
+  supportName: string | null;
+  supportPhone: string | null;
+  /** Daily check-in reminder, scheduled on this phone only. */
+  reminderEnabled: boolean;
+  reminderHour: number;
+  reminderMinute: number;
 };
 
 export type SettingKey = keyof AppSettings;
@@ -17,7 +24,18 @@ export const DEFAULT_SETTINGS: AppSettings = {
   onboarded: false,
   biometricEnabled: false,
   shakeToHide: false,
+  supportName: null,
+  supportPhone: null,
+  reminderEnabled: false,
+  reminderHour: 20,
+  reminderMinute: 0,
 };
+
+/** A whole number in [0, max), or the fallback. */
+function parseInRange(value: string | undefined, max: number, fallback: number): number {
+  const n = Number(value);
+  return Number.isInteger(n) && n >= 0 && n < max ? n : fallback;
+}
 
 export async function getSetting(db: Database, key: SettingKey): Promise<string | null> {
   const row = await db.getFirst<{ value: string }>('SELECT value FROM settings WHERE key = ?', [
@@ -43,6 +61,11 @@ export async function loadSettings(db: Database): Promise<AppSettings> {
     onboarded: raw.get('onboarded') === 'true',
     biometricEnabled: raw.get('biometricEnabled') === 'true',
     shakeToHide: raw.get('shakeToHide') === 'true',
+    supportName: raw.get('supportName') ?? null,
+    supportPhone: raw.get('supportPhone') ?? null,
+    reminderEnabled: raw.get('reminderEnabled') === 'true',
+    reminderHour: parseInRange(raw.get('reminderHour'), 24, DEFAULT_SETTINGS.reminderHour),
+    reminderMinute: parseInRange(raw.get('reminderMinute'), 60, DEFAULT_SETTINGS.reminderMinute),
   };
 }
 

@@ -58,7 +58,9 @@ describe('first launch', () => {
 
     expect(await screen.findByText('Welcome, Sky')).toBeOnTheScreen();
     expect(await secureStore.get(SECURE_KEYS.dbKey)).toMatch(/^[0-9a-f]{64}$/);
-    expect(await secureStore.get(SECURE_KEYS.pin)).not.toContain('2468');
+    const record = JSON.parse((await secureStore.get(SECURE_KEYS.pin)) ?? '{}');
+    expect(Object.values(record)).not.toContain('2468');
+    expect(record.hash).toMatch(/^[0-9a-f]{64}$/);
   });
 
   it('rejects PINs that do not match', async () => {

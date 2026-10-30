@@ -1,0 +1,13 @@
+{
+  "id": "box-breathing",
+  "type": "breathing",
+  "title": "exercises.boxBreathing.title",
+  "duration_seconds": 64,
+  "rounds": 4,
+  "steps": [
+    { "text": "exercises.boxBreathing.in", "seconds": 4, "animation": "inhale" },
+    { "text": "exercises.boxBreathing.holdIn", "seconds": 4, "animation": "hold" },
+    { "text": "exercises.boxBreathing.out", "seconds": 4, "animation": "exhale" },
+    { "text": "exercises.boxBreathing.holdOut", "seconds": 4, "animation": "hold" }
+  ]
+}

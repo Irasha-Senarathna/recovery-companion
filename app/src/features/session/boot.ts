@@ -1,4 +1,5 @@
 import type { KeyStore } from '../../platform/keyStore';
+import { clearMediaTemp } from '../../platform/mediaTemp';
 import { openDatabase } from '../../storage/db';
 import { getOrCreateDbKey } from '../../storage/key';
 import { DEFAULT_SETTINGS, loadSettings, type AppSettings } from '../../storage/settings';
@@ -11,6 +12,8 @@ export type BootResult =
 
 /** Opens the encrypted store and decides where the app starts. */
 export async function boot(store: KeyStore): Promise<BootResult> {
+  // Leftover unencrypted media from a crash or a lock mid-recording.
+  await clearMediaTemp().catch(() => {});
   try {
     const db = await openDatabase(await getOrCreateDbKey(store));
     const settings = await loadSettings(db);

@@ -15,7 +15,19 @@
       },
       "predictiveBackGestureEnabled": false,
       "package": "dev.recoverycompanion.app",
-      "allowBackup": false
+      "allowBackup": false,
+      "blockedPermissions": [
+        "android.permission.READ_EXTERNAL_STORAGE",
+        "android.permission.WRITE_EXTERNAL_STORAGE",
+        "android.permission.SCHEDULE_EXACT_ALARM",
+        "android.permission.USE_EXACT_ALARM"
+      ],
+      "permissions": [
+        "android.permission.USE_BIOMETRIC",
+        "android.permission.USE_FINGERPRINT",
+        "android.permission.RECORD_AUDIO",
+        "android.permission.MODIFY_AUDIO_SETTINGS"
+      ]
     },
     "web": {
       "favicon": "./assets/favicon.png",
@@ -37,8 +49,40 @@
         {
           "faceIDPermission": "Allow $(PRODUCT_NAME) to use Face ID to unlock the app."
         }
-      ]
+      ],
+      [
+        "expo-audio",
+        {
+          "microphonePermission": "Allow $(PRODUCT_NAME) to record voice notes you choose to save.",
+          "enableBackgroundPlayback": false
+        }
+      ],
+      [
+        "expo-image-picker",
+        {
+          "photosPermission": "Allow $(PRODUCT_NAME) to add photos you choose to your reasons.",
+          "cameraPermission": false
+        }
+      ],
+      [
+        "expo-notifications",
+        {
+          "color": "#2E6B67"
+        }
+      ],
+      "./plugins/withNoFirebaseAutoInit"
     ],
-    "scheme": "recoverycompanion"
+    "scheme": "recoverycompanion",
+    "extra": {
+      "router": {
+        "asyncRoutes": {
+          "web": true
+        }
+      },
+      "eas": {
+        "projectId": "10c99ab9-3c16-4484-87cf-358509377c8e"
+      }
+    },
+    "owner": "irasha-senarathna"
   }
 }

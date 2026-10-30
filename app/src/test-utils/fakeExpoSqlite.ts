@@ -45,8 +45,8 @@ class FakeConnection {
 
   async runAsync(sql: string, params: SqlValue[] = []) {
     statements.push(sql);
-    await (await this.file()).run(sql, params);
-    return { changes: 0, lastInsertRowId: 0 };
+    const { lastInsertRowId } = await (await this.file()).run(sql, params);
+    return { changes: 0, lastInsertRowId };
   }
 
   async getFirstAsync<T>(sql: string, params: SqlValue[] = []): Promise<T | null> {

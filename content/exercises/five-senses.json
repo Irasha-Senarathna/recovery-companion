@@ -1,0 +1,14 @@
+{
+  "id": "five-senses",
+  "type": "grounding",
+  "title": "exercises.fiveSenses.title",
+  "duration_seconds": 90,
+  "rounds": 1,
+  "steps": [
+    { "text": "exercises.fiveSenses.see", "seconds": 20 },
+    { "text": "exercises.fiveSenses.touch", "seconds": 20 },
+    { "text": "exercises.fiveSenses.hear", "seconds": 20 },
+    { "text": "exercises.fiveSenses.smell", "seconds": 15 },
+    { "text": "exercises.fiveSenses.taste", "seconds": 15 }
+  ]
+}

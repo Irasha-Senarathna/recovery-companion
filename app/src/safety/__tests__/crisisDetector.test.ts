@@ -25,7 +25,7 @@ describe('crisis detector (safety rule 4)', () => {
     'kms',
     'I want to take my own life',
     'I might hang myself',
-    "i dont want to live anymore",
+    'i dont want to live anymore',
     "I don't want to be here anymore",
     'I wish I was dead',
     'nothing to live for',
@@ -61,12 +61,9 @@ describe('crisis detector (safety rule 4)', () => {
     },
   );
 
-  it.each(['මැරෙන්න හිතෙනවා', 'ජීවිතේ එපා', 'சாகணும்'])(
-    'spoken forms: detects %p',
-    (text) => {
-      expect(detectCrisis(text)).toBe(true);
-    },
-  );
+  it.each(['මැරෙන්න හිතෙනවා', 'ජීවිතේ එපා', 'சாகணும்'])('spoken forms: detects %p', (text) => {
+    expect(detectCrisis(text)).toBe(true);
+  });
 
   it.each([
     'நான் தற்கொலை செய்ய நினைக்கிறேன்',

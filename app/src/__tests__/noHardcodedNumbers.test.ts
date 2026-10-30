@@ -4,7 +4,7 @@ import { listSourceFiles, readSource } from '../test-utils/sourceFiles';
  * Safety rule 3: helpline numbers come only from content/helplines.json.
  * Flags any string literal with a run of 3+ digits (a short code like 1990,
  * or a number inside a longer sentence), literal `tel:` links, and any 3+
- * digit run in UI text. Font weights, hex colours and lines marked
+ * digit run in UI text. Font weights, colours and lines marked
  * `not-a-phone-number` (with a reason) are skipped.
  */
 const STRING_LITERAL = /(['"`])(?:\\.|(?!\1)[^\\\n])*\1/g;
@@ -14,10 +14,20 @@ const DIGIT_RUN = /\d{3,}/;
 
 const FONT_WEIGHT = /fontWeight:\s*(['"])\d00\1/g;
 const HEX_COLOUR = /(['"])#[0-9a-f]{3,8}\1/gi;
+const RGBA_COLOUR = /(['"])rgba?\([\d.,\s]+\)\1/g;
 const MARKED_LINE = /^.*not-a-phone-number.*$/gm;
+// SVG drawing geometry (paths, viewBox, circles) and percentages are not phone numbers.
+const SVG_GEOMETRY = /\b(d|viewBox|cx|cy|r|x|y|x1|x2|y1|y2|offset)="[^"]*"/g;
+const PERCENT = /(['"])\d+(\.\d+)?%\1/g;
 
 function phoneLiterals(source: string): string[] {
-  const cleaned = source.replace(MARKED_LINE, '').replace(FONT_WEIGHT, '').replace(HEX_COLOUR, '');
+  const cleaned = source
+    .replace(MARKED_LINE, '')
+    .replace(FONT_WEIGHT, '')
+    .replace(HEX_COLOUR, '')
+    .replace(RGBA_COLOUR, '')
+    .replace(SVG_GEOMETRY, '')
+    .replace(PERCENT, '');
   return [...cleaned.matchAll(STRING_LITERAL)]
     .map((m) => m[0])
     .filter((literal) => NUMBER_IN_TEXT.test(literal) && /\d{3,}|\d[\s-]\d/.test(literal))
@@ -55,5 +65,7 @@ describe('no hard-coded helpline numbers (safety rule 3)', () => {
     expect(phoneLiterals(`const id = 'help-button';`)).toEqual([]);
     expect(phoneLiterals(`{ fontWeight: '700' }`)).toEqual([]);
     expect(phoneLiterals(`const msg = 'Call 1990 now';`)).toHaveLength(1);
+    expect(phoneLiterals(`<Path d="M0 98 C 60 62, 120 64" /> width="100%"`)).toEqual([]);
+    expect(phoneLiterals(`<Text label="1990" />`)).toHaveLength(1);
   });
 });

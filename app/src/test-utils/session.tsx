@@ -9,6 +9,7 @@ export function fakeSession(overrides: Partial<Session> = {}): Session {
     hidden: false,
     settings: { ...DEFAULT_SETTINGS, nickname: 'Sky', onboarded: true },
     biometricsAvailable: false,
+    db: null,
     unlockWithPin: jest.fn(async () => ({ status: 'ok' as const })),
     unlockWithBiometrics: jest.fn(async () => false),
     lock: jest.fn(),

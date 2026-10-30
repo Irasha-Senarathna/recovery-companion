@@ -21,6 +21,8 @@ export async function openDatabase(key: string | null): Promise<Database> {
     // Raw 256-bit key; the hex is validated above, so it is safe to inline.
     await sqlite.execAsync(`PRAGMA key = "x'${key}'";`);
     await checkKey(sqlite);
+    // Overwrite deleted content (e.g. a removed photo) instead of leaving it in free pages.
+    await sqlite.execAsync('PRAGMA secure_delete = ON;');
 
     const db = wrap(sqlite);
     await migrate(db);
@@ -48,7 +50,8 @@ function wrap(sqlite: SQLite.SQLiteDatabase): Database {
   return {
     exec: (sql) => sqlite.execAsync(sql),
     run: async (sql, params = []) => {
-      await sqlite.runAsync(sql, params);
+      const result = await sqlite.runAsync(sql, params);
+      return { lastInsertRowId: result.lastInsertRowId };
     },
     getFirst: (sql, params = []) => sqlite.getFirstAsync(sql, params),
     getAll: (sql, params = []) => sqlite.getAllAsync(sql, params),

@@ -125,6 +125,7 @@ export function PinStep({ onFinish }: { onFinish: (pin: string) => Promise<void>
         error={error}
         {...pinProps}
       />
+      {busy ? <BodyText>{t('onboarding.pinSaving')}</BodyText> : null}
       <ActionButton
         testID="onboarding-finish"
         label={t('onboarding.finish')}

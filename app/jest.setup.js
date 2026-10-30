@@ -44,3 +44,56 @@ beforeEach(() => {
   require('expo-secure-store').__items.clear();
   require('expo-sqlite').__reset();
 });
+
+jest.mock('expo-image-picker', () => ({
+  launchImageLibraryAsync: jest.fn(async () => ({ canceled: true, assets: null })),
+}));
+
+jest.mock('expo-audio', () => ({
+  RecordingPresets: { LOW_QUALITY: {} },
+  useAudioRecorder: jest.fn(() => ({
+    prepareToRecordAsync: jest.fn(async () => {}),
+    record: jest.fn(),
+    stop: jest.fn(async () => {}),
+    uri: null,
+  })),
+  createAudioPlayer: jest.fn(() => ({
+    play: jest.fn(),
+    pause: jest.fn(),
+    remove: jest.fn(),
+    addListener: jest.fn(() => ({ remove: jest.fn() })),
+  })),
+  requestRecordingPermissionsAsync: jest.fn(async () => ({ granted: false })),
+  setAudioModeAsync: jest.fn(async () => {}),
+}));
+
+jest.mock('expo-file-system', () => ({
+  Paths: { cache: { uri: 'file:///cache/' } },
+  Directory: jest.fn(() => ({ exists: false, create: jest.fn(), delete: jest.fn() })),
+  File: jest.fn(() => ({
+    exists: false,
+    write: jest.fn(async () => {}),
+    bytes: jest.fn(async () => new Uint8Array()),
+    delete: jest.fn(),
+    uri: 'file:///cache/x',
+  })),
+}));
+
+jest.mock('expo-notifications', () => ({
+  AndroidImportance: { DEFAULT: 5 },
+  AndroidNotificationVisibility: { PRIVATE: 2 },
+  SchedulableTriggerInputTypes: { DAILY: 'daily' },
+  setNotificationChannelAsync: jest.fn(async () => null),
+  scheduleNotificationAsync: jest.fn(async () => 'daily-checkin'),
+  cancelScheduledNotificationAsync: jest.fn(async () => {}),
+  cancelAllScheduledNotificationsAsync: jest.fn(async () => {}),
+  dismissAllNotificationsAsync: jest.fn(async () => {}),
+  deleteNotificationChannelAsync: jest.fn(async () => {}),
+  requestPermissionsAsync: jest.fn(async () => ({ granted: true })),
+}));
+
+jest.mock('expo-haptics', () => ({
+  NotificationFeedbackType: { Success: 'success' },
+  selectionAsync: jest.fn(async () => {}),
+  notificationAsync: jest.fn(async () => {}),
+}));

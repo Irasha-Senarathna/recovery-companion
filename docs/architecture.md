@@ -148,7 +148,7 @@ Rules this flow enforces:
 ```mermaid
 flowchart LR
   subgraph ML["ml/ — on laptop, synthetic data only"]
-    G["generate.py<br/>200 synthetic users × 180 days<br/>hidden trigger patterns"] --> D[("data/synthetic/*.parquet<br/>git-ignored")]
+    G["generate.py<br/>200 synthetic users × 180 days<br/>hidden trigger patterns"] --> D[("ml/data/*.csv<br/>git-ignored")]
     D --> F["features.py<br/>shared feature spec"]
     F --> S["Time-based split<br/>days 1–120 train<br/>121–150 validation<br/>151–180 test"]
     S --> LR["Logistic regression<br/>(standardised features)"]
@@ -174,9 +174,10 @@ flowchart LR
   P["Parity test: Python and TS<br/>give the same scores on fixtures"] -.-> INF
 ```
 
-- **Prediction target**: "craving level ≥ 7 or a slip in the next 24 hours".
-- **Features** (draft): sleep hours, sleep quality, stress, mood, craving
-  level, 3-day rolling averages, day of week, weekend flag, time-of-day bucket,
+- **Prediction target**: "craving level ≥ 3 (on the 0–4 check-in scale) or a slip
+  in the next 24 hours". The scale and tags are shared with the app through
+  `content/checkin.json`; the planted patterns are listed in `ml/README.md` (M4).
+- **Features** (draft): sleep (0–4), stress, mood, craving level, 3-day rolling averages, day of week, weekend flag, time-of-day bucket,
   days since last slip, and flags for the most common tags.
 - **Honesty note**: the model is trained and tested on synthetic data. Its
   metrics show the pipeline works. They do **not** show it predicts real

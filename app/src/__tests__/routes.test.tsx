@@ -24,6 +24,10 @@ const SESSION_FOR_ROUTE: Record<string, Partial<Session>> = {
   onboarding: { status: 'onboarding' },
   problem: { status: 'error' },
   loading: { status: 'loading' },
+  sos: { status: 'unlocked' },
+  vault: { status: 'unlocked' },
+  progress: { status: 'unlocked' },
+  checkin: { status: 'unlocked' },
 };
 
 describe('every screen', () => {

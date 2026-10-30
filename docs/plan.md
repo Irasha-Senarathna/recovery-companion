@@ -115,7 +115,7 @@ Open items for the user: verify `content/helplines.json` (the "emergency" entry
 is 1927, which may not be an emergency number), native-speaker review of si/ta text
 and crisis lists, translated disclaimers.
 
-## M3 — Craving SOS · TODO
+## M3 — Craving SOS · DONE
 
 **Goal:** one big button that takes the user through a coping exercise, their reasons, and support options.
 
@@ -136,7 +136,21 @@ and crisis lists, translated disclaimers.
   `vaultRepo.test.ts` (BLOB round trip, size limit), `exercises.schema.test.ts`
   (all 6 exercises complete in en/si/ta). The safety-reviewer reports no Critical or High findings.
 
-## M4 — Daily check-in + synthetic data · TODO
+**Result (M3):** 551 app tests + 3 server tests pass; ESLint, tsc, ruff and mypy
+clean; web and Android bundles build. Uses `expo-audio` (the successor of
+`expo-av`). Also added: a calm "dawn lagoon" visual theme for the whole app
+(gradients, rounded cards, SVG illustrations, glowing SOS button, breathing
+wave; light and dark; still with reduce-motion), a support person in Settings,
+and `/progress`. Review fixes: urgent "Get help now" on the first SOS screen and
+during exercises; the support number is stored and dialled in full; pause and
+screen-reader-friendly exercises; the "usually pass in" figure appears only
+after 3 cravings that passed; help next to a saved reason with crisis words;
+unencrypted media copies deleted at once and swept at launch; playback stops
+on lock/hide; microphone permission kept, camera and storage blocked.
+Open items for the user: native-speaker review of the si/ta SOS and exercise
+text (they reach people at a hard moment); test voice notes on a real phone.
+
+## M4 — Daily check-in + synthetic data · DONE
 
 **Goal:** a check-in that takes under 20 seconds, and a realistic synthetic dataset.
 
@@ -156,6 +170,31 @@ and crisis lists, translated disclaimers.
 - **Tests pass:** `checkinRepo.test.ts`, `checkinScreen.test.tsx`,
   `notificationText.test.ts` (banned terms, 3 languages), `test_generate.py`
   (shape, value ranges, determinism, the planted pattern can be measured).
+
+**Result (M4):** 646 app tests, 3 server tests and 8 ml tests pass; ESLint, tsc,
+ruff and mypy clean; Android and web bundles build. Check-in: four tap-or-drag
+0–4 scales (one adjustable control for screen readers, light haptics, calm
+no-bounce springs that respect reduce-motion) and 11 optional tags from
+`content/checkin.json`, which `ml/` shares. One check-in per day, editable that
+day. After saving: low mood offers people to talk to; a strong craving offers
+SOS. Daily reminder in Settings with neutral text (tested in en/si/ta), shown
+exactly in Settings, lock-screen visibility private, no exact-alarm
+permission, "Simulate notification" on web. Dev menu (development builds only)
+loads/clears demo rows marked `demo = 1`. `make ml` writes deterministic CSVs to
+`ml/data/`. Design touches from the `apple-design` skill: instant press feedback,
+tighter heading tracking. Review fixes: Sinhala wording, neutral colour for
+stress/craving scales, calmer "Get help" button, help shown before SOS, an
+app-name notice on the reminder, Firebase auto-init and analytics switched off
+in the manifest (ready for M6), delete-all also clears shown notifications and
+the channel, PIN failures counted before the check.
+Needs a new phone build (`make build-android`): expo-notifications and
+expo-haptics are native.
+Carry-overs: **M5** must leave `demo = 1` rows out of risk features; **M6** must
+fetch a push token only after the user opts in, and delete it on leave/delete-all;
+**M9** add a safety case for the "In pain" tag (no medication advice);
+**M10** neutral app name/icon option (the name shows on every notification).
+
+---
 
 ## M5 — Trigger map + early warning · TODO
 

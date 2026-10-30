@@ -36,7 +36,12 @@
   "home": {
     "title": "Welcome, {{nickname}}",
     "subtitle": "One step at a time. You can come back here whenever you need.",
-    "settings": "Settings"
+    "settings": "Settings",
+    "reasons": "Your reasons",
+    "progress": "Your progress",
+    "checkin": "Daily check-in",
+    "checkinChange": "Change today's check-in",
+    "checkinDone": "Today's check-in is saved."
   },
   "hide": {
     "button": "Hide",
@@ -56,7 +61,8 @@
     "biometricPrompt": "Unlock the app",
     "forgotTitle": "Forgot your PIN?",
     "forgotInfo": "For your privacy, the PIN cannot be recovered. You can delete all data on this phone and set the app up again.",
-    "blocked": "For your safety, PIN entry is paused after too many tries. You can unlock with your fingerprint or face if it is turned on, or delete all data on this phone and set the app up again."
+    "blocked": "For your safety, PIN entry is paused after too many tries. You can unlock with your fingerprint or face if it is turned on, or delete all data on this phone and set the app up again.",
+    "checking": "Checking…"
   },
   "onboarding": {
     "languageTitle": "Choose your language",
@@ -74,7 +80,8 @@
     "pinInvalid": "Please use 4 to 6 digits.",
     "pinMismatch": "The two PINs are different. Please try again.",
     "finish": "Finish setup",
-    "pinWeak": "That PIN is easy to guess. Please avoid repeated digits, simple runs of digits, and common PINs."
+    "pinWeak": "That PIN is easy to guess. Please avoid repeated digits, simple runs of digits, and common PINs.",
+    "pinSaving": "Securing your PIN…"
   },
   "settings": {
     "title": "Settings",
@@ -88,7 +95,27 @@
     "biometric": "Unlock with fingerprint or face",
     "shakeToHide": "Shake the phone to hide the app",
     "data": "Your data",
-    "dataInfo": "Everything you enter stays on this phone, encrypted."
+    "dataInfo": "Everything you enter stays on this phone, encrypted.",
+    "support": "Your support person",
+    "supportInfo": "Someone you trust to call when things get hard. This stays on this phone.",
+    "supportName": "Their name",
+    "supportPhone": "Their phone number",
+    "supportSave": "Save support person",
+    "supportInvalid": "Please enter a name and a full phone number.",
+    "supportSaved": "Saved.",
+    "supportRemove": "Remove support person",
+    "reminderTitle": "Daily reminder",
+    "reminder": "Remind me to check in each day",
+    "reminderDenied": "Notifications are off for this app. You can allow them in your phone's settings.",
+    "reminderAt": "Reminder at {{time}}",
+    "hourEarlier": "1 hour earlier",
+    "hourLater": "1 hour later",
+    "minutesEarlier": "15 min earlier",
+    "minutesLater": "15 min later",
+    "reminderPreview": "The reminder will say only this:",
+    "simulateNotification": "Simulate notification (web demo)",
+    "simulatedNotification": "Web demo: on a phone, the reminder above would appear now.",
+    "reminderAppName": "Your phone also shows this app's name with each reminder, and may show it on the lock screen."
   },
   "deleteAll": {
     "button": "Delete all my data",
@@ -100,5 +127,207 @@
   "problem": {
     "title": "Your data could not be opened",
     "info": "The saved data on this phone could not be opened. You can delete it and set the app up again."
+  },
+  "exercises": {
+    "slowBreathing": {
+      "title": "Slow breathing",
+      "in": "Breathe in slowly through your nose.",
+      "out": "Breathe out gently, a little longer than you breathed in."
+    },
+    "boxBreathing": {
+      "title": "Box breathing",
+      "in": "Breathe in for a count of four.",
+      "holdIn": "Hold softly for four.",
+      "out": "Breathe out for four.",
+      "holdOut": "Rest for four."
+    },
+    "fiveSenses": {
+      "title": "Five senses",
+      "see": "Look around. Name five things you can see.",
+      "touch": "Notice four things you can feel, like your clothes or the chair.",
+      "hear": "Listen for three sounds, near or far.",
+      "smell": "Notice two things you can smell.",
+      "taste": "Notice one thing you can taste."
+    },
+    "feetOnTheGround": {
+      "title": "Feet on the ground",
+      "sit": "Sit or stand comfortably. Let your shoulders drop.",
+      "press": "Press your feet gently into the floor. Feel it holding you up.",
+      "hands": "Rest your hands on your legs. Notice their warmth.",
+      "name": "Say quietly where you are and what day it is."
+    },
+    "urgeSurfing": {
+      "title": "Ride the wave",
+      "notice": "Notice the craving without fighting it. It is a feeling, and feelings change.",
+      "where": "Where do you feel it in your body? Just notice.",
+      "wave": "Picture it as a wave. It rises, it peaks, and then it falls.",
+      "breathe": "Breathe slowly and ride the wave. You don't have to act on it.",
+      "check": "How strong is it now? It may already be a little smaller."
+    },
+    "changeTheScene": {
+      "title": "Change the scene",
+      "move": "Move to a different spot, even another room or outside.",
+      "water": "Drink a glass of water, slowly.",
+      "task": "Pick one small task: wash a cup, water a plant, or message a friend."
+    }
+  },
+  "sos": {
+    "button": "SOS",
+    "buttonLabel": "I'm having a craving",
+    "buttonHint": "Starts a short guided exercise to help you through it",
+    "subtitle": "A craving is a wave. Let's ride it together.",
+    "title": "You're not alone",
+    "choose": "Choose an exercise",
+    "autoPick": "Choose for me",
+    "minutes": "About {{minutes}} min",
+    "next": "Next",
+    "finish": "Skip to the next part",
+    "stepOf": "Step {{current}} of {{total}}",
+    "breatheIn": "Breathe in",
+    "breatheOut": "Breathe out",
+    "hold": "Hold",
+    "wave": "Ride the wave",
+    "reasonTitle": "Remember why",
+    "reasonNext": "Continue",
+    "playVoice": "Play your voice note",
+    "photoReason": "A photo you saved",
+    "optionsTitle": "What would help now?",
+    "callSupport": "Call {{name}}",
+    "addSupport": "Add a support person",
+    "getHelp": "Get help",
+    "okay": "I'm okay now",
+    "outcomeTitle": "Did the craving pass?",
+    "outcomePassed": "Yes, it passed",
+    "outcomeNotYet": "Not yet",
+    "outcomeUnsure": "I'm not sure",
+    "donePassed": "You stayed with it, and it passed. Well done for riding that wave.",
+    "doneNotYet": "That's okay. Cravings can come in waves. You can try another exercise, reach out, or get help.",
+    "doneUnsure": "Thank you for checking in with yourself. Every pause like this counts.",
+    "tryAnother": "Try another exercise",
+    "home": "Back to home",
+    "notSafe": "Not safe right now, or someone may have taken too much?",
+    "getHelpNow": "Get help now",
+    "pause": "Pause",
+    "resume": "Resume",
+    "breathingNote": "Breathe in a way that feels comfortable. Skip any step that doesn't feel right.",
+    "showAnother": "Show another reason",
+    "callFailed": "The call could not be started on this device. The number is {{phone}}. You can also use Get help."
+  },
+  "progress": {
+    "title": "Your progress",
+    "gotThrough": "Cravings you got through: {{count}}",
+    "empty": "Each time a craving passes, it will show here. Opening SOS is already a step.",
+    "typical_one": "For you, cravings have often eased within about {{count}} minute.",
+    "typical_other": "For you, cravings have often eased within about {{count}} minutes."
+  },
+  "vault": {
+    "title": "Your reasons",
+    "intro": "Save what matters to you, on a good day. One will be shown to you when a craving comes.",
+    "textLabel": "A reason, in your own words",
+    "addText": "Save reason",
+    "addPhoto": "Add a photo",
+    "recordVoice": "Record a voice note",
+    "stopVoice": "Stop and save",
+    "recording": "Recording, up to one minute",
+    "voicePhoneOnly": "Voice notes work on the phone only.",
+    "micDenied": "Microphone access is off. You can turn it on in your phone settings.",
+    "delete": "Delete",
+    "deleteConfirm": "Yes, delete",
+    "voiceNote": "Voice note",
+    "photo": "Photo",
+    "empty": "No reasons saved yet.",
+    "errors": {
+      "empty": "There is nothing to save yet.",
+      "too_long": "That is a little too long. Please keep it shorter.",
+      "too_large": "That file is too large. Please choose a smaller one.",
+      "bad_type": "That kind of file can't be saved here.",
+      "full": "Your reasons list is full. Delete one to add another."
+    }
+  },
+  "checkin": {
+    "title": "Daily check-in",
+    "intro": "Four quick taps. There are no right or wrong answers.",
+    "notSet": "Tap to choose",
+    "tagsTitle": "Anything going on today?",
+    "tagsInfo": "Optional. Tap any that fit.",
+    "save": "Save check-in",
+    "saveHint": "Answer all four first.",
+    "saveError": "That didn't save. Please try again.",
+    "savedTitle": "Saved. Thank you for checking in.",
+    "savedBody": "Small check-ins add up. You can change today's answers any time today.",
+    "strongCraving": "Cravings can feel strong, and they do pass. SOS is here if you want it.",
+    "openSos": "Open SOS",
+    "lowMood": "If today feels heavy, you don't have to carry it alone.",
+    "getHelp": "Get help",
+    "done": "Back to home",
+    "measures": {
+      "mood": {
+        "label": "Mood",
+        "levels": {
+          "0": "Very low",
+          "1": "Low",
+          "2": "Okay",
+          "3": "Good",
+          "4": "Very good"
+        }
+      },
+      "sleep": {
+        "label": "Sleep last night",
+        "levels": {
+          "0": "Very poor",
+          "1": "Poor",
+          "2": "Okay",
+          "3": "Good",
+          "4": "Very good"
+        }
+      },
+      "stress": {
+        "label": "Stress",
+        "levels": {
+          "0": "None",
+          "1": "A little",
+          "2": "Some",
+          "3": "High",
+          "4": "Very high"
+        }
+      },
+      "craving": {
+        "label": "Cravings",
+        "levels": {
+          "0": "None",
+          "1": "Mild",
+          "2": "Moderate",
+          "3": "Strong",
+          "4": "Very strong"
+        }
+      }
+    },
+    "tags": {
+      "alone": "Alone a lot",
+      "bored": "Bored",
+      "tired": "Tired",
+      "conflict": "Argument or conflict",
+      "work_stress": "Work or study pressure",
+      "money_worries": "Money worries",
+      "payday": "Payday",
+      "celebration": "Party or celebration",
+      "pain": "In pain",
+      "old_routine": "Saw people from my old routine",
+      "risky_place": "Near a risky place"
+    },
+    "scaleHint": "Swipe up or down to change."
+  },
+  "notifications": {
+    "reminderTitle": "A quiet moment",
+    "reminderBody": "How are you today? Your daily note is ready when you are.",
+    "channelName": "Daily reminder"
+  },
+  "dev": {
+    "title": "Developer tools",
+    "info": "Development builds only. Demo data is made up and marked so it can be cleared.",
+    "load": "Load demo data (30 days)",
+    "clear": "Clear demo data",
+    "loaded": "Added {{checkIns}} check-ins and {{sessions}} SOS sessions.",
+    "cleared": "Demo data cleared."
   }
 }

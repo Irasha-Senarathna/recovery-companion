@@ -1,0 +1,13 @@
+{
+  "id": "feet-on-the-ground",
+  "type": "grounding",
+  "title": "exercises.feetOnTheGround.title",
+  "duration_seconds": 60,
+  "rounds": 1,
+  "steps": [
+    { "text": "exercises.feetOnTheGround.sit", "seconds": 15 },
+    { "text": "exercises.feetOnTheGround.press", "seconds": 15 },
+    { "text": "exercises.feetOnTheGround.hands", "seconds": 15 },
+    { "text": "exercises.feetOnTheGround.name", "seconds": 15 }
+  ]
+}

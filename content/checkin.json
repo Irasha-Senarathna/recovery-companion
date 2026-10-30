@@ -1,0 +1,18 @@
+{
+  "_comment": "Shared by the app check-in and ml/generate.py. Levels run from scale.min to scale.max.",
+  "scale": { "min": 0, "max": 4 },
+  "measures": ["mood", "sleep", "stress", "craving"],
+  "tags": [
+    "alone",
+    "bored",
+    "tired",
+    "conflict",
+    "work_stress",
+    "money_worries",
+    "payday",
+    "celebration",
+    "pain",
+    "old_routine",
+    "risky_place"
+  ]
+}

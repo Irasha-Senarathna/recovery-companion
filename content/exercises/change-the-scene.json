@@ -1,0 +1,12 @@
+{
+  "id": "change-the-scene",
+  "type": "distraction",
+  "title": "exercises.changeTheScene.title",
+  "duration_seconds": 90,
+  "rounds": 1,
+  "steps": [
+    { "text": "exercises.changeTheScene.move", "seconds": 30 },
+    { "text": "exercises.changeTheScene.water", "seconds": 20 },
+    { "text": "exercises.changeTheScene.task", "seconds": 40 }
+  ]
+}

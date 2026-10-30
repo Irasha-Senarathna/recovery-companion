@@ -49,6 +49,10 @@ function AppStack() {
         <Stack.Protected redirectTo={redirectTo} guard={unlocked}>
           <Stack.Screen name="index" />
           <Stack.Screen name="settings" />
+          <Stack.Screen name="sos" />
+          <Stack.Screen name="vault" />
+          <Stack.Screen name="progress" />
+          <Stack.Screen name="checkin" />
         </Stack.Protected>
         <Stack.Protected redirectTo={redirectTo} guard={hidden}>
           <Stack.Screen name="hidden" />

@@ -1,6 +1,8 @@
 import type { KeyStore } from '../platform/keyStore';
 import { disableBiometricUnlock } from '../platform/biometrics';
 import { cancelAllScheduledNotifications } from '../platform/notifications';
+import { clearMediaTemp } from '../platform/mediaTemp';
+import { stopVoice } from '../platform/voice';
 import { deleteDatabaseFile as deleteDbFile } from './db';
 import { SECURE_KEYS } from './secureKeys';
 import type { Database } from './types';
@@ -11,6 +13,7 @@ type Deps = {
   deleteDatabaseFile?: () => Promise<void>;
   cancelNotifications?: () => Promise<void>;
   removeBiometricToken?: () => Promise<void>;
+  clearTempFiles?: () => Promise<void>;
 };
 
 export type DeleteAllResult = { failed: string[] };
@@ -28,14 +31,17 @@ export async function deleteAllData({
   deleteDatabaseFile = deleteDbFile,
   cancelNotifications = cancelAllScheduledNotifications,
   removeBiometricToken = disableBiometricUnlock,
+  clearTempFiles = clearMediaTemp,
 }: Deps): Promise<DeleteAllResult> {
   const steps: [string, () => Promise<void>][] = [
     ['dbKey', () => retryOnce(() => store.remove(SECURE_KEYS.dbKey))],
+    ['playback', async () => stopVoice()],
     ['close', async () => db?.close()],
     ['database', deleteDatabaseFile],
     ['secureStore', () => removeAll(store)],
     ['biometrics', removeBiometricToken],
     ['notifications', cancelNotifications],
+    ['tempFiles', clearTempFiles],
   ];
 
   const failed: string[] = [];
