@@ -51,7 +51,8 @@ for diagrams.
 | Circle accounts: `rc.circle_member`, `rc.circle_supporter` (random ID + token, secure store) | Support circle | High | Token sent to the circle API as `Authorization: Bearer`, never in a URL | Until the circle is turned off | Turn off / leave supporter mode / delete-all |
 | Pending server deletions `rc.circle_pending_delete` (tokens only, secure store) | Support circle | Low (random tokens of accounts being deleted) | Sent once to `DELETE /account` | **Outlives delete-all on purpose** until the server confirms; retried at every launch | Removed when the server confirms |
 | Supporter push opt-in `circleNotify` (settings) and the Expo push token | Support circle | Medium | The push token goes to the circle API **only after the supporter switches notifications on** | Until switched off | Switch off (removes it on the server and unregisters the phone) / leave / delete-all |
-| Coach chat history | AI coach | Very high | Current turns are sent to the coach service when enabled | **Not stored by default.** Optional on-device history | Clear chat / delete-all |
+| Coach chat (messages and replies) | AI coach | Very high | Only after opt-in: the app language, the current message and the last ≤ 6 turns of this chat go to the coach service. **Messages with crisis words are never sent** | **Not stored**: held in the coach screen's memory only, gone when the screen closes | Clear chat / turn off the coach / leave the screen |
+| Coach on/off `coachEnabled` (settings) | AI coach | Low | No | Until changed | Turn off on the coach screen / delete-all |
 | Daily check-in reminder: on/off and time (settings); one scheduled local notification `daily-checkin` with fixed neutral text | Check-in | Medium (lock screen) | No: scheduled by the phone itself, no push service | Until turned off | Settings toggle / delete-all cancels it |
 | Scheduled heads-up `early-warning` (one-time, ≤ 1 a day, never 22:00–08:00, neutral text) | Early warning | Medium: its arrival itself hints at a harder day (said in the toggle's note). Android hides the text on a secure lock screen; iOS shows it unless the user picks "Show Previews: When Unlocked" | No: scheduled by the phone itself | Until fired, cancelled or no longer a harder day | Toggle off / delete-all cancels it and removes its channel |
 
@@ -80,8 +81,11 @@ health data. **A schema allow-list test** fails the build if anyone adds one.
 
 | Item | Handling |
 |---|---|
-| Current message + last ≤ 6 turns | Processed in memory and discarded after the reply. Never written to disk or a DB. |
-| Request logs | Method, path, status and latency only. **Bodies are never logged.** A test checks this. |
+| Language + current message + last ≤ 6 turns (≤ 500 chars each, extra fields refused) | Processed in memory and discarded after the reply. Never written to disk or a DB; the container has no volume. |
+| Request logs | Method, path, status and latency only. **Bodies and replies are never logged**, also on errors; Uvicorn's access log is off; invalid requests get `{"detail": "invalid"}` without echoing the input. A test checks this. |
+| Rate limit and size cap | 30 requests a minute per client address and bodies ≤ 16 KB, both checked before the body is read. Addresses are kept in memory only and swept once their minute has passed. Behind Docker Desktop all clients share one address, so the limit is effectively per laptop. |
+| Network exposure | Port 8001 is bound to `127.0.0.1` by default (`COACH_BIND`). A phone reaches it over USB with `adb reverse tcp:8001 tcp:8001`. Opening it to the Wi-Fi (`COACH_BIND=0.0.0.0` plus a `192.168.x.x` address) sends chat text **unencrypted**; the coach screen then shows a warning, and release builds refuse non-local http. |
+| Ollama on the Mac | Keeps the prompt in memory while the model stays loaded (default 5 minutes). It writes prompts to `~/.ollama/logs/server.log` only with `OLLAMA_DEBUG=1`: **never set it**. |
 | Ollama | Runs locally. Ollama does not keep a chat history for API calls. |
 
 ### Third parties
@@ -129,7 +133,7 @@ whom) · A4 coach conversations · A5 the integrity of the help-resources conten
 | TH8 | T-Invite brute-forces invite codes | A3 | 10-character base32 codes (~50 bits), single use, 24 h expiry, one open code per member, stored as SHA-256. Unknown, used and expired codes give the same answer. After 5 wrong codes per account or 20 per address in an hour, redemption is refused (even for a right code). The member must approve each new supporter, giving them a name only the member sees. Max 3 supporters. | Social engineering. The code hash is unsalted, so someone who dumps the DB could brute-force an open code offline within its 24 h, but would still need the member's approval. |
 | TH9 | An untrusted supporter | A2 | The member can revoke at any time. Before approving, the member compares a 4-character check code shown on both phones, so someone who intercepted the code is caught. Requests sent before approval stay hidden. Supporters get nothing beyond the neutral signal. | The supporter already knows the person is in recovery. |
 | TH10 | Signal spam / abuse | A3 | Rate limit of 3 signals per day per member, plus per-IP limits on the API. | — |
-| TH11 | The coach service logs or keeps chat text | A4 | Stateless design. Body logging is off and a test checks it. No DB in the coach container. Off by default. | Ollama or OS-level swap. Documented. |
+| TH11 | The coach service logs or keeps chat text | A4 | Stateless design. Body logging is off and tests check it on every path, including unexpected errors and the real Ollama client. No DB or volume in the coach container. Off by default. Bound to this computer by default. | Ollama or OS-level swap; `OLLAMA_DEBUG`; plain http if the user opens the port to the Wi-Fi (on-screen warning). Documented. |
 | TH12 | The coach gives harmful advice | user safety | Crisis detection on the device and on the server. Topic guard. Output checker. Safety eval suite with 100% required on crisis, self-harm, overdose and dosing cases. | LLM unpredictability. The coach stays optional and clearly labelled as not a therapist. |
 | TH13 | Help resources are wrong or out of date | A5 | `helplines.json` is edited only by the developer (hook-protected) and carries a "last verified" date. The app warns when an entry is unverified or over 6 months old. An entry is shown as red "emergency services" only if it has a name and a checked date. | Human error in verification. |
 | TH14 | T-Dev adds tracking or logs personal data | A1 | No analytics SDKs. A dependency allow-list test in CI. A lint rule bans `console.log` in `app/src`. The privacy-reviewer subagent runs on storage, server and notification changes. | Review gaps. |
@@ -174,5 +178,7 @@ whom) · A4 coach conversations · A5 the integrity of the help-resources conten
 | Push text is the app's reviewed, banned-term-tested notification text | 6 |
 | Signals older than 7 days are purged | 6 |
 | Slips, goals and wins in the encrypted DB; unknown slip option ids dropped; slip day only (today or yesterday), no exact time; one slip removable; goal title ≤ 80 chars via SafeTextInput; ≤ 6 goals; removing a goal removes its wins; model v2 parity incl. `slip_recent`, synthetic data only | 7 |
-| Coach service never logs request bodies | 9 |
+| Coach service never logs request bodies or replies, on any path (`test_no_body_logging.py`) | 9 |
+| Coach off by default; nothing sent before opt-in; crisis words never sent (`coachScreen.test.tsx`, `chat.test.ts`) | 9 |
+| Coach client sends only `lang`, `message`, `history` (≤ 6 turns) (`coachClient.test.ts`) | 9 |
 | No analytics or ad packages in `package.json` | 11 (CI) |

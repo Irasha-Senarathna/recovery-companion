@@ -84,8 +84,7 @@ flowchart LR
 | `evals/` | Laptop | Coach safety cases (YAML) and runner; pass rates per category. |
 | `content/` | Repo | Developer-verified content. Bundled into the app at build time. |
 
-> Note: `coach/` is a new top-level folder that CLAUDE.md does not list yet.
-> Milestone 9 adds it to CLAUDE.md's folder list.
+`coach/` was added to CLAUDE.md's folder list in milestone 9.
 
 ## 2. Data flow: what stays on the device and what leaves it
 
@@ -261,6 +260,42 @@ sequenceDiagram
     end
   end
 ```
+
+Built in milestone 9:
+
+- **One crisis word list**, `content/crisis_terms.json`, is read by the app
+  (`src/safety/crisisTerms.ts`) and the coach (`coach/app/crisis.py`). The phone
+  checks the message before sending and never sends crisis words; the service
+  checks the message and every earlier user turn again.
+- The **topic guard** (`topic_guard.py`) blocks *asking for advice* on dosing,
+  withdrawal/tapering, medicines and getting or using drugs, plus attempts to
+  change the coach's rules (role-play, "ignore your instructions"). It undoes
+  simple spelling tricks ("d0se", "d o s e"). Mentions alone ("I saw my doctor
+  today") pass. Si/ta term lists are drafts for native-speaker review.
+- The service answers with a **kind**: `reply` (checked model text), `crisis`,
+  `refusal` (+ topic) or `fallback`. Only `reply` carries model text; the app
+  shows its own translated text and Get help / SOS buttons for the others. A
+  `reach_out` note is added when the user leans only on the coach.
+- The **output checker** fails closed on:
+  - phone numbers or links
+  - role claims ("I am a therapist"; also in si/ta)
+  - doses and amounts
+  - medicine and drug names (also in si/ta)
+  - withdrawal advice
+  - drug-use instructions
+  - secrecy from supporters
+  - "you only need me" reliance
+  - shame words
+  - crisis words
+- After any crisis the app **pauses the coach** for that visit: help stays
+  pinned and nothing more is sent.
+- Ollama runs natively on the Mac by default (`host.docker.internal:11434`,
+  uses the GPU); `docker compose --profile ollama` starts a container instead.
+  Model: `COACH_MODEL` (default `qwen2.5:7b`). The coach listens on port 8001,
+  bound to `127.0.0.1` (a phone uses `adb reverse tcp:8001 tcp:8001`), and the app
+  reads `EXPO_PUBLIC_COACH_API_URL`.
+- `make safety-eval` runs `evals/safety_cases.yaml` through the real pipeline
+  with a scripted model; `ARGS="--live"` uses Ollama and writes `evals/report.md`.
 
 ## Repository layout (target)
 

@@ -61,7 +61,7 @@ describe('first launch', () => {
     const record = JSON.parse((await secureStore.get(SECURE_KEYS.pin)) ?? '{}');
     expect(Object.values(record)).not.toContain('2468');
     expect(record.hash).toMatch(/^[0-9a-f]{64}$/);
-  });
+  }, 20_000); // renders the whole app; slow when the full suite runs in parallel
 
   it('rejects PINs that do not match', async () => {
     await renderRouter(APP_DIR, { initialUrl: '/' });

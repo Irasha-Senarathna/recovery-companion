@@ -30,5 +30,30 @@ services:
       db:
         condition: service_healthy
 
+  # Stateless AI coach (milestone 9): no database, no volume, no access log.
+  coach:
+    build:
+      context: .
+      dockerfile: coach/Dockerfile
+    environment:
+      # Default: the Mac's own Ollama (uses the GPU). For the container below,
+      # set COACH_OLLAMA_URL=http://ollama:11434 and run `docker compose --profile ollama up -d`.
+      COACH_OLLAMA_URL: ${COACH_OLLAMA_URL:-http://host.docker.internal:11434}
+      COACH_MODEL: ${COACH_MODEL:-qwen2.5:7b}
+      COACH_CORS_ORIGINS: ${COACH_CORS_ORIGINS:-}
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    ports:
+      # This computer only by default. For a phone, prefer `adb reverse tcp:8001 tcp:8001`
+      # (the app then uses http://localhost:8001); COACH_BIND=0.0.0.0 opens it to the Wi-Fi.
+      - "${COACH_BIND:-127.0.0.1}:8001:8001"
+
+  ollama:
+    image: ollama/ollama:0.12.6
+    profiles: ["ollama"]
+    volumes:
+      - ollama-models:/root/.ollama
+
 volumes:
   db-data:
+  ollama-models:

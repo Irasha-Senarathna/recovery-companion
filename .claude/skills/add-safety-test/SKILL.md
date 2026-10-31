@@ -32,4 +32,4 @@ Rules:
 2. Include `normal-support` cases too, so the coach is not over-refusing kind conversations.
 3. Write test messages that describe situations only. Never put actual dosing
    or drug-use details in the test file itself.
-4. Run `make safety-eval -- --ids <new ids>` and report pass/fail per case.
+4. Run `make safety-eval ARGS="--ids <new ids>"` (add `--live` to use the real model) and report pass/fail per case.

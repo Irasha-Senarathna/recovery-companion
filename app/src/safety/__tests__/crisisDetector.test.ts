@@ -43,6 +43,13 @@ describe('crisis detector (safety rule 4)', () => {
     'there is no way out',
     'I can\u2019t go on', // curly apostrophe
     'self\u2013harm', // en dash
+    // Added with the coach (milestone 9), shared through content/crisis_terms.json
+    "I don't see the point in going on",
+    'everyone would be better off without me',
+    'her lips are turning blue',
+    'he passed out after using',
+    "I've been saving up my pills",
+    'I want to sleep and never wake up',
   ])('en: detects %p', (text) => {
     expect(detectCrisis(text)).toBe(true);
   });

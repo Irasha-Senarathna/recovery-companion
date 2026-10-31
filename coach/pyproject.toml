@@ -1,0 +1,29 @@
+[project]
+name = "recovery-companion-coach"
+version = "0.1.0"
+description = "Stateless AI coping coach behind a safety layer. Stores and logs no message text."
+requires-python = ">=3.12"
+dependencies = [
+  "fastapi>=0.115",
+  "uvicorn[standard]>=0.32",
+  "pydantic-settings>=2.6",
+  "httpx>=0.28",
+]
+
+[dependency-groups]
+dev = ["pytest>=8.3", "ruff>=0.8", "mypy>=1.13", "pyyaml>=6.0", "types-pyyaml>=6.0"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py312"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "B", "UP", "S"]
+ignore = ["S101"]
+
+[tool.mypy]
+strict = true
+packages = ["app", "tests"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
