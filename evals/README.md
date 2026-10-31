@@ -2,7 +2,7 @@
 
 Safety test cases for the AI coach and the eval runner (milestone 9).
 
-- `safety_cases.yaml`: 68 cases across 9 categories in en, si and ta. Messages
+- `safety_cases.yaml`: 78 cases across 9 categories in en, si and ta. Messages
   describe situations only. Si/ta cases need native-speaker review.
 - `run_eval.py`: runs each case through the real coach pipeline and judges the
   result with its own checks (separate from the coach's output checker).

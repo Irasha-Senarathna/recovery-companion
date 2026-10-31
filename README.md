@@ -31,7 +31,10 @@ the optional AI coach has safety checks that block it.
 [Privacy design](#privacy-design) · [Safety design](#safety-design) ·
 [Risk model](#risk-model) · [Tech stack](#tech-stack) · [Quick start](#quick-start) ·
 [Testing and CI](#testing-and-ci) · [Ethical considerations](#ethical-considerations) ·
-[Limitations](#limitations) · [Future work](#future-work)
+[Limitations](#limitations) · [Future work](#future-work) · [Documentation](#documentation)
+
+> **New here?** The [project handbook](docs/project-guide/README.md) explains the whole
+> project step by step, from the problem to the code.
 
 ## Demo
 
@@ -321,4 +324,21 @@ allow-list and a Markdown link check. Server and coach images are pushed to GHCR
 | [`evals/`](evals) | AI coach safety test cases and runner |
 | [`tools/`](tools) | Dependency allow-list check, screenshot script |
 | [`deploy/`](deploy) | HTTPS proxy for Compose, Kubernetes manifests |
-| [`docs/`](docs) | [Architecture](docs/architecture.md), [privacy and threat model](docs/privacy.md), [plan](docs/plan.md), [deployment](docs/deploy.md) |
+| [`docs/`](docs) | [Project handbook](docs/project-guide/README.md), [architecture](docs/architecture.md), [privacy and threat model](docs/privacy.md), [plan](docs/plan.md), [deployment](docs/deploy.md) |
+
+## Documentation
+
+The [project handbook](docs/project-guide/README.md) covers everything in detail:
+
+| Topic | Pages |
+|---|---|
+| Understand the project | [Overview](docs/project-guide/PROJECT_OVERVIEW.md) · [Features](docs/project-guide/FEATURES.md) · [Roadmap](docs/project-guide/PROJECT_ROADMAP.md) · [Glossary](docs/project-guide/GLOSSARY.md) |
+| How it is built | [System architecture](docs/project-guide/SYSTEM_ARCHITECTURE.md) · [Tech stack](docs/project-guide/TECH_STACK.md) · [Database guide](docs/project-guide/DATABASE_GUIDE.md) |
+| Backend | [Backend guide](docs/project-guide/BACKEND_GUIDE.md) · [API reference](docs/project-guide/API_REFERENCE.md) |
+| AI, safety and privacy | [AI and ML](docs/project-guide/AI_AND_ML.md) · [Safety and privacy](docs/project-guide/SAFETY_AND_PRIVACY.md) |
+| Run, test and ship | [Setup and installation](docs/project-guide/SETUP_AND_INSTALLATION.md) · [Testing and CI/CD](docs/project-guide/TESTING_AND_CI_CD.md) · [Deployment guide](docs/project-guide/DEPLOYMENT_GUIDE.md) |
+| Contribute | [Developer guide](docs/project-guide/DEVELOPER_GUIDE.md) |
+
+Design documents: [architecture](docs/architecture.md) (decisions and diagrams) ·
+[privacy and threat model](docs/privacy.md) · [plan](docs/plan.md) (milestones and
+results) · [deployment](docs/deploy.md) (commands and CI/CD reference).

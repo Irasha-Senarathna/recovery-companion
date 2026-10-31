@@ -74,7 +74,7 @@ deps-check:
 
 # Markdown link check, the same tool CI uses (needs Docker).
 links:
-	docker run --rm -v "$(CURDIR)":/input -w /input lycheeverse/lychee:0.24.2 --config lychee.toml README.md 'docs/*.md'
+	docker run --rm -v "$(CURDIR)":/input -w /input lycheeverse/lychee:0.24.2 --config lychee.toml README.md 'docs/**/*.md'
 
 # README screenshots from the running web demo (start `make web` first). Demo data only.
 screenshots:
