@@ -287,6 +287,12 @@ Built in milestone 9:
   - "you only need me" reliance
   - shame words
   - crisis words
+- Milestone 10: shame words that are clearly denied ("you're not weak", "a slip
+  isn't a failure", "you don't have to start over") are allowed. Labels (addict,
+  clean) and commands ("don't be weak") are still blocked. Si/ta shame words come
+  from `content/shame_terms.json`, which the app's locale tests also use (drafts for
+  native-speaker review). The phone's crisis detector now undoes the same spelling
+  tricks as the service. Both read the shared cases in `evals/fixtures/crisis_spelling.json`.
 - After any crisis the app **pauses the coach** for that visit: help stays
   pinned and nothing more is sent.
 - Ollama runs natively on the Mac by default (`host.docker.internal:11434`,
@@ -296,6 +302,31 @@ Built in milestone 9:
   reads `EXPO_PUBLIC_COACH_API_URL`.
 - `make safety-eval` runs `evals/safety_cases.yaml` through the real pipeline
   with a scripted model; `ARGS="--live"` uses Ollama and writes `evals/report.md`.
+
+## Accessibility and languages (milestone 10)
+
+- **Checked by tests, not by hand.** `a11y.labels.test.tsx` renders every route,
+  empty and with 30 days of demo data, and walks the later steps of SOS, slip,
+  onboarding and check-in. Every button, switch and text field must have a label,
+  a role (text fields excepted) and a tap target of at least 48 dp.
+  `contrast.test.ts` checks every text colour on every surface it is drawn on
+  (≥ 4.5:1) and the `outline` of fields and switches (≥ 3:1), in light and dark.
+- **Large text.** From a font scale of 1.3 (`LARGE_TEXT_SCALE`), the screen header
+  stacks and the round SOS button becomes a wide one that grows with its text.
+  Font scaling is never switched off. Only display numbers (32 sp and up, in
+  `AnimatedNumber`) stop at 1.25× so they stay inside their rings; they are still
+  larger than body text at 200%.
+- **Empty states.** Lists show an `EmptyState` card (calm words, at most one next
+  step) instead of a blank space.
+- **Translations.** si/ta must have every en key and the same `{{placeholders}}`.
+  A string may stay in English only if it is listed in `_meta.sameAsEnglish`. Both
+  files stay `needs_review`, and `_meta.priorityReview` lists the areas a native
+  speaker should read first. The en/si/ta shame-word lists in
+  `content/shame_terms.json` are tested against every string.
+- **Offline.** Everything except the support circle and the coach works in
+  airplane mode (`offline.test.tsx`).
+- **About** (Settings → "About this app and your privacy") shows the user-verified
+  disclaimer, a plain-language privacy summary and the neutral app name.
 
 ## Repository layout (target)
 
@@ -308,8 +339,8 @@ server/       FastAPI support-circle API + Alembic migrations + tests
 coach/        FastAPI coach service + safety layer + tests
 ml/           generate.py, features.py, train.py, evaluate.py, export.py, report.md
 content/      helplines.json*, disclaimer.md*, support_places.json,
-              first_visit{,.si,.ta}.md, exercises/
-evals/        safety_cases.yaml, run_eval.py, report.md
+              first_visit{,.si,.ta}.md, exercises/, crisis_terms.json, shame_terms.json
+evals/        safety_cases.yaml, run_eval.py, report.md, fixtures/
 docs/         architecture.md, privacy.md, plan.md, deploy.md
 * edited by the developer only (protected by a hook)
 ```

@@ -24,7 +24,7 @@ export function ToggleRow({ label, value, onValueChange, note, disabled, testID 
         value={value}
         disabled={disabled}
         onValueChange={onValueChange}
-        trackColor={{ true: theme.primary, false: theme.border }}
+        trackColor={{ true: theme.primary, false: theme.outline }}
       />
     </View>
   );

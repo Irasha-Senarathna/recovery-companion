@@ -3,6 +3,7 @@ import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { ActionButton } from '../../components/ActionButton';
 import { BodyText } from '../../components/BodyText';
+import { EmptyState } from '../../components/EmptyState';
 import { ScreenLayout } from '../../components/ScreenLayout';
 import { MAX_SUPPORTERS } from './limits';
 import { CircleErrorText, SectionHeading, SharingSummary } from './CircleText';
@@ -60,7 +61,9 @@ function MemberCircle({ circle }: { circle: Circle }) {
       )}
 
       <SectionHeading>{t('circle.supporters')}</SectionHeading>
-      {circle.links.length === 0 ? <BodyText>{t('circle.noSupporters')}</BodyText> : null}
+      {circle.links.length === 0 ? (
+        <EmptyState testID="circle-empty" message={t('circle.noSupporters')} />
+      ) : null}
       {circle.links.map((link) => (
         <SupporterRow key={link.id} link={link} circle={circle} />
       ))}

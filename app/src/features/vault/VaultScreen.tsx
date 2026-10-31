@@ -2,7 +2,7 @@ import { useCallback, useEffect, useState } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import { useTranslation } from 'react-i18next';
 import { ActionButton } from '../../components/ActionButton';
-import { BodyText } from '../../components/BodyText';
+import { EmptyState } from '../../components/EmptyState';
 import { Card } from '../../components/Card';
 import { ScreenLayout } from '../../components/ScreenLayout';
 import type { Database } from '../../storage/types';
@@ -38,7 +38,7 @@ function Vault({ db }: { db: Database }) {
     <>
       <Text style={[styles.intro, { color: theme.textMuted }]}>{t('vault.intro')}</Text>
       <AddReason db={db} onAdded={refresh} />
-      {items.length === 0 ? <BodyText>{t('vault.empty')}</BodyText> : null}
+      {items.length === 0 ? <EmptyState testID="vault-empty" message={t('vault.empty')} /> : null}
       {items.map((item) => (
         <VaultCard key={item.id} item={item} db={db} onDeleted={refresh} />
       ))}

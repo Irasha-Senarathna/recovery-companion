@@ -1,4 +1,27 @@
-import { CRISIS_TERMS, detectCrisis } from '../crisisDetector';
+import spelling from '../../../../evals/fixtures/crisis_spelling.json';
+import { CRISIS_TERMS, deobfuscate, detectCrisis } from '../crisisDetector';
+
+// Shared with coach/tests/test_crisis.py, so the phone and the service agree.
+describe('spelling tricks', () => {
+  it.each(spelling.detect)('detects %p', (text) => {
+    expect(detectCrisis(text)).toBe(true);
+  });
+
+  it.each(spelling.ignore)('does not flag %p', (text) => {
+    expect(detectCrisis(text)).toBe(false);
+  });
+
+  it.each([
+    ['d0se', 'dose'],
+    ['x@nax', 'xanax'],
+    ['d o s e', 'dose'],
+    ['d.o.s.e', 'dose'],
+    ['room 101', 'room 101'],
+    ['a b', 'a b'],
+  ])('deobfuscate(%p) is %p', (text, expected) => {
+    expect(deobfuscate(text)).toBe(expected);
+  });
+});
 
 describe('crisis detector (safety rule 4)', () => {
   it.each([

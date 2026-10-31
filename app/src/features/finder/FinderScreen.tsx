@@ -4,6 +4,7 @@ import { StyleSheet, Text, View } from 'react-native';
 import { useTranslation } from 'react-i18next';
 import { ActionButton } from '../../components/ActionButton';
 import { BodyText } from '../../components/BodyText';
+import { EmptyState } from '../../components/EmptyState';
 import { ChipGroup } from '../../components/ChipGroup';
 import { ScreenLayout } from '../../components/ScreenLayout';
 import { isLanguage } from '../../i18n';
@@ -47,23 +48,23 @@ export function FinderScreen({ places = loadPlaces(), today = new Date() }: Prop
         onPress={() => router.push('/first-visit')}
       />
       {places.length === 0 ? (
-        <BodyText>{t('finder.none')}</BodyText>
+        <EmptyState testID="finder-empty" message={t('finder.none')} />
       ) : (
         <>
           <Filters places={places} type={type} area={area} onType={setType} onArea={setArea} />
           {shown.length === 0 ? (
-            <>
-              <BodyText>{t('finder.noMatch')}</BodyText>
-              <ActionButton
-                testID="finder-clear"
-                tone="plain"
-                label={t('finder.clear')}
-                onPress={() => {
+            <EmptyState
+              testID="finder-no-match"
+              message={t('finder.noMatch')}
+              action={{
+                testID: 'finder-clear',
+                label: t('finder.clear'),
+                onPress: () => {
                   setType(null);
                   setArea(null);
-                }}
-              />
-            </>
+                },
+              }}
+            />
           ) : (
             shown.map((place) => <PlaceDetail key={place.id} place={place} today={today} />)
           )}

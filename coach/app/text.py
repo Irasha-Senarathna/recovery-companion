@@ -16,7 +16,8 @@ def normalise(text: str) -> str:
     text = unicodedata.normalize("NFC", text).lower()
     text = re.sub(r"[‘’ʼ`]", "'", text)
     text = re.sub(r"[‐-―]", "-", text)
-    text = re.sub(r"[‌‍]", "", text)
+    # Zero-width and soft-hyphen characters hide words: "over\u200bdose".
+    text = re.sub(r"[\u200b\u200c\u200d\u00ad\u2060\ufeff]", "", text)
     return re.sub(r"\s+", " ", text).strip()
 
 

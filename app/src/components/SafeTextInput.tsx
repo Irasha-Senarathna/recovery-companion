@@ -33,12 +33,12 @@ export function SafeTextInput({ label, value, onChangeText, hint, error, ...rest
     <View style={styles.field}>
       <Text style={[styles.label, { color: theme.text }]}>{label}</Text>
       <TextInput
+        {...rest}
         autoCorrect={false}
         spellCheck={false}
         autoComplete="off"
         importantForAutofill="no"
         textContentType="none"
-        {...rest}
         accessibilityLabel={label}
         accessibilityHint={hint}
         value={value}
@@ -46,7 +46,7 @@ export function SafeTextInput({ label, value, onChangeText, hint, error, ...rest
         placeholderTextColor={theme.textMuted}
         style={[
           styles.input,
-          { color: theme.text, backgroundColor: theme.surface, borderColor: theme.border },
+          { color: theme.text, backgroundColor: theme.surface, borderColor: theme.outline },
         ]}
       />
       {hint ? <Text style={[styles.hint, { color: theme.textMuted }]}>{hint}</Text> : null}

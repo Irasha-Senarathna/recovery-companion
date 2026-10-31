@@ -1,0 +1,28 @@
+{
+  "_about": "Spelling tricks the crisis detector must see through, shared by the app (app/src/safety/__tests__/crisisDetector.test.ts) and the coach (coach/tests/test_crisis.py) so both stay in step.",
+  "detect": [
+    "thinking about su1c1de",
+    "I took an 0verdose",
+    "I want to k i l l myself",
+    "s.u.i.c.i.d.e",
+    "k1ll mys3lf",
+    "he 0verd0sed",
+    "s u i c i d e",
+    "I might self h4rm",
+    "I want to d1e",
+    "SU1CIDE",
+    "I took an over​dose",
+    "thinking about sui­cide",
+    "over⁠dose again"
+  ],
+  "ignore": [
+    "I scored 100 on my test",
+    "meet at 5 pm",
+    "a b c",
+    "room 101 at 7",
+    "I feel ok today",
+    "plan A or plan B",
+    "the U.K. is far",
+    "my pin is 4 digits"
+  ]
+}

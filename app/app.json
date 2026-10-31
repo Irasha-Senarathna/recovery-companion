@@ -1,6 +1,6 @@
 {
   "expo": {
-    "name": "Recovery Companion",
+    "name": "Companion",
     "slug": "recovery-companion",
     "version": "1.0.0",
     "orientation": "portrait",
@@ -30,6 +30,7 @@
       ]
     },
     "web": {
+      "name": "Companion",
       "favicon": "./assets/favicon.png",
       "bundler": "metro",
       "output": "single"

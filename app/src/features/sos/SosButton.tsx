@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 import { Animated, Easing, Pressable, StyleSheet, Text, View } from 'react-native';
 import { useTranslation } from 'react-i18next';
 import { useReducedMotion } from '../../components/useReducedMotion';
-import { useTheme } from '../../theme';
+import { RADIUS, useLargeText, useTheme } from '../../theme';
 
 const SIZE = 184;
 
@@ -12,6 +12,8 @@ export function SosButton({ onPress }: { onPress: () => void }) {
   const { t } = useTranslation();
   const theme = useTheme();
   const reduced = useReducedMotion();
+  // A circle cannot grow with large text, so it becomes a wide, rounded button.
+  const large = useLargeText();
   const [glow] = useState(() => new Animated.Value(0));
 
   useEffect(() => {
@@ -41,19 +43,24 @@ export function SosButton({ onPress }: { onPress: () => void }) {
 
   return (
     <View style={styles.wrap}>
-      <Animated.View
-        pointerEvents="none"
-        style={[styles.halo, { backgroundColor: theme.wave[1], opacity, transform: [{ scale }] }]}
-      />
+      {large ? null : (
+        <Animated.View
+          pointerEvents="none"
+          style={[styles.halo, { backgroundColor: theme.wave[1], opacity, transform: [{ scale }] }]}
+        />
+      )}
       <Pressable
         testID="sos-button"
         accessibilityRole="button"
         accessibilityLabel={t('sos.buttonLabel')}
         accessibilityHint={t('sos.buttonHint')}
         onPress={onPress}
-        style={({ pressed }) => [styles.button, { opacity: pressed ? 0.9 : 1 }]}
+        style={({ pressed }) => [
+          large ? styles.wide : styles.round,
+          { opacity: pressed ? 0.9 : 1 },
+        ]}
       >
-        <LinearGradient colors={theme.sos} style={styles.fill}>
+        <LinearGradient colors={theme.sos} style={large ? styles.wideFill : styles.fill}>
           <Text style={[styles.title, { color: theme.onSos }]}>{t('sos.button')}</Text>
           <Text style={[styles.label, { color: theme.onSos }]}>{t('sos.buttonLabel')}</Text>
         </LinearGradient>
@@ -65,8 +72,10 @@ export function SosButton({ onPress }: { onPress: () => void }) {
 const styles = StyleSheet.create({
   wrap: { alignItems: 'center', justifyContent: 'center', paddingVertical: 24 },
   halo: { position: 'absolute', width: SIZE + 56, height: SIZE + 56, borderRadius: 999 },
-  button: { width: SIZE, height: SIZE, minHeight: SIZE, borderRadius: 999, overflow: 'hidden' },
+  round: { width: SIZE, height: SIZE, minHeight: SIZE, borderRadius: 999, overflow: 'hidden' },
   fill: { flex: 1, alignItems: 'center', justifyContent: 'center', padding: 20, gap: 6 },
+  wide: { width: '100%', minHeight: SIZE / 2, borderRadius: RADIUS.card, overflow: 'hidden' },
+  wideFill: { alignItems: 'center', justifyContent: 'center', padding: 24, gap: 6 },
   title: { fontSize: 34, fontWeight: '800', letterSpacing: 2 },
   label: { fontSize: 16, fontWeight: '600', textAlign: 'center' },
 });

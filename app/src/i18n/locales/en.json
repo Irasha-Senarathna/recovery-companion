@@ -3,7 +3,7 @@
     "status": "source"
   },
   "app": {
-    "name": "Recovery Companion"
+    "name": "Companion"
   },
   "common": {
     "webDemoBanner": "Web demo — not for real data. Nothing here is stored securely.",
@@ -121,7 +121,8 @@
     "reminderPreview": "The reminder will say only this:",
     "simulateNotification": "Simulate notification (web demo)",
     "simulatedNotification": "Web demo: on a phone, the reminder above would appear now.",
-    "reminderAppName": "Your phone also shows this app's name with each reminder, and may show it on the lock screen."
+    "reminderAppName": "Your phone also shows this app's name with each reminder, and may show it on the lock screen.",
+    "about": "About this app and your privacy"
   },
   "deleteAll": {
     "button": "Delete all my data",
@@ -673,7 +674,8 @@
     "moneyKept": "Put towards your life so far",
     "amount": "Rs {{amount}}",
     "moneyNext": "Next milestone: Rs {{amount}}",
-    "moneyChange": "Change the daily amount"
+    "moneyChange": "Change the daily amount",
+    "empty": "No goals yet. You could start with one small thing that matters to you."
   },
   "finder": {
     "title": "Find support",
@@ -741,5 +743,20 @@
     "turnOff": "Turn off the coach",
     "paused": "The coach is paused for now. Right now a real person can help more than a chat can. Please reach out using Get help.",
     "unencrypted": "Test setup: this connection to the coach is not encrypted, so others on the same Wi-Fi could read your messages. Do not use it for real conversations."
+  },
+  "about": {
+    "title": "About and privacy",
+    "privacyTitle": "Your privacy",
+    "points": {
+      "phone": "No sign-up: no name, email or phone number. What you enter is stored encrypted on this phone and is not backed up to the cloud.",
+      "leave": "Only two features send anything to a server, and only after you turn them on: the support circle and the coping coach.",
+      "circle": "Your support circle only learns that, and when, you asked them to check in. Never your check-ins, cravings, slips or places. It uses a random ID, not your name.",
+      "coach": "The coping coach gets only this chat (your message and the last few turns), not your other data, and the coach service does not save it. If the app spots crisis words, the message is not sent and help opens instead.",
+      "calls": "Calling a number or opening a website hands it to your phone's own apps, which may keep it in their call log or history.",
+      "tracking": "No ads, no analytics and no tracking.",
+      "control": "You can lock the app, hide it with one tap, and delete everything from Settings. Anything on the support circle server is removed the next time the app is online."
+    },
+    "appName": "On your home screen and in notifications, this app is called \"{{name}}\", so it does not stand out.",
+    "version": "Version {{version}}"
   }
 }

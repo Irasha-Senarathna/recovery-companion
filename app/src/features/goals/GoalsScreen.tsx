@@ -7,6 +7,7 @@ import { AnimatedNumber } from '../../components/AnimatedNumber';
 import { BodyText } from '../../components/BodyText';
 import { Card } from '../../components/Card';
 import { ChipGroup } from '../../components/ChipGroup';
+import { EmptyState } from '../../components/EmptyState';
 import { SafeTextInput } from '../../components/SafeTextInput';
 import { ScreenLayout } from '../../components/ScreenLayout';
 import type { Database } from '../../storage/types';
@@ -53,6 +54,7 @@ function Goals({ db }: { db: Database }) {
     <>
       <BodyText>{t('goals.intro')}</BodyText>
       <MoneyCard />
+      {goals.length === 0 ? <EmptyState testID="goals-empty" message={t('goals.empty')} /> : null}
       {goals.map((goal) => (
         <GoalCard
           key={goal.id}

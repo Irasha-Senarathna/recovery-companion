@@ -448,7 +448,7 @@ Carry-overs:
 - **M10**: si/ta shame-word lists.
 - **M11**: TLS in front of the coach if it is ever used over Wi-Fi.
 
-## M10 — Accessibility, language coverage, polish · TODO
+## M10 — Accessibility, language coverage, polish · DONE
 
 **Goal:** an accessible, calm, fully translated app that works offline.
 
@@ -464,6 +464,54 @@ Carry-overs:
 - Each list screen has an empty state. Every core feature apart from the circle and the coach works in airplane mode.
 - **Tests pass:** `a11y.labels.test.tsx` (scans all screens), `contrast.test.ts`
   (theme tokens), `i18n.parity.test.ts`, `offline.test.tsx`, `aboutScreen.test.tsx`.
+
+**Result (M10):** 1629 app tests, 67 server tests, 24 ml tests and 262 coach tests pass.
+ESLint, tsc, ruff and mypy are clean, and the web bundle builds. Safety eval: stub model
+100%, live qwen2.5:7b 78/78 = 100% (up from 98.7% in M9), including 100% on crisis, self-harm, overdose and dosing.
+- **Accessibility, checked by tests.** `a11y.labels.test.tsx` scans every route, both
+  empty and with demo data, plus the later steps of SOS, slip, onboarding and check-in.
+  It found one gap, the hidden screen's unlabelled long-press area, which is now fixed.
+  `contrast.test.ts` found white on the SOS gradient at 3.96:1, now 4.69:1. A new
+  `outline` token gives text fields and switches 3:1 or more.
+- **Large text.** At font scale 1.3 and above, the header stacks and the SOS button
+  becomes wide. Font scaling is never turned off. Only display numbers stop at 1.25×.
+- **Empty states.** `EmptyState` is used in the vault, goals (new), circle, supporter
+  mode, finder, help contacts, SOS stats and the trigger map.
+- **Translations.** `i18n.parity.test.ts` replaces `locales.test.ts`. It adds placeholder
+  parity, `_meta.sameAsEnglish` (the only strings allowed to stay in English) and
+  `_meta.priorityReview` (help, slip, coach, notifications, about, finder, onboarding).
+  si/ta stay `needs_review`.
+- **Offline.** `offline.test.tsx` checks that every route except circle and coach,
+  plus the core actions, works with fetch, XHR and WebSocket all failing.
+- **About** (Settings → About this app and your privacy) shows the disclaimer, a
+  7-point privacy summary (wording corrected after the privacy review) and the version.
+- **Neutral name.** The display name and web tab title are now "Companion", and
+  `app.name` is "Companion" in all three languages. This needs a new phone build.
+- **Coach carry-overs.**
+  - Plain denials ("you're not weak", "a slip isn't a failure") now pass the output
+    checker, but only as a whole clause and only when the reply has no hedge
+    (yet, if, unless, only, "..."). The safety review found 4 High bypasses in the
+    first version ("not just weak", "won't make you a failure", "yet", sarcasm); all
+    are fixed and tested.
+  - The shame check now reads `content/shame_terms.json` for en, si and ta. The en list
+    gained relapsed again, lost streak, pathetic, lazy, selfish and willpower terms.
+    The si/ta lists are drafts, narrowed so they do not block kind text.
+  - The phone's crisis detector now undoes the same spelling tricks as the service.
+    Both now also strip zero-width characters and soft hyphens, and both read the
+    shared cases in `evals/fixtures/crisis_spelling.json`.
+
+Not done, needs you:
+- the native-speaker review (si/ta strings, shame and crisis lists, first-visit guides)
+- a clinician's read of the slip wording
+
+Carry-overs:
+- **M11**: neutral Android package id (`dev.recoverycompanion.app` can be seen by other
+  apps; changing it needs a fresh install and re-registered FCM/EAS) and URL scheme
+  `recoverycompanion`.
+- **M11**: load the coach's word lists at startup so a missing file fails fast.
+- **M11**: an offline test through the real `SessionProvider` (queued server deletions at launch).
+- **M11**: a "mark goal as done" option that keeps its wins, demo slips in the dev menu,
+  and a synthetic-data marker for `model.json`. These were deferred by choice.
 
 ## M11 — CI/CD, demo, README · TODO
 

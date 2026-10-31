@@ -1,44 +1,6 @@
-import fs from 'fs';
-import path from 'path';
 import { renderRouter, screen } from 'expo-router/testing-library';
-import type { Session } from '../features/session/SessionProvider';
 import { fakeSession, layoutWithSession } from '../test-utils/session';
-
-const APP_DIR = path.join(__dirname, '..', 'app');
-
-/** Every route file in src/app (layouts excluded), by route name. */
-function listRoutes(): string[] {
-  return fs
-    .readdirSync(APP_DIR)
-    .filter((file) => file.endsWith('.tsx') && !file.startsWith('_'))
-    .map((file) => file.replace(/\.tsx$/, ''));
-}
-
-/** The session state in which each route is reachable. */
-const SESSION_FOR_ROUTE: Record<string, Partial<Session>> = {
-  index: { status: 'unlocked' },
-  settings: { status: 'unlocked' },
-  help: { status: 'locked' },
-  lock: { status: 'locked' },
-  hidden: { status: 'locked', hidden: true },
-  onboarding: { status: 'onboarding' },
-  problem: { status: 'error' },
-  loading: { status: 'loading' },
-  sos: { status: 'unlocked' },
-  vault: { status: 'unlocked' },
-  progress: { status: 'unlocked' },
-  checkin: { status: 'unlocked' },
-  triggers: { status: 'unlocked' },
-  'coping-plan': { status: 'unlocked' },
-  circle: { status: 'unlocked' },
-  'circle-invite': { status: 'unlocked' },
-  supporter: { status: 'unlocked' },
-  slip: { status: 'unlocked' },
-  goals: { status: 'unlocked' },
-  finder: { status: 'unlocked' },
-  'first-visit': { status: 'unlocked' },
-  coach: { status: 'unlocked' },
-};
+import { listRoutes, routeComponent, SESSION_FOR_ROUTE, urlFor } from '../test-utils/routes';
 
 describe('every screen', () => {
   const routes = listRoutes();
@@ -50,10 +12,9 @@ describe('every screen', () => {
 
   it.each(routes)('/%s shows the help button (safety rule 2)', async (route) => {
     const session = fakeSession(SESSION_FOR_ROUTE[route]);
-    const component = jest.requireActual(path.join(APP_DIR, `${route}.tsx`)).default;
     await renderRouter(
-      { _layout: layoutWithSession(session), [route]: component },
-      { initialUrl: route === 'index' ? '/' : `/${route}` },
+      { _layout: layoutWithSession(session), [route]: routeComponent(route) },
+      { initialUrl: urlFor(route) },
     );
     const button = await screen.findByTestId('help-button');
     expect(button).toBeOnTheScreen();

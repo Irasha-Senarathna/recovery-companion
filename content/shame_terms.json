@@ -1,0 +1,73 @@
+{
+  "_about": "Shame words (safety rule 5) that app text and coach replies must never use. Shared by the app's locale tests (app/src/i18n/__tests__/i18n.parity.test.ts) and the coach output checker (coach/app/output_checker.py). en entries are regular-expression fragments matched on word boundaries, case-insensitive; write fragments that work the same in JavaScript and Python. si/ta entries are plain substrings in Sinhala/Tamil script. Keep si/ta entries specific: a broad stem (e.g. Tamil தோற்ற, which also means 'appearance') would block kind text. The coach builds its whole shame check (en, si, ta) from this file; a plain denial such as \"you're not weak\" is allowed there, see coach/app/output_checker.py.",
+  "en": {
+    "status": "source",
+    "patterns": [
+      "fail(ed|ure|ures|ing)?",
+      "clean|dirty",
+      "addicts?",
+      "abusers?",
+      "junkies?",
+      "start(ing)? over",
+      "back to (day )?(zero|0|one|1)",
+      "weak(ness)?",
+      "shameful",
+      "ruined (everything|it all)",
+      "lost all (your |of your )?progress",
+      "relaps\\w* again",
+      "(lost|lose|losing|reset|broke|broken) (your |the )?streak",
+      "streak (is |was )?(lost|reset|broken)",
+      "pathetic",
+      "lazy",
+      "selfish",
+      "losers?",
+      "disgrace\\w*",
+      "disappoint\\w*",
+      "(no|lack of) willpower",
+      "should be ashamed",
+      "let (everyone|everybody|them|people|your family) down"
+    ]
+  },
+  "si": {
+    "status": "needs_review",
+    "terms": [
+      "අසාර්ථක",
+      "අසමත්",
+      "පරාජිතයා",
+      "පරාජය වුණා",
+      "දුර්වලයා",
+      "දුර්වල කෙනෙක්",
+      "ඇබ්බැහියා",
+      "ඇබ්බැහියෙක්",
+      "ඇබ්බැහියන්",
+      "ඇබ්බැහිකාරයා",
+      "කුඩුකාරයා",
+      "කුඩුකාරයෙක්",
+      "කුඩුකාරයෝ",
+      "කුඩු කාරයා",
+      "ලැජ්ජා සහගත",
+      "ලැජ්ජා විය යුතු",
+      "ලැජ්ජා වෙන්න ඕන",
+      "ආයෙත් බිංදුවට",
+      "නැවත බිංදුවට"
+    ]
+  },
+  "ta": {
+    "status": "needs_review",
+    "terms": [
+      "தோல்வி",
+      "தோற்றுவிட்ட",
+      "தோற்றுப்போன",
+      "தோற்றாய்",
+      "பலவீன",
+      "போதை அடிமை",
+      "போதைக்கு அடிமை",
+      "போதைப்பொருள் அடிமை",
+      "அடிமையானவர்",
+      "வெட்கக்கேடு",
+      "வெட்கப்பட வேண்டும்",
+      "மீண்டும் பூஜ்ஜிய",
+      "மீண்டும் பூஜ்ய"
+    ]
+  }
+}

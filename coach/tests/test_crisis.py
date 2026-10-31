@@ -1,4 +1,5 @@
 import json
+from pathlib import Path
 
 import pytest
 
@@ -69,3 +70,21 @@ def test_uses_the_same_word_list_as_the_app() -> None:
     data = json.loads(terms_path().read_text(encoding="utf-8"))
     assert {"en", "si", "ta", "romanised"} <= data.keys()
     assert terms_path().parent.name == "content"
+
+
+# Shared with the app's crisis detector test, so the phone and the service agree.
+SPELLING = json.loads(
+    (Path(__file__).resolve().parents[2] / "evals" / "fixtures" / "crisis_spelling.json").read_text(
+        encoding="utf-8"
+    )
+)
+
+
+@pytest.mark.parametrize("text", SPELLING["detect"])
+def test_detects_spelling_tricks(text: str) -> None:
+    assert detect_crisis(text)
+
+
+@pytest.mark.parametrize("text", SPELLING["ignore"])
+def test_ignores_ordinary_numbers_and_letters(text: str) -> None:
+    assert not detect_crisis(text)

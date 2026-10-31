@@ -4,6 +4,7 @@ import { Linking, StyleSheet, Text } from 'react-native';
 import { useTranslation } from 'react-i18next';
 import { ActionButton } from '../../components/ActionButton';
 import { BodyText } from '../../components/BodyText';
+import { EmptyState } from '../../components/EmptyState';
 import { Card } from '../../components/Card';
 import { CalmScene } from '../../components/illustrations/CalmScene';
 import { detectCrisis } from '../../safety/crisisDetector';
@@ -234,7 +235,9 @@ export function DoneStep({
 
 export function StatsText({ stats }: { stats: SosStats }) {
   const { t } = useTranslation();
-  if (stats.gotThrough === 0) return <BodyText>{t('progress.empty')}</BodyText>;
+  if (stats.gotThrough === 0) {
+    return <EmptyState testID="sos-stats-empty" message={t('progress.empty')} />;
+  }
   return (
     <>
       <BodyText>{t('progress.gotThrough', { count: stats.gotThrough })}</BodyText>

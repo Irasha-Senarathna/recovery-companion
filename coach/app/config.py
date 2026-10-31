@@ -13,7 +13,7 @@ class Settings(BaseSettings):
     timeout_seconds: float = 60.0
     # Web demo only: comma-separated browser origins, e.g. http://localhost:8081.
     cors_origins: str = ""
-    # Where crisis_terms.json lives; empty = the repo's content/ folder.
+    # Where crisis_terms.json and shame_terms.json live; empty = the repo's content/ folder.
     content_dir: str = ""
 
 

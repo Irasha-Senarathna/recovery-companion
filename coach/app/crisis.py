@@ -13,15 +13,19 @@ from app.text import latin_pattern, normalise, variants
 HERE = Path(__file__).resolve().parent
 
 
-def terms_path() -> Path:
-    """content/crisis_terms.json: next to the app in Docker, at the repo root otherwise."""
+def content_path(name: str) -> Path:
+    """A shared file in content/: next to the app in Docker, at the repo root otherwise."""
     if settings.content_dir:
-        return Path(settings.content_dir) / "crisis_terms.json"
+        return Path(settings.content_dir) / name
     for base in (HERE.parent, HERE.parent.parent):
-        candidate = base / "content" / "crisis_terms.json"
+        candidate = base / "content" / name
         if candidate.exists():
             return candidate
-    raise FileNotFoundError("content/crisis_terms.json not found")
+    raise FileNotFoundError(f"content/{name} not found")
+
+
+def terms_path() -> Path:
+    return content_path("crisis_terms.json")
 
 
 @cache
