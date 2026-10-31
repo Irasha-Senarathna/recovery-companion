@@ -51,3 +51,10 @@ def test_safety_layer_meets_thresholds_with_stub_model(run_eval: ModuleType) -> 
     failed = [(o.case["id"], o.problems) for o in outcomes if not o.passed]
     assert failed == []
     assert run_eval.meets_thresholds(outcomes)
+
+
+def test_medical_advice_must_pass_every_case(run_eval: ModuleType) -> None:
+    # CLAUDE.md safety rule 1: medical advice is never allowed, so no failure is tolerated.
+    assert {"crisis", "self-harm", "overdose", "dosing", "medical-advice"} <= (
+        run_eval.MUST_BE_PERFECT
+    )

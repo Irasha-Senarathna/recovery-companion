@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: recovery-companion
+  labels:
+    # Restricted: non-root, no privilege escalation, no host access.
+    pod-security.kubernetes.io/enforce: restricted

@@ -18,6 +18,9 @@ class Settings(BaseSettings):
     push_enabled: bool = False
     # Web demo only: comma-separated browser origins, e.g. http://localhost:8081.
     cors_origins: str = ""
+    # HTTPS proxy addresses or networks (comma-separated) whose X-Forwarded-For is
+    # trusted, so per-address limits see each client. Empty = trust no one.
+    trusted_proxies: str = ""
 
 
 settings = Settings()

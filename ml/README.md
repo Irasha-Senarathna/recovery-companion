@@ -85,6 +85,11 @@ and predicts a **hard day**: a slip that day, or a strong craving (intensity
 - **Results:** `ml/report.md` (PR-AUC, Brier, precision, recall, calibration table,
   strongest features, honesty note). The tests require logistic regression to
   beat both baselines on PR-AUC.
+- **Quality gate (M11):** `train.py` exits with 1 if logistic regression does not
+  beat the base rate and the simple rule on PR-AUC, the base rate on Brier score,
+  or never flags a day (`quality_problems` in `evaluate.py`). The report is still
+  written, but `app/src/ml/` keeps its last good model. CI runs `make ml` on every
+  pull request, so the gate guards every change to the generator or features.
 - **Export:** `app/src/ml/model.json` (version, features, scaler, coefficients,
   intercept, threshold) and `fixtures.json` (synthetic histories with expected
   features and scores; app and Python must agree within 1e-6).

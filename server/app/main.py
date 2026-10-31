@@ -5,6 +5,7 @@ from contextlib import asynccontextmanager
 
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
+from uvicorn.middleware.proxy_headers import ProxyHeadersMiddleware
 
 from app.config import settings
 from app.db import session_factory
@@ -53,6 +54,10 @@ def create_app(*, run_purge_loop: bool = True) -> FastAPI:
             allow_methods=["GET", "POST", "PUT", "DELETE"],
             allow_headers=["Authorization", "Content-Type"],
         )
+
+    proxies = [p.strip() for p in settings.trusted_proxies.split(",") if p.strip()]
+    if proxies:
+        app.add_middleware(ProxyHeadersMiddleware, trusted_hosts=proxies)
 
     @app.get("/health")
     def health() -> dict[str, str]:

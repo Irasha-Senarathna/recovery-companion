@@ -1,6 +1,6 @@
 # Plan — Recovery Companion
 
-Status: **awaiting approval**. No code is written until this plan is approved.
+Status: **all 11 milestones done.** Remaining work is listed under M11's result.
 Each milestone is built with `/milestone N`: plan → tests first → implement →
 `make lint` + `make test` → reviewer subagents → docs → summary.
 
@@ -513,7 +513,7 @@ Carry-overs:
 - **M11**: a "mark goal as done" option that keeps its wins, demo slips in the dev menu,
   and a synthetic-data marker for `model.json`. These were deferred by choice.
 
-## M11 — CI/CD, demo, README · TODO
+## M11 — CI/CD, demo, README · DONE
 
 **Goal:** automated quality gates and a portfolio-ready presentation.
 
@@ -531,3 +531,50 @@ Carry-overs:
   tech stack, quick start, ethics, limitations and future work.
 - **Tests pass:** every CI job is green on a PR. `test_dependency_allowlist`
   passes. Links in the README are checked by a markdown link check.
+
+**Result (M11):** 1629 app, 71 server, 34 ml, 263 coach and 50 tools tests pass; ESLint,
+tsc, ruff and mypy clean; stub safety eval 100%; `make ml` passes its gate; link check
+58/58. All three workflows pass actionlint; the k8s manifests pass `kubeconform -strict`;
+both images build. **Not yet run on GitHub**: the jobs go green only once pushed.
+- **CI** (`ci.yml`, every PR and push to main): app (lint, tsc, Jest, web bundle),
+  server, coach (+ safety eval, scripted model), ml (+ `make ml`), dependency allow-list,
+  Markdown links (lychee). Actions pinned to commit SHAs, read-only token,
+  `persist-credentials: false`, `EXPO_NO_TELEMETRY=1`. Jest also checked under `TZ=UTC`.
+- **Images** (`server-image.yml`): server and coach built on PRs, pushed to GHCR from
+  main and `v*` tags (`sha-…`, `latest`, version). Only this job can write packages.
+- **EAS** (`app-preview.yml`): manual, `preview` profile only, packages installed before
+  the token is in the environment, EAS CLI pinned.
+- **ML quality gate:** `train.py` exits 1 (report kept, app model untouched) when logistic
+  regression does not beat both baselines on PR-AUC, the base rate on Brier, flags no
+  day, or any metric is NaN.
+- **Dependency allow-list** (`tools/`): every direct dependency must be listed; analytics,
+  ad, crash-reporting and LLM-tracing SDKs are refused anywhere in the lock files (also
+  behind npm aliases); every npm package must come from the registry; missing lock
+  files fail.
+- **Safety gate:** medical advice is now a 100%-required eval category (safety review).
+  `evals/report.md` still shows "—" for it until the next live run.
+- **Deploy** (`docs/deploy.md`, `deploy/`): Compose; Compose + Caddy (HTTPS, 16 KB cap,
+  logs discarded, API port closed); Kubernetes (restricted PSS, non-root, read-only FS,
+  network policies incl. egress); OpenChoreo mapping (sketch, field names to check).
+- **Privacy review fix (High):** behind a proxy, every client had the proxy's address,
+  so per-address limits were one shared bucket. `SERVER_TRUSTED_PROXIES` now trusts
+  `X-Forwarded-For` only from the proxy (`test_proxy_headers.py`).
+- **Other review fixes:** `.easignore` (root and app) mirrors `.gitignore`;
+  `coach/Dockerfile.dockerignore` (BuildKit builds send only the copied files); README
+  claims toned down (coach eval, risk model on synthetic data, data table).
+- **README:** pitch, demo-video placeholder, 6 screenshots (`make screenshots`, web demo,
+  made-up data), architecture diagram, privacy, safety + eval results, model results,
+  stack, quick start, ethics, limitations, future work.
+
+Not done, needs you:
+- push a branch and open a PR to see the jobs go green; add the `EXPO_TOKEN` secret;
+  require the CI checks on `main`
+- record the demo video
+- run `make safety-eval ARGS="--live"` to refresh `evals/report.md` with the new
+  medical-advice requirement
+
+Carry-overs (not in M11's acceptance criteria, left for later): neutral Android package
+id and URL scheme; coach word lists loaded at startup; offline test through the real
+`SessionProvider`; "mark goal as done"; demo slips in the dev menu; synthetic-data marker
+in `model.json`; digest-pinned base images (Dependabot or Renovate); purge of long-unseen
+circle accounts.

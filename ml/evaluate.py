@@ -1,5 +1,6 @@
 """Metrics on the held-out test days, and ml/report.md."""
 
+import math
 from dataclasses import dataclass
 from pathlib import Path
 
@@ -98,6 +99,29 @@ def evaluate(trained: Trained, splits: Splits) -> Report:
         test_positive_rate=sum(test.y) / len(test.y),
         top_coefficients=ranked[:6],
     )
+
+
+def quality_problems(report: Report) -> list[str]:
+    """Reasons not to ship the model. CI runs `make ml`, which fails when any are found."""
+    lr = report.models.get("logistic_regression")
+    base = report.models.get("base_rate")
+    rule = report.models.get("simple_rule")
+    if lr is None or base is None or rule is None:
+        return ["the report is missing the shipped model or a baseline"]
+    # Every comparison with NaN is False, so NaN would otherwise slip through.
+    metrics = {"PR-AUC": lr.pr_auc, "Brier": lr.brier, "recall": lr.recall}
+    if not all(math.isfinite(v) for v in metrics.values()):
+        return [f"{name} is not a number" for name, v in metrics.items() if not math.isfinite(v)]
+    problems = []
+    if lr.pr_auc <= base.pr_auc:
+        problems.append(f"PR-AUC {lr.pr_auc:.3f} is no better than the base rate")
+    if lr.pr_auc <= rule.pr_auc:
+        problems.append(f"PR-AUC {lr.pr_auc:.3f} is no better than the simple rule")
+    if lr.brier >= base.brier:
+        problems.append(f"Brier {lr.brier:.3f} is no better than the base rate")
+    if lr.recall == 0:
+        problems.append("recall is 0: the model never flags a hard day")
+    return problems
 
 
 def write_report(report: Report, path: Path) -> None:

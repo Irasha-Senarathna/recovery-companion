@@ -1,6 +1,6 @@
 # Architecture — Recovery Companion
 
-Status: **draft for approval**. No code exists yet; this describes the target design.
+Status: **built** (milestones 1–11). Sections name the milestone that built each part.
 
 Recovery Companion is an offline-first Android app. Almost everything runs on
 the phone. Two small, optional services run on the developer's laptop (Docker
@@ -328,7 +328,22 @@ Built in milestone 9:
 - **About** (Settings → "About this app and your privacy") shows the user-verified
   disclaimer, a plain-language privacy summary and the neutral app name.
 
-## Repository layout (target)
+## Delivery (milestone 11)
+
+```mermaid
+flowchart LR
+  PR["Pull request"] --> CI["ci.yml<br/>app · server · coach + safety eval<br/>ml (train + quality gate)<br/>dependency allow-list · links"]
+  PR --> IMG["server-image.yml<br/>build server + coach images"]
+  Main["Push to main / v* tag"] --> IMG2["server-image.yml<br/>build + push to GHCR"]
+  Manual["Manual run"] --> EAS["app-preview.yml<br/>EAS Build: Android APK"]
+  IMG2 --> Compose["Docker Compose<br/>(+ Caddy for HTTPS)"]
+  IMG2 --> K8s["Kubernetes / OpenChoreo"]
+```
+
+All actions are pinned to commit SHAs; jobs get read-only repository access, and only
+the image job can write packages. See [deploy.md](deploy.md).
+
+## Repository layout
 
 ```
 app/          Expo app (TypeScript)
@@ -341,6 +356,9 @@ ml/           generate.py, features.py, train.py, evaluate.py, export.py, report
 content/      helplines.json*, disclaimer.md*, support_places.json,
               first_visit{,.si,.ta}.md, exercises/, crisis_terms.json, shame_terms.json
 evals/        safety_cases.yaml, run_eval.py, report.md, fixtures/
-docs/         architecture.md, privacy.md, plan.md, deploy.md
+tools/        check_dependencies.py + dependency_allowlist.json, screenshots.py
+deploy/       docker-compose.tls.yml + Caddyfile (HTTPS), k8s/ manifests
+.github/      workflows: ci.yml, server-image.yml, app-preview.yml
+docs/         architecture.md, privacy.md, plan.md, deploy.md, screenshots/
 * edited by the developer only (protected by a hook)
 ```

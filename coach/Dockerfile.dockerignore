@@ -1,0 +1,10 @@
+# The coach image is built from the repository root (it needs two files from content/).
+# Docker reads this file, not coach/.dockerignore, for that build. Send only what the
+# Dockerfile copies: never .env, virtual environments or anything else in the repo.
+*
+!coach/pyproject.toml
+!coach/uv.lock
+!coach/app/
+!content/crisis_terms.json
+!content/shame_terms.json
+**/__pycache__

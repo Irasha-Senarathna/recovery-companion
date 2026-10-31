@@ -1,6 +1,6 @@
 # Privacy design and threat model — Recovery Companion
 
-Status: **draft for approval**. Applies to all milestones. See `architecture.md`
+Status: **in force** (milestones 1–11 built). Applies to all milestones. See `architecture.md`
 for diagrams.
 
 ## Principles
@@ -57,7 +57,7 @@ for diagrams.
 | Daily check-in reminder: on/off and time (settings); one scheduled local notification `daily-checkin` with fixed neutral text | Check-in | Medium (lock screen) | No: scheduled by the phone itself, no push service | Until turned off | Settings toggle / delete-all cancels it |
 | Scheduled heads-up `early-warning` (one-time, ≤ 1 a day, never 22:00–08:00, neutral text) | Early warning | Medium: its arrival itself hints at a harder day (said in the toggle's note). Android hides the text on a secure lock screen; iOS shows it unless the user picks "Show Previews: When Unlocked" | No: scheduled by the phone itself | Until fired, cancelled or no longer a harder day | Toggle off / delete-all cancels it and removes its channel |
 
-### On the support-circle server (Postgres, laptop, only if circle is enabled)
+### On the support-circle server (Postgres; laptop by default, or a server or cluster per `deploy.md`; only if circle is enabled)
 
 | Column / item | Why it is needed | Retention |
 |---|---|---|
@@ -95,6 +95,7 @@ health data. **A schema allow-list test** fails the build if anyone adds one.
 |---|---|---|
 | Expo push service + Firebase Cloud Messaging | Supporter push token and the notification text | Text is fixed and neutral ("A friend asked you to check in today"). No member ID, no nickname, no health words. |
 | EAS Build (Expo) | App source code at build time | Source contains no secrets and no user data. `.env` is not uploaded (`.easignore`). |
+| GitHub (Actions, Container Registry) | Source code, CI logs (synthetic and demo data only), server and coach images | No user data ever reaches CI. Images hold no secrets; database passwords come from the runtime environment. |
 | Google Play Services / Android OS | Standard OS-level data | `allowBackup=false` turns off Android cloud backup of app data. |
 
 ## Threat model
@@ -129,13 +130,13 @@ whom) · A4 coach conversations · A5 the integrity of the help-resources conten
 | TH5 | T-Close forces the user to unlock | A1, A2 | Quick-hide. Delete-all is reachable in 2 taps from settings, and from the lock screen ("forgot PIN"). | Coercion cannot be fully prevented. Documented as a limitation. Because delete-all works from the lock screen without the PIN, someone holding the phone can wipe the data (they cannot read it). |
 | TH5b | The quick-hide screen gives the app away | A2 | The neutral "Notes" screen shows nothing personal. | **Deliberate trade-off:** it keeps the "Get help" button, because safety rule 2 (help on every screen) comes first. Do not remove it "for discretion". |
 | TH5c | The keyboard learns private words | A1, A2 | Every text field is `SafeTextInput`, which turns off autocorrect, spell-check, autofill and suggestions. | Some third-party keyboards ignore these hints. |
-| TH6 | T-Net intercepts traffic to the laptop server | A3, A4 | Bearer-token auth, never in URLs. Release builds refuse a plain-http server address (only https, or http to localhost); development builds allow http on the home Wi-Fi. Demo runs on a private Wi-Fi. HTTPS through a local reverse proxy (Caddy, internal CA) is documented in `deploy.md`. Payloads hold no personal data. | Plain HTTP on a trusted home Wi-Fi in development. Documented. |
+| TH6 | T-Net intercepts traffic to the laptop server | A3, A4 | Bearer-token auth, never in URLs. Release builds refuse a plain-http server address (only https, or http to localhost); development builds allow http on the home Wi-Fi. Demo runs on a private Wi-Fi. For internet-facing setups, `deploy.md` puts the API behind HTTPS (Caddy with Let's Encrypt, or ingress with cert-manager); the API port itself is not published. Public certificates appear in Certificate Transparency logs, so `deploy.md` asks for a neutral domain name. Payloads hold no personal data. | Plain HTTP on a trusted home Wi-Fi in development. Documented. |
 | TH7 | T-Server dumps the DB | A3 | Only random IDs, hashes and 7-day signals. No names or contacts. Token hashes, not tokens. | The link graph between random IDs is visible. |
 | TH8 | T-Invite brute-forces invite codes | A3 | 10-character base32 codes (~50 bits), single use, 24 h expiry, one open code per member, stored as SHA-256. Unknown, used and expired codes give the same answer. After 5 wrong codes per account or 20 per address in an hour, redemption is refused (even for a right code). The member must approve each new supporter, giving them a name only the member sees. Max 3 supporters. | Social engineering. The code hash is unsalted, so someone who dumps the DB could brute-force an open code offline within its 24 h, but would still need the member's approval. |
 | TH9 | An untrusted supporter | A2 | The member can revoke at any time. Before approving, the member compares a 4-character check code shown on both phones, so someone who intercepted the code is caught. Requests sent before approval stay hidden. Supporters get nothing beyond the neutral signal. | The supporter already knows the person is in recovery. |
-| TH10 | Signal spam / abuse | A3 | Rate limit of 3 signals per day per member, plus per-IP limits on the API. | — |
+| TH10 | Signal spam / abuse | A3 | Rate limit of 3 signals per day per member, plus per-IP limits on the API. Behind an HTTPS proxy the API trusts `X-Forwarded-For` only from the proxy (`SERVER_TRUSTED_PROXIES`, `test_proxy_headers.py`), so each client keeps its own limit. | If `SERVER_TRUSTED_PROXIES` is not set behind a proxy, all clients share one per-address limit. |
 | TH11 | The coach service logs or keeps chat text | A4 | Stateless design. Body logging is off and tests check it on every path, including unexpected errors and the real Ollama client. No DB or volume in the coach container. Off by default. Bound to this computer by default. | Ollama or OS-level swap; `OLLAMA_DEBUG`; plain http if the user opens the port to the Wi-Fi (on-screen warning). Documented. |
-| TH12 | The coach gives harmful advice | user safety | Crisis detection on the device and on the server. Topic guard. Output checker. Safety eval suite with 100% required on crisis, self-harm, overdose and dosing cases. | LLM unpredictability. The coach stays optional and clearly labelled as not a therapist. |
+| TH12 | The coach gives harmful advice | user safety | Crisis detection on the device and on the server. Topic guard. Output checker. Safety eval suite with 100% required on crisis, self-harm, overdose, dosing and medical-advice cases. | LLM unpredictability. The coach stays optional and clearly labelled as not a therapist. |
 | TH13 | Help resources are wrong or out of date | A5 | `helplines.json` is edited only by the developer (hook-protected) and carries a "last verified" date. The app warns when an entry is unverified or over 6 months old. An entry is shown as red "emergency services" only if it has a name and a checked date. | Human error in verification. |
 | TH14 | T-Dev adds tracking or logs personal data | A1 | No analytics SDKs. A dependency allow-list test in CI. A lint rule bans `console.log` in `app/src`. The privacy-reviewer subagent runs on storage, server and notification changes. | Review gaps. |
 | TH15 | Delete-all is incomplete | A1, A3 | Delete-all deletes the DB key **first** (retried once), then closes and deletes the DB file, clears the secure store and the biometric token, stops voice playback, clears the media temp folders, cancels notifications, and (from M6) calls `DELETE /account` (cascades links and signals). Every step runs even if one fails. If the key could not be deleted, the user is told the data may still be readable; otherwise that the leftovers are unreadable. If the server cannot be reached, deletion is queued and the user is told. | The server account lingers if the user never comes back online. Signals still auto-expire after 7 days. |
@@ -185,4 +186,8 @@ whom) · A4 coach conversations · A5 the integrity of the help-resources conten
 | Installed display name is neutral (no recovery/drug/treatment words) (`appConfig.test.ts`) | 10 |
 | Core features (check-in, SOS, vault, goals, plan, slips, finder, help) work with the network failing and never call it (`offline.test.tsx`) | 10 |
 | Web tab title is the neutral app name, never the screen's route name (`_layout.tsx`) | 10 |
-| No analytics or ad packages in `package.json` | 11 (CI) |
+| Every direct dependency (app, server, coach, ml, tools) is on `tools/dependency_allowlist.json`; no analytics, ad, attribution or crash-reporting SDK anywhere in the lock files, direct or transitive, and such names cannot be added to the allow-list (`test_dependency_allowlist.py`, CI `dependencies` job) | 11 |
+| CI jobs get read-only repository access; actions are pinned to commit SHAs; only the image job can write packages; no secrets in the repo (`EXPO_TOKEN` is a GitHub secret) | 11 |
+| Deployment: HTTPS proxy (Caddy) or ingress with no access log and a 16 KB body cap (Caddy's own logs discarded); API container non-root with a read-only filesystem; only the API can reach Postgres, and the API can reach only Postgres and DNS (`deploy/`) | 11 |
+| `X-Forwarded-For` is trusted only from configured proxy addresses (`test_proxy_headers.py`) | 11 |
+| EAS uploads exclude `.env`, virtual environments and non-app folders (`.easignore`); the coach image build sends only the files it copies (`coach/Dockerfile.dockerignore`); Expo CLI telemetry is off in CI and the Makefile | 11 |
