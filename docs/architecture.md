@@ -189,6 +189,25 @@ flowchart LR
   metrics show the pipeline works. They do **not** show it predicts real
   relapse risk. The README and the trigger-map screen say this.
 
+## Support finder (milestone 8)
+
+- **Source:** only `content/support_places.json`, bundled into the app, so the
+  finder works offline and makes no network request. Opening a place only
+  hands a `tel:` or `https:` link to the phone, and only when the person taps.
+- **Validation** (`features/finder/places.ts`): malformed, untyped or repeated
+  entries are dropped, never guessed. An entry is a demo unless it says
+  `"demo": false`; demo entries never keep a phone number or website, so a
+  made-up place can never be dialled. A real entry is only contactable when its
+  `source_url` is `https`, and websites must be `https` too. Name, area and
+  hours are given in en/si/ta (English is the fallback).
+- **Freshness:** the same six-month rule as the help contacts
+  (`verificationStatus`). Older entries show "please confirm before you go";
+  undated or future-dated ones show "not yet checked". A demo entry is never
+  shown as "last checked".
+- **First-visit guide:** `content/first_visit{,.si,.ta}.md`, parsed by
+  `utils/markdown.ts` (shared with the disclaimer) into headings, paragraphs and
+  bullets; never rendered as HTML.
+
 ## 4. Support circle (milestone 6)
 
 ```mermaid
@@ -253,7 +272,8 @@ app/          Expo app (TypeScript)
 server/       FastAPI support-circle API + Alembic migrations + tests
 coach/        FastAPI coach service + safety layer + tests
 ml/           generate.py, features.py, train.py, evaluate.py, export.py, report.md
-content/      helplines.json*, disclaimer.md*, support_places.json, exercises/
+content/      helplines.json*, disclaimer.md*, support_places.json,
+              first_visit{,.si,.ta}.md, exercises/
 evals/        safety_cases.yaml, run_eval.py, report.md
 docs/         architecture.md, privacy.md, plan.md, deploy.md
 * edited by the developer only (protected by a hook)

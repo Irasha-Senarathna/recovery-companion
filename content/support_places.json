@@ -1,0 +1,127 @@
+
+{
+  "_status": "VERIFIED OFFICIAL-SOURCE ENTRIES",
+  "country": "LK",
+  "places": [
+    {
+      "id": "galle-treatment-centre",
+      "demo": false,
+      "type": "treatment_centre",
+      "name": {
+        "en": "Galle Youth Prevention, Treatment & Rehabilitation Centre",
+        "si": "ගාල්ල තරුණ නිවාරණ, ප්‍රතිකාර හා පුනරුත්ථාපන මධ්‍යස්ථානය",
+        "ta": "காலி இளைஞர் தடுப்பு, சிகிச்சை மற்றும் மறுவாழ்வு மையம்"
+      },
+      "area": {
+        "en": "Unawatuna, Galle",
+        "si": "උණවටුන, ගාල්ල",
+        "ta": "உனவட்டுன, காலி"
+      },
+      "hours": {
+        "en": "Contact centre to confirm opening hours",
+        "si": "විවෘත වේලාවන් තහවුරු කර ගැනීමට මධ්‍යස්ථානය අමතන්න",
+        "ta": "திறந்திருக்கும் நேரத்தை உறுதிப்படுத்த மையத்தைத் தொடர்பு கொள்ளவும்"
+      },
+      "phone": "+94 91 2224443",
+      "website": null,
+      "source_url": "https://www.nddcb.gov.lk/contact.php",
+      "last_verified": "2026-10-31"
+    },
+    {
+      "id": "kandy-treatment-centre",
+      "demo": false,
+      "type": "treatment_centre",
+      "name": {
+        "en": "Kandy Youth Prevention, Treatment & Rehabilitation Centre",
+        "si": "මහනුවර තරුණ නිවාරණ, ප්‍රතිකාර හා පුනරුත්ථාපන මධ්‍යස්ථානය",
+        "ta": "கண்டி இளைஞர் தடுப்பு, சிகிச்சை மற்றும் மறுவாழ்வு மையம்"
+      },
+      "area": {
+        "en": "Mampitiya Estate, Handessa, Peradeniya",
+        "si": "මාම්පිටිය වත්ත, හන්දෙස්ස, පේරාදෙණිය",
+        "ta": "மம்பிட்டிய தோட்டம், ஹந்தெஸ்ஸ, பேராதனை"
+      },
+      "hours": {
+        "en": "Contact centre to confirm opening hours",
+        "si": "විවෘත වේලාවන් තහවුරු කර ගැනීමට මධ්‍යස්ථානය අමතන්න",
+        "ta": "திறந்திருக்கும் நேரத்தை உறுதிப்படுத்த மையத்தைத் தொடர்பு கொள்ளவும்"
+      },
+      "phone": "+94 81 2315504",
+      "website": null,
+      "source_url": "https://www.nddcb.gov.lk/contact.php",
+      "last_verified": "2026-10-31"
+    },
+    {
+      "id": "siyapatha-counselling-colombo",
+      "demo": false,
+      "type": "counselling",
+      "name": {
+        "en": "Siyapatha Counselling Centre",
+        "si": "සියපත උපදේශන මධ්‍යස්ථානය",
+        "ta": "சியபத ஆலோசனை மையம்"
+      },
+      "area": {
+        "en": "Old Ceylon Buddhist Congress Complex, Bauddhaloka Mawatha, Colombo 07",
+        "si": "පැරණි ලංකා බෞද්ධ මහා සම්මේලන ගොඩනැගිල්ල, බෞද්ධාලෝක මාවත, කොළඹ 07",
+        "ta": "பழைய இலங்கை பௌத்த காங்கிரஸ் வளாகம், பௌத்தாலோக மாவத்தை, கொழும்பு 07"
+      },
+      "hours": {
+        "en": "24-hour telephone counselling available",
+        "si": "පැය 24 පුරා දුරකථන උපදේශන සේවාව ලබා ගත හැක",
+        "ta": "24 மணி நேர தொலைபேசி ஆலோசனை கிடைக்கும்"
+      },
+      "phone": "+94 11 3091394",
+      "website": null,
+      "source_url": "https://www.nddcb.gov.lk/contact.php",
+      "last_verified": "2026-10-31"
+    },
+    {
+      "id": "maha-bodhi-counselling-colombo",
+      "demo": false,
+      "type": "counselling",
+      "name": {
+        "en": "Sri Lanka Maha Bodhi Counselling Centre",
+        "si": "ශ්‍රී ලංකා මහාබෝධි උපදේශන මධ්‍යස්ථානය",
+        "ta": "இலங்கை மகாபோதி ஆலோசனை மையம்"
+      },
+      "area": {
+        "en": "No. 130, Maligakanda Road, Maradana",
+        "si": "අංක 130, මාලිගාකන්ද පාර, මරදාන",
+        "ta": "இலக்கம் 130, மாளிகாகந்த வீதி, மருதானை"
+      },
+      "hours": {
+        "en": "Contact centre to confirm opening hours",
+        "si": "විවෘත වේලාවන් තහවුරු කර ගැනීමට මධ්‍යස්ථානය අමතන්න",
+        "ta": "திறந்திருக்கும் நேரத்தை உறுதிப்படுத்த மையத்தைத் தொடர்பு கொள்ளவும்"
+      },
+      "phone": "+94 11 2677626",
+      "website": null,
+      "source_url": "https://www.nddcb.gov.lk/contact.php",
+      "last_verified": "2026-10-31"
+    },
+    {
+      "id": "nimh-navodaya-support-group",
+      "demo": false,
+      "type": "support_group",
+      "name": {
+        "en": "Navodaya Alcohol & Narcotics Eradication Support Programme",
+        "si": "නවෝදය මත්පැන් හා මත්ද්‍රව්‍ය නිවාරණ සහාය වැඩසටහන",
+        "ta": "நவோதயா மதுபான மற்றும் போதைப்பொருள் ஒழிப்பு ஆதரவு திட்டம்"
+      },
+      "area": {
+        "en": "National Institute of Mental Health, Mulleriyawa New Town",
+        "si": "ජාතික මානසික සෞඛ්‍ය විද්‍යායතනය, මුල්ලේරියාව නව නගරය",
+        "ta": "தேசிய மனநல நிறுவனம், முல்லேரியாவ புதிய நகரம்"
+      },
+      "hours": {
+        "en": "Mondays, 2 pm – 4 pm",
+        "si": "සඳුදා, ප.ව. 2 – ප.ව. 4",
+        "ta": "திங்கட்கிழமைகளில், பிற்பகல் 2 – 4"
+      },
+      "phone": "+94 11 2578556",
+      "website": null,
+      "source_url": "https://nimh.health.gov.lk/en/navodaya/",
+      "last_verified": "2026-10-31"
+    }
+  ]
+}

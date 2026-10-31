@@ -352,7 +352,7 @@ Carry-overs: **M10** native-speaker and clinician review of the slip wording
 (en/si/ta), especially the overdose-risk line; a "mark goal as done" that keeps its
 wins; demo slips in the dev menu.
 
-## M8 — Treatment & support finder · TODO
+## M8 — Treatment & support finder · DONE
 
 **Goal:** a finder built only from a content file the developer has verified.
 
@@ -368,6 +368,28 @@ wins; demo slips in the dev menu.
 - A "What happens at your first visit?" guide in 3 languages.
 - **Tests pass:** `places.schema.test.ts`, `places.staleness.test.ts`,
   `finderScreen.test.tsx`.
+
+**Result (M8):** 1161 app tests, 67 server tests and 24 ml tests pass; ESLint, tsc,
+ruff and mypy clean; web bundle builds. `/finder` (from home, "Find treatment and
+support"): filter chips for kind of support and area (area names in the current
+language), one card per place with name, kind, area, hours, contact, and either
+"Last checked" or a warning (older than 6 months, or not yet checked). A clear
+"Demo" badge and banner; demo entries never keep a phone number or website, so
+nothing made-up can be dialled. A real entry needs an https `source_url` to be
+contactable. Calls and websites open only on a tap, with a note if the phone
+cannot open them. `/first-visit`: "What happens at your first visit?" from
+`content/first_visit{,.si,.ta}.md` (si/ta marked needs_review). It points to staff
+for anything about health and ends with its own Get help button. Markdown parsing
+moved to `utils/markdown.ts` (adds bullets), shared with the disclaimer. Works
+offline: everything is bundled, with no network calls. Safety review: no Critical or
+High findings. All Medium and Low findings fixed: demo entries are never shown as
+checked, softer intro wording, a neutral "could not open" note, an inline help button,
+localized hours, and three Sinhala wording fixes.
+The user has since replaced the demo places with five places checked from NDDCB and
+NIMH sources (2026-10-31). Suggestion: shorten `area` to a town or district so places
+in the same area share one filter chip.
+Carry-overs: **M10** native-speaker review of `first_visit.si.md`/`.ta.md` and the
+`finder` strings; a counsellor's read of the first-visit guide.
 
 ## M9 — Optional AI coping coach + safety layer · TODO
 

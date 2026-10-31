@@ -85,6 +85,12 @@ export default function HomeScreen() {
           onPress={() => router.push('/goals')}
         />
         <ActionButton
+          testID="open-finder"
+          tone="soft"
+          label={t('home.finder')}
+          onPress={() => router.push('/finder')}
+        />
+        <ActionButton
           testID="open-settings"
           tone="plain"
           label={t('home.settings')}

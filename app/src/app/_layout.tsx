@@ -60,6 +60,8 @@ function AppStack() {
           <Stack.Screen name="supporter" />
           <Stack.Screen name="slip" />
           <Stack.Screen name="goals" />
+          <Stack.Screen name="finder" />
+          <Stack.Screen name="first-visit" />
         </Stack.Protected>
         <Stack.Protected redirectTo={redirectTo} guard={hidden}>
           <Stack.Screen name="hidden" />

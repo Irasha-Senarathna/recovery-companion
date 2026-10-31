@@ -45,7 +45,8 @@
     "triggers": "Your patterns",
     "circle": "Your support circle",
     "goals": "Your goals",
-    "slip": "Had a slip? Let’s look after you"
+    "slip": "Had a slip? Let’s look after you",
+    "finder": "Find treatment and support"
   },
   "hide": {
     "button": "Hide",
@@ -672,5 +673,32 @@
     "amount": "Rs {{amount}}",
     "moneyNext": "Next milestone: Rs {{amount}}",
     "moneyChange": "Change the daily amount"
+  },
+  "finder": {
+    "title": "Find support",
+    "intro": "Places that may be able to help. Details can change, so please call or check before you go.",
+    "demoIntro": "Places marked \"Demo\" are examples only. They are not real places and cannot be contacted.",
+    "demoBadge": "Demo",
+    "demoNote": "This is an example, not a real place, so it has no contact details.",
+    "firstVisit": "What happens at your first visit?",
+    "typeLabel": "Kind of support",
+    "areaLabel": "Area",
+    "allTypes": "All kinds",
+    "allAreas": "All areas",
+    "types": {
+      "treatment_centre": "Treatment centre",
+      "counselling": "Counselling",
+      "support_group": "Support group"
+    },
+    "area": "Area: {{area}}",
+    "hours": "Hours: {{hours}}",
+    "website": "Open website",
+    "websiteHint": "Opens this place’s website in your browser",
+    "stale": "Last checked more than 6 months ago ({{date}}). Details may have changed, so please confirm before you go.",
+    "unverified": "Not yet checked. Please confirm these details before you go.",
+    "none": "No places have been added yet.",
+    "noMatch": "No places match these choices. Try another area or kind of support.",
+    "clear": "Show all places",
+    "openFailed": "This could not be opened on this device. You can contact the place another way, or use Get help."
   }
 }

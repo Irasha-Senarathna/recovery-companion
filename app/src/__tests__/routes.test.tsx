@@ -35,6 +35,8 @@ const SESSION_FOR_ROUTE: Record<string, Partial<Session>> = {
   supporter: { status: 'unlocked' },
   slip: { status: 'unlocked' },
   goals: { status: 'unlocked' },
+  finder: { status: 'unlocked' },
+  'first-visit': { status: 'unlocked' },
 };
 
 describe('every screen', () => {
