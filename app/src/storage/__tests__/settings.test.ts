@@ -1,5 +1,5 @@
 import { createMemoryDatabase } from '../memoryDb';
-import { migrate } from '../migrations';
+import { MIGRATIONS, migrate } from '../migrations';
 import { getSetting, loadSettings, saveSettings } from '../settings';
 
 async function freshDb() {
@@ -54,6 +54,6 @@ describe('migrate', () => {
   it('is safe to run twice', async () => {
     const db = await freshDb();
     await migrate(db);
-    expect(await db.getFirst('PRAGMA user_version')).toEqual({ user_version: 4 });
+    expect(await db.getFirst('PRAGMA user_version')).toEqual({ user_version: MIGRATIONS.length });
   });
 });

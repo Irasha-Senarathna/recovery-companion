@@ -91,6 +91,8 @@ jest.mock('expo-notifications', () => ({
   dismissNotificationAsync: jest.fn(async () => {}),
   deleteNotificationChannelAsync: jest.fn(async () => {}),
   requestPermissionsAsync: jest.fn(async () => ({ granted: true })),
+  getExpoPushTokenAsync: jest.fn(async () => ({ type: 'expo', data: 'ExponentPushToken[test]' })),
+  unregisterForNotificationsAsync: jest.fn(async () => {}),
 }));
 
 jest.mock('expo-haptics', () => ({

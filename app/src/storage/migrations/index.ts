@@ -44,6 +44,12 @@ export const MIGRATIONS: readonly string[] = [
      people     TEXT NOT NULL DEFAULT '',
      updated_at INTEGER NOT NULL
    );`,
+  // M6: the user's own names for support-circle links. Never sent to the server.
+  `CREATE TABLE circle_labels (
+     link_id TEXT PRIMARY KEY NOT NULL,
+     role    TEXT NOT NULL CHECK (role IN ('member', 'supporter')),
+     label   TEXT NOT NULL
+   );`,
 ];
 
 /** Brings the schema up to date, tracking the version in PRAGMA user_version. */

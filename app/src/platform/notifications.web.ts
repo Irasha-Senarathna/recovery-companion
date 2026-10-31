@@ -7,6 +7,7 @@ import type { DailyReminder, OneTimeNudge } from './notifications';
 export type { DailyReminder, OneTimeNudge };
 export const REMINDER_ID = 'daily-checkin';
 export const NUDGE_ID = 'early-warning';
+export const CIRCLE_CHANNEL_ID = 'circle';
 
 export async function requestNotificationPermission(): Promise<boolean> {
   return true;

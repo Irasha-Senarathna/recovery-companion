@@ -4,7 +4,10 @@ WORKDIR /srv
 COPY pyproject.toml uv.lock ./
 RUN uv sync --frozen --no-dev
 COPY app ./app
+COPY alembic ./alembic
+COPY alembic.ini ./
 RUN useradd --create-home appuser
 USER appuser
 EXPOSE 8000
-CMD ["/srv/.venv/bin/uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8000", "--no-access-log"]
+# Migrations first, then the API. No access log: request paths and addresses are not kept.
+CMD ["sh", "-c", "/srv/.venv/bin/alembic upgrade head && exec /srv/.venv/bin/uvicorn app.main:app --host 0.0.0.0 --port 8000 --no-access-log"]

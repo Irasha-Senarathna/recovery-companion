@@ -99,3 +99,54 @@ describe('delete all my data', () => {
     expect(sqlite.__hasFile(DB_NAME)).toBe(false);
   });
 });
+
+describe('delete all and the support circle', () => {
+  it('deletes the server accounts before the tokens are removed', async () => {
+    const db = await setUpUser();
+    await secureStore.set(SECURE_KEYS.circleMember, '{"accountId":"a","token":"t"}');
+    let tokenSeen: string | null = null;
+    const leaveCircle = jest.fn(async (store: typeof secureStore) => {
+      tokenSeen = await store.get(SECURE_KEYS.circleMember);
+      return 'deleted' as const;
+    });
+
+    const result = await deleteAllData({
+      db,
+      store: secureStore,
+      cancelNotifications: async () => {},
+      leaveCircle,
+    });
+
+    expect(tokenSeen).not.toBeNull();
+    expect(result).toEqual({ failed: [] });
+    expect(await secureStore.get(SECURE_KEYS.circleMember)).toBeNull();
+  });
+
+  it('tells the user when the server deletion is queued for later', async () => {
+    const db = await setUpUser();
+    const result = await deleteAllData({
+      db,
+      store: secureStore,
+      cancelNotifications: async () => {},
+      leaveCircle: async () => 'queued',
+    });
+    expect(result).toEqual({ failed: [], circleQueued: true });
+  });
+
+  it('still removes everything else on the phone if the circle step fails', async () => {
+    const db = await setUpUser();
+    await secureStore.set(SECURE_KEYS.circleMember, '{"accountId":"a","token":"t"}');
+    const result = await deleteAllData({
+      db,
+      store: secureStore,
+      cancelNotifications: async () => {},
+      leaveCircle: async () => {
+        throw new Error('boom');
+      },
+    });
+    expect(result.failed).toEqual(['circle']);
+    expect(await secureStore.get(SECURE_KEYS.pin)).toBeNull();
+    // The server account still exists, so its token is kept for another try.
+    expect(await secureStore.get(SECURE_KEYS.circleMember)).not.toBeNull();
+  });
+});

@@ -16,8 +16,14 @@ services:
   server:
     build: ./server
     environment:
-      SERVER_DATABASE_URL: postgresql://${POSTGRES_USER}:${POSTGRES_PASSWORD}@db:5432/${POSTGRES_DB}
+      # Passed as parts, not one URL, so any character in the password is safe.
+      SERVER_DB_HOST: db
+      SERVER_DB_NAME: ${POSTGRES_DB}
+      SERVER_DB_USER: ${POSTGRES_USER}
+      SERVER_DB_PASSWORD: ${POSTGRES_PASSWORD}
       SERVER_ENABLE_DOCS: ${SERVER_ENABLE_DOCS:-false}
+      SERVER_PUSH_ENABLED: ${SERVER_PUSH_ENABLED:-false}
+      SERVER_CORS_ORIGINS: ${SERVER_CORS_ORIGINS:-}
     ports:
       - "8000:8000"
     depends_on:

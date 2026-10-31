@@ -186,7 +186,35 @@ flowchart LR
   metrics show the pipeline works. They do **not** show it predicts real
   relapse risk. The README and the trigger-map screen say this.
 
-## 4. Coach request path (milestone 9)
+## 4. Support circle (milestone 6)
+
+```mermaid
+sequenceDiagram
+  participant M as Member phone
+  participant A as Circle API
+  participant S as Supporter phone
+  M->>A: POST /accounts {role: member} (only when turned on)
+  M->>A: POST /invites → 10-char code (24 h, single use)
+  M-->>S: code passed on in person / by message
+  S->>A: POST /accounts {role: supporter}, POST /invites/redeem
+  A-->>S: link_id (pending). Supporter names the member locally
+  M->>A: GET /links → pending link. Member names them locally
+  M->>A: POST /links/{id}/approve
+  M->>A: POST /signals (empty body, after consent each time, ≤ 3/day)
+  A-->>S: Expo push "A friend asked you to check in today." (if opted in)
+  S->>A: GET /signals → [{link_id, created_at}] (≤ 7 days)
+```
+
+- Each side knows a link only by its `link_id`; the API never returns the other
+  side's account ID. Names ("Sister") live in `circle_labels` on each phone.
+- Errors come back as short codes (`circle_full`, `daily_limit`, ...) that the
+  app translates. Rate limits live in server memory only.
+- The app reads the server address from `EXPO_PUBLIC_CIRCLE_API_URL`. Without it
+  the circle shows as "not set up on this version". The web demo needs
+  `SERVER_CORS_ORIGINS` and gets no push ("Check for requests" instead).
+- Alembic migrations run when the server container starts.
+
+## 5. Coach request path (milestone 9)
 
 ```mermaid
 sequenceDiagram

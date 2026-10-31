@@ -67,6 +67,12 @@ export default function HomeScreen() {
           onPress={() => router.push('/vault')}
         />
         <ActionButton
+          testID="open-circle"
+          tone="soft"
+          label={t('home.circle')}
+          onPress={() => router.push('/circle')}
+        />
+        <ActionButton
           testID="open-progress"
           tone="soft"
           label={t('home.progress')}

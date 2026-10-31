@@ -1,4 +1,6 @@
 import type { KeyStore } from '../../platform/keyStore';
+import { defaultCircleClient } from '../circle/client';
+import { flushQueuedDeletions } from '../circle/credentials';
 import { clearMediaTemp } from '../../platform/mediaTemp';
 import { openDatabase } from '../../storage/db';
 import { getOrCreateDbKey } from '../../storage/key';
@@ -14,6 +16,8 @@ export type BootResult =
 export async function boot(store: KeyStore): Promise<BootResult> {
   // Leftover unencrypted media from a crash or a lock mid-recording.
   await clearMediaTemp().catch(() => {});
+  // Support-circle accounts whose deletion was queued while offline (not awaited).
+  flushQueuedDeletions(store, defaultCircleClient()).catch(() => {});
   try {
     const db = await openDatabase(await getOrCreateDbKey(store));
     const settings = await loadSettings(db);

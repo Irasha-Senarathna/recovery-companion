@@ -46,7 +46,10 @@ for diagrams.
 | Coping plan: early signs, what helps, who to contact (free text, ≤ 1000 chars each, crisis words open help) | Early warning | High (may name people) | No | Until changed | Delete-all |
 | Risk score, reasons, trigger patterns | Trigger map | High | No. Computed on the phone from the user's own check-ins | **Not stored**: recomputed when a screen opens | Nothing to delete |
 | Heads-up settings: on/off, time of today's heads-up | Early warning | Medium (the time hints at a harder day) | No | Until changed | Delete-all |
-| Supporter local labels (e.g. "Sister") | Support circle | Medium | **No.** The label exists only on the phone that set it | Until removed | Revoke / delete-all |
+| Supporter local labels (e.g. "Sister"), table `circle_labels` (link ID, role, label ≤ 40 chars) | Support circle | Medium | **No.** The label exists only on the phone that set it; the server only ever hears "approve link X" | Until the link ends | Remove / turn off / delete-all; labels of links ended by the other side are dropped on the next refresh |
+| Circle accounts: `rc.circle_member`, `rc.circle_supporter` (random ID + token, secure store) | Support circle | High | Token sent to the circle API as `Authorization: Bearer`, never in a URL | Until the circle is turned off | Turn off / leave supporter mode / delete-all |
+| Pending server deletions `rc.circle_pending_delete` (tokens only, secure store) | Support circle | Low (random tokens of accounts being deleted) | Sent once to `DELETE /account` | **Outlives delete-all on purpose** until the server confirms; retried at every launch | Removed when the server confirms |
+| Supporter push opt-in `circleNotify` (settings) and the Expo push token | Support circle | Medium | The push token goes to the circle API **only after the supporter switches notifications on** | Until switched off | Switch off (removes it on the server and unregisters the phone) / leave / delete-all |
 | Coach chat history | AI coach | Very high | Current turns are sent to the coach service when enabled | **Not stored by default.** Optional on-device history | Clear chat / delete-all |
 | Daily check-in reminder: on/off and time (settings); one scheduled local notification `daily-checkin` with fixed neutral text | Check-in | Medium (lock screen) | No: scheduled by the phone itself, no push service | Until turned off | Settings toggle / delete-all cancels it |
 | Scheduled heads-up `early-warning` (one-time, ≤ 1 a day, never 22:00–08:00, neutral text) | Early warning | Medium: its arrival itself hints at a harder day (said in the toggle's note). Android hides the text on a secure lock screen; iOS shows it unless the user picks "Show Previews: When Unlocked" | No: scheduled by the phone itself | Until fired, cancelled or no longer a harder day | Toggle off / delete-all cancels it and removes its channel |
@@ -59,10 +62,15 @@ for diagrams.
 | `account.token_hash` (SHA-256 of a 256-bit random token) | Authentication | Until account deleted |
 | `account.role` (member / supporter) | Authorisation | Until account deleted |
 | `account.created_at` | Abuse limits | Until account deleted |
-| `invite.code_hash`, `expires_at`, `used_at`, `member_id` | Invite flow (single use, 24 h expiry) | Deleted at use or expiry |
-| `link.member_id`, `supporter_id`, `status`, `created_at` | Who may receive whose signals (max 3) | Until revoked |
-| `signal.id`, `member_id`, `created_at` | "Please check in on me" | **Auto-deleted after 7 days** |
-| `push_token.account_id`, `token` | Deliver a neutral push to supporters | Until account deleted or token rotated |
+| `invite.code_hash`, `member_id`, `expires_at` | Invite flow (single use, 24 h expiry, one open code per member) | Deleted at use, when replaced, or by the hourly purge after expiry |
+| `link.id`, `member_id`, `supporter_id`, `status` (pending / active), `created_at` | Who may receive whose signals (max 3, pending ones included). The API returns only `link.id`, never the other side's account ID | Until revoked by either side |
+| `signal.id`, `member_id`, `created_at` | "Please check in on me". The request must have an empty body | **Deleted after 7 days** by an hourly purge, and never shown once older |
+| `push_token.account_id`, `token`, `lang` (en / si / ta) | Deliver the fixed neutral push in the supporter's language | Until switched off, account deleted, or Expo reports the device gone |
+
+Not stored anywhere: client IP addresses and rate-limit counters exist only in the
+server's memory (sliding windows of at most 1 hour) and are never logged; Uvicorn's
+access log is off. Push is **off by default** (`SERVER_PUSH_ENABLED=false`); supporters
+then see requests when they open supporter mode.
 
 There are no columns for names, phone numbers, emails, free text, locations or
 health data. **A schema allow-list test** fails the build if anyone adds one.
@@ -115,10 +123,10 @@ whom) · A4 coach conversations · A5 the integrity of the help-resources conten
 | TH5 | T-Close forces the user to unlock | A1, A2 | Quick-hide. Delete-all is reachable in 2 taps from settings, and from the lock screen ("forgot PIN"). | Coercion cannot be fully prevented. Documented as a limitation. Because delete-all works from the lock screen without the PIN, someone holding the phone can wipe the data (they cannot read it). |
 | TH5b | The quick-hide screen gives the app away | A2 | The neutral "Notes" screen shows nothing personal. | **Deliberate trade-off:** it keeps the "Get help" button, because safety rule 2 (help on every screen) comes first. Do not remove it "for discretion". |
 | TH5c | The keyboard learns private words | A1, A2 | Every text field is `SafeTextInput`, which turns off autocorrect, spell-check, autofill and suggestions. | Some third-party keyboards ignore these hints. |
-| TH6 | T-Net intercepts traffic to the laptop server | A3, A4 | Bearer-token auth. Demo runs on a private Wi-Fi. HTTPS through a local reverse proxy (Caddy, internal CA) is documented in `deploy.md`. Payloads hold no personal data. | Plain HTTP on a trusted home Wi-Fi in development. Documented. |
+| TH6 | T-Net intercepts traffic to the laptop server | A3, A4 | Bearer-token auth, never in URLs. Release builds refuse a plain-http server address (only https, or http to localhost); development builds allow http on the home Wi-Fi. Demo runs on a private Wi-Fi. HTTPS through a local reverse proxy (Caddy, internal CA) is documented in `deploy.md`. Payloads hold no personal data. | Plain HTTP on a trusted home Wi-Fi in development. Documented. |
 | TH7 | T-Server dumps the DB | A3 | Only random IDs, hashes and 7-day signals. No names or contacts. Token hashes, not tokens. | The link graph between random IDs is visible. |
-| TH8 | T-Invite brute-forces invite codes | A3 | 10-character base32 codes (~50 bits), single use, 24 h expiry, stored hashed. Rate limit on redemption. The member must approve each new supporter. Max 3 supporters. | Social engineering. |
-| TH9 | An untrusted supporter | A2 | The member can revoke at any time. Supporters get nothing beyond the neutral signal. | The supporter already knows the person is in recovery. |
+| TH8 | T-Invite brute-forces invite codes | A3 | 10-character base32 codes (~50 bits), single use, 24 h expiry, one open code per member, stored as SHA-256. Unknown, used and expired codes give the same answer. After 5 wrong codes per account or 20 per address in an hour, redemption is refused (even for a right code). The member must approve each new supporter, giving them a name only the member sees. Max 3 supporters. | Social engineering. The code hash is unsalted, so someone who dumps the DB could brute-force an open code offline within its 24 h, but would still need the member's approval. |
+| TH9 | An untrusted supporter | A2 | The member can revoke at any time. Before approving, the member compares a 4-character check code shown on both phones, so someone who intercepted the code is caught. Requests sent before approval stay hidden. Supporters get nothing beyond the neutral signal. | The supporter already knows the person is in recovery. |
 | TH10 | Signal spam / abuse | A3 | Rate limit of 3 signals per day per member, plus per-IP limits on the API. | — |
 | TH11 | The coach service logs or keeps chat text | A4 | Stateless design. Body logging is off and a test checks it. No DB in the coach container. Off by default. | Ollama or OS-level swap. Documented. |
 | TH12 | The coach gives harmful advice | user safety | Crisis detection on the device and on the server. Topic guard. Output checker. Safety eval suite with 100% required on crisis, self-harm, overdose and dosing cases. | LLM unpredictability. The coach stays optional and clearly labelled as not a therapist. |
@@ -158,7 +166,11 @@ whom) · A4 coach conversations · A5 the integrity of the help-resources conten
 | Heads-up: off by default, ≤ 1 a day, quiet hours, neutral text in en/si/ta | 5 |
 | Coping plan saved in the encrypted DB; crisis words in it open help | 5 |
 | Notification strings contain no banned terms, in all 3 languages | 4, 5 |
-| Server schema matches the column allow-list | 6 |
+| Server schema matches the column allow-list, and the Alembic migration creates exactly that schema | 6 |
+| Tokens and invite codes stored only as hashes; requests with extra fields refused; signals refuse any body | 6 |
+| `DELETE /account` cascades to links, invites, signals and push token | 6 |
+| Push token fetched only after opt-in; removed on switch-off, leave and delete-all | 6 |
+| Push text is the app's reviewed, banned-term-tested notification text | 6 |
 | Signals older than 7 days are purged | 6 |
 | Coach service never logs request bodies | 9 |
 | No analytics or ad packages in `package.json` | 11 (CI) |

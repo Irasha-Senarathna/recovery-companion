@@ -18,6 +18,8 @@ export type AppSettings = {
   nudgesEnabled: boolean;
   /** When today's heads-up was scheduled for; at most one a day. */
   lastNudgeAt: number | null;
+  /** Supporter mode: a push when someone asks for a check-in (off until opted in). */
+  circleNotify: boolean;
 };
 
 export type SettingKey = keyof AppSettings;
@@ -35,6 +37,7 @@ export const DEFAULT_SETTINGS: AppSettings = {
   reminderMinute: 0,
   nudgesEnabled: false,
   lastNudgeAt: null,
+  circleNotify: false,
 };
 
 /** A whole number in [0, max), or the fallback. */
@@ -79,6 +82,7 @@ export async function loadSettings(db: Database): Promise<AppSettings> {
     reminderMinute: parseInRange(raw.get('reminderMinute'), 60, DEFAULT_SETTINGS.reminderMinute),
     nudgesEnabled: raw.get('nudgesEnabled') === 'true',
     lastNudgeAt: parseTime(raw.get('lastNudgeAt')),
+    circleNotify: raw.get('circleNotify') === 'true',
   };
 }
 

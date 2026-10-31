@@ -7,6 +7,8 @@ const CHANNEL_ID = 'reminders';
 /** The single early-warning heads-up (M5). */
 export const NUDGE_ID = 'early-warning';
 const NUDGE_CHANNEL_ID = 'nudges';
+/** Support-circle pushes (M6, supporter mode). Must match server/app/push.py. */
+export const CIRCLE_CHANNEL_ID = 'circle';
 
 export type DailyReminder = {
   hour: number;
@@ -79,7 +81,7 @@ export async function cancelDailyReminder(): Promise<void> {
 
 /**
  * Used by delete-all: future reminders, any already in the notification shade,
- * and both channels in Android settings (daily reminder and heads-up).
+ * and every channel in Android settings (reminder, heads-up, support circle).
  */
 export async function cancelAllScheduledNotifications(): Promise<void> {
   // Every step runs even if one fails, so no channel is left behind.
@@ -88,6 +90,7 @@ export async function cancelAllScheduledNotifications(): Promise<void> {
     Notifications.dismissAllNotificationsAsync(),
     Notifications.deleteNotificationChannelAsync(CHANNEL_ID),
     Notifications.deleteNotificationChannelAsync(NUDGE_CHANNEL_ID),
+    Notifications.deleteNotificationChannelAsync(CIRCLE_CHANNEL_ID),
   ]);
   if (results.some((r) => r.status === 'rejected')) throw new Error('notifications');
 }

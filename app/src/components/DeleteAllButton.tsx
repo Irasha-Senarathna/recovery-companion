@@ -11,6 +11,7 @@ export function DeleteAllButton() {
   const [confirming, setConfirming] = useState(false);
   const [busy, setBusy] = useState(false);
   const [failed, setFailed] = useState<string[]>([]);
+  const [circleQueued, setCircleQueued] = useState(false);
 
   const confirm = async () => {
     setBusy(true);
@@ -18,6 +19,7 @@ export function DeleteAllButton() {
     setBusy(false);
     setConfirming(false);
     setFailed(result.failed);
+    setCircleQueued(!!result.circleQueued);
   };
 
   if (!confirming) {
@@ -28,6 +30,7 @@ export function DeleteAllButton() {
             {failed.includes('dbKey') ? t('deleteAll.incomplete') : t('deleteAll.partial')}
           </BodyText>
         ) : null}
+        {circleQueued ? <BodyText>{t('deleteAll.circleQueued')}</BodyText> : null}
         <ActionButton
           testID="delete-all"
           tone="plain"

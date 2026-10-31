@@ -30,6 +30,9 @@ const SESSION_FOR_ROUTE: Record<string, Partial<Session>> = {
   checkin: { status: 'unlocked' },
   triggers: { status: 'unlocked' },
   'coping-plan': { status: 'unlocked' },
+  circle: { status: 'unlocked' },
+  'circle-invite': { status: 'unlocked' },
+  supporter: { status: 'unlocked' },
 };
 
 describe('every screen', () => {

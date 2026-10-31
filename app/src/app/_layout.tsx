@@ -55,6 +55,9 @@ function AppStack() {
           <Stack.Screen name="checkin" />
           <Stack.Screen name="triggers" />
           <Stack.Screen name="coping-plan" />
+          <Stack.Screen name="circle" />
+          <Stack.Screen name="circle-invite" />
+          <Stack.Screen name="supporter" />
         </Stack.Protected>
         <Stack.Protected redirectTo={redirectTo} guard={hidden}>
           <Stack.Screen name="hidden" />

@@ -246,7 +246,7 @@ a marker file so `model.json` can prove its data was synthetic.
 
 ---
 
-## M6 — Support circle · TODO
+## M6 — Support circle · DONE
 
 **Goal:** invite up to 3 supporters and send a minimal "please check in on me" signal, with consent.
 
@@ -269,6 +269,38 @@ a marker file so `model.json` can prove its data was synthetic.
   limit), `test_links.py` (max 3, revoke), `test_signals.py` (rate limit,
   purge), `test_schema_allowlist.py`, `test_delete_account.py`;
   `circleClient.test.ts`, `circleScreen.test.tsx`. The privacy-reviewer reports no Critical or High findings.
+
+**Result (M6):** 909 app tests, 67 server tests and 21 ml tests pass; ESLint, tsc,
+ruff and mypy clean; full flow checked by hand against Postgres in Docker (invite →
+approve → signal → delete cascades). Server: SQLAlchemy + Alembic (migrations run
+when the container starts), five allow-listed tables, short error codes the app
+translates, in-memory rate limits (accounts 10/h per address; wrong invite codes
+5/h per account and 20/h per address, counted before lookup), hourly purge, opt-in
+CORS for the web demo, push through Expo **off by default** (`SERVER_PUSH_ENABLED`).
+The database URL is built from parts, so any password character works. App:
+`/circle` (turn on with a clear "what leaves this phone", approve with a check
+code shown on both phones and a name kept only on the phone, remove, invite,
+"Ask my circle to check in" with consent every time, turn off), `/circle-invite`
+(code, share, new code), `/supporter` (join with code + local name, requests by
+name, opt-in push, stop supporting, leave). Every send outcome also offers
+"Get help" and "Open SOS", because a supporter may not see a request at once.
+Delete-all deletes the server accounts first, queues them if offline (retried at
+launch) and keeps the tokens if that step fails. Review fixes: si/ta push text
+said "check on you" (now "check on them"), honest "may not see it straight away"
+wording, rolling-24-hour wording, https required outside dev builds, approval
+resets when requests become visible, thread-safe guess limiter, DB errors hide
+parameters, one shared push client.
+Needs: `app/.env` with `EXPO_PUBLIC_CIRCLE_API_URL`, and for real push a
+`google-services.json` + FCM key in EAS, then `SERVER_PUSH_ENABLED=true` and a new
+phone build.
+Carry-overs: **M10** neutral app display name (it shows on supporters' lock
+screens; both reviewers flagged this); **M11** TLS proxy for the API, digest-pinned
+images, request-size cap and per-account limits on read routes; later: purge
+accounts unseen for N days (needs a `last_seen_day` column), row locks so parallel
+requests cannot exceed 3 signals or 3 supporters, a unique push token, a lock
+around the pending-deletion queue, a guard against double account creation, and a
+"this connection has ended" note for supporters. iOS Keychain survives uninstall
+(not built for iOS).
 
 ## M7 — Shame-free slips, rebuild goals, progress · TODO
 

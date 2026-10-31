@@ -7,6 +7,10 @@ dependencies = [
   "fastapi>=0.115",
   "uvicorn[standard]>=0.32",
   "pydantic-settings>=2.6",
+  "sqlalchemy>=2.0",
+  "psycopg[binary]>=3.2",
+  "alembic>=1.14",
+  "httpx>=0.28",
 ]
 
 [dependency-groups]
@@ -20,9 +24,14 @@ target-version = "py312"
 select = ["E", "F", "I", "B", "UP", "S"]
 ignore = ["S101"]
 
+[tool.ruff.lint.isort]
+# The local alembic/ folder holds migrations; the package is third-party.
+known-third-party = ["alembic"]
+
 [tool.mypy]
 strict = true
 packages = ["app", "tests"]
+exclude = ["alembic/versions"]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
