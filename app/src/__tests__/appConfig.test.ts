@@ -53,3 +53,21 @@ describe('app permissions', () => {
     });
   });
 });
+
+/**
+ * Privacy: the installed name shows on the home screen, in the app switcher
+ * and on every notification, including on a locked phone. It must not hint at
+ * recovery, drugs or treatment.
+ */
+describe('neutral app name', () => {
+  const REVEALING = /recover|addict|drug|sober|rehab|relapse|craving|detox|substance|treatment/i;
+
+  it('has a display name that says nothing about recovery', () => {
+    expect(appJson.expo.name).not.toMatch(REVEALING);
+    expect(appJson.expo.name.trim().length).toBeGreaterThan(0);
+  });
+
+  it('uses the same neutral name for the web tab title', () => {
+    expect(appJson.expo.web).toMatchObject({ name: appJson.expo.name });
+  });
+});

@@ -9,6 +9,7 @@ import {
   type SessionStatus,
 } from '../features/session/SessionProvider';
 import { useSecureScreen } from '../platform/secureScreen';
+import appJson from '../../app.json';
 import { useTheme } from '../theme';
 
 export default function RootLayout() {
@@ -44,11 +45,17 @@ function AppStack() {
     <>
       <StatusBar style="auto" />
       <Stack
-        screenOptions={{ headerShown: false, contentStyle: { backgroundColor: theme.background } }}
+        screenOptions={{
+          headerShown: false,
+          // The browser tab shows this, never the screen's name ("slip", "sos").
+          title: appJson.expo.name,
+          contentStyle: { backgroundColor: theme.background },
+        }}
       >
         <Stack.Protected redirectTo={redirectTo} guard={unlocked}>
           <Stack.Screen name="index" />
           <Stack.Screen name="settings" />
+          <Stack.Screen name="about" />
           <Stack.Screen name="sos" />
           <Stack.Screen name="vault" />
           <Stack.Screen name="progress" />
@@ -60,6 +67,9 @@ function AppStack() {
           <Stack.Screen name="supporter" />
           <Stack.Screen name="slip" />
           <Stack.Screen name="goals" />
+          <Stack.Screen name="finder" />
+          <Stack.Screen name="first-visit" />
+          <Stack.Screen name="coach" />
         </Stack.Protected>
         <Stack.Protected redirectTo={redirectTo} guard={hidden}>
           <Stack.Screen name="hidden" />

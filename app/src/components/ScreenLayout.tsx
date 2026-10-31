@@ -4,7 +4,7 @@ import { ScrollView, StyleSheet, Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { QuickHideButton } from '../features/hide/QuickHideButton';
 import { WebDemoBanner } from '../platform/WebDemoBanner';
-import { useTheme } from '../theme';
+import { useLargeText, useTheme } from '../theme';
 import { HelpButton } from './HelpButton';
 
 type Props = {
@@ -18,13 +18,15 @@ type Props = {
 /** Every route renders inside this, so the help button is always visible. */
 export function ScreenLayout({ title, children, testID, hero }: Props) {
   const theme = useTheme();
+  // With large text the title gets its own line, so the buttons never squeeze it.
+  const large = useLargeText();
 
   return (
     <View style={[styles.root, { backgroundColor: theme.background }]}>
       <LinearGradient colors={theme.gradient} style={StyleSheet.absoluteFill} />
       <SafeAreaView testID={testID} style={styles.root}>
         <WebDemoBanner />
-        <View style={styles.header}>
+        <View testID="screen-header" style={[styles.header, large && styles.headerStacked]}>
           <Text accessibilityRole="header" style={[styles.title, { color: theme.text }]}>
             {title}
           </Text>
@@ -52,7 +54,8 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
     paddingVertical: 12,
   },
-  actions: { flexDirection: 'row', gap: 8 },
+  headerStacked: { flexDirection: 'column', alignItems: 'flex-start' },
+  actions: { flexDirection: 'row', flexWrap: 'wrap', gap: 8 },
   title: { flexShrink: 1, fontSize: 26, fontWeight: '700', letterSpacing: -0.3 },
   content: {
     padding: 20,

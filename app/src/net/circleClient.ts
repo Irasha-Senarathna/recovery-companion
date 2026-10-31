@@ -4,6 +4,7 @@
  * Never add check-ins, names, labels or anything personal here (docs/privacy.md).
  */
 import type { Language } from '../i18n';
+import { checkedBaseUrl } from './baseUrl';
 
 export type CircleRole = 'member' | 'supporter';
 export type Credentials = { accountId: string; token: string; role: CircleRole };
@@ -203,16 +204,11 @@ export function checkCode(linkId: string): string {
 /**
  * The server address from `app/.env` (EXPO_PUBLIC_CIRCLE_API_URL), e.g. the
  * laptop's address on the home Wi-Fi. Null when not set: the circle is then
- * shown as not available on this build. Plain http (where anyone on the same
- * Wi-Fi could read the token) is allowed only in development builds or for
- * this computer itself; anything else must use https.
+ * shown as not available on this build. See `checkedBaseUrl` for the http rules.
  */
 export function circleBaseUrl(
   url = process.env.EXPO_PUBLIC_CIRCLE_API_URL,
   dev: boolean = __DEV__,
 ): string | null {
-  if (!url) return null;
-  if (url.startsWith('https://')) return url;
-  const local = /^http:\/\/(localhost|127\.0\.0\.1)(:\d+)?(\/|$)/.test(url);
-  return url.startsWith('http://') && (dev || local) ? url : null;
+  return checkedBaseUrl(url, dev);
 }

@@ -1,0 +1,9 @@
+# kubectl apply -k deploy/k8s   (create the server-db secret first; see secret.example.yaml)
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+resources:
+  - namespace.yaml
+  - postgres.yaml
+  - server.yaml
+  - ingress.yaml
+  - networkpolicy.yaml

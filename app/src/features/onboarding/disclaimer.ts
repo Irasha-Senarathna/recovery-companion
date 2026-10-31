@@ -1,24 +1,10 @@
 import text from '../../../../content/disclaimer.md';
+import { parseMarkdown, type MarkdownBlock } from '../../utils/markdown';
 
-export type DisclaimerBlock = { kind: 'heading' | 'paragraph'; text: string };
+export type DisclaimerBlock = MarkdownBlock;
 
-/**
- * Turns the user-verified Markdown disclaimer into plain blocks: comments are
- * dropped, `#` lines become headings, and bold/italic markers are removed.
- */
-export function parseDisclaimer(markdown: string): DisclaimerBlock[] {
-  return markdown
-    .replace(/<!--[\s\S]*?-->/g, '')
-    .split(/\n\s*\n/)
-    .map((block) => block.replace(/\s*\n\s*/g, ' ').trim())
-    .filter(Boolean)
-    .map((block) => {
-      const plain = block.replace(/(\*\*|__|\*|_)(.+?)\1/g, '$2');
-      return plain.startsWith('#')
-        ? { kind: 'heading' as const, text: plain.replace(/^#+\s*/, '') }
-        : { kind: 'paragraph' as const, text: plain };
-    });
-}
+/** The user-verified Markdown disclaimer as plain blocks. */
+export const parseDisclaimer = parseMarkdown;
 
 export function loadDisclaimer(): DisclaimerBlock[] {
   return parseDisclaimer(text);

@@ -2,6 +2,7 @@ import { Linking, StyleSheet, Text, View } from 'react-native';
 import { useTranslation } from 'react-i18next';
 import { ActionButton } from '../../components/ActionButton';
 import { BodyText } from '../../components/BodyText';
+import { EmptyState } from '../../components/EmptyState';
 import { isLanguage } from '../../i18n';
 import { useTheme } from '../../theme';
 import {
@@ -16,7 +17,9 @@ type Props = { entries: HelplineEntry[]; today?: Date };
 
 export function HelplineList({ entries, today = new Date() }: Props) {
   const { t } = useTranslation();
-  if (entries.length === 0) return <BodyText>{t('help.notSetUp')}</BodyText>;
+  if (entries.length === 0) {
+    return <EmptyState testID="helplines-empty" message={t('help.notSetUp')} />;
+  }
   return (
     <>
       {entries.map((entry) => (

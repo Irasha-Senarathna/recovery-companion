@@ -3,7 +3,7 @@
     "status": "source"
   },
   "app": {
-    "name": "Recovery Companion"
+    "name": "Companion"
   },
   "common": {
     "webDemoBanner": "Web demo — not for real data. Nothing here is stored securely.",
@@ -45,7 +45,9 @@
     "triggers": "Your patterns",
     "circle": "Your support circle",
     "goals": "Your goals",
-    "slip": "Had a slip? Let’s look after you"
+    "slip": "Had a slip? Let’s look after you",
+    "finder": "Find treatment and support",
+    "coach": "Talk with the coping coach"
   },
   "hide": {
     "button": "Hide",
@@ -119,7 +121,8 @@
     "reminderPreview": "The reminder will say only this:",
     "simulateNotification": "Simulate notification (web demo)",
     "simulatedNotification": "Web demo: on a phone, the reminder above would appear now.",
-    "reminderAppName": "Your phone also shows this app's name with each reminder, and may show it on the lock screen."
+    "reminderAppName": "Your phone also shows this app's name with each reminder, and may show it on the lock screen.",
+    "about": "About this app and your privacy"
   },
   "deleteAll": {
     "button": "Delete all my data",
@@ -671,6 +674,89 @@
     "moneyKept": "Put towards your life so far",
     "amount": "Rs {{amount}}",
     "moneyNext": "Next milestone: Rs {{amount}}",
-    "moneyChange": "Change the daily amount"
+    "moneyChange": "Change the daily amount",
+    "empty": "No goals yet. You could start with one small thing that matters to you."
+  },
+  "finder": {
+    "title": "Find support",
+    "intro": "Places that may be able to help. Details can change, so please call or check before you go.",
+    "demoIntro": "Places marked \"Demo\" are examples only. They are not real places and cannot be contacted.",
+    "demoBadge": "Demo",
+    "demoNote": "This is an example, not a real place, so it has no contact details.",
+    "firstVisit": "What happens at your first visit?",
+    "typeLabel": "Kind of support",
+    "areaLabel": "Area",
+    "allTypes": "All kinds",
+    "allAreas": "All areas",
+    "types": {
+      "treatment_centre": "Treatment centre",
+      "counselling": "Counselling",
+      "support_group": "Support group"
+    },
+    "area": "Area: {{area}}",
+    "hours": "Hours: {{hours}}",
+    "website": "Open website",
+    "websiteHint": "Opens this place’s website in your browser",
+    "stale": "Last checked more than 6 months ago ({{date}}). Details may have changed, so please confirm before you go.",
+    "unverified": "Not yet checked. Please confirm these details before you go.",
+    "none": "No places have been added yet.",
+    "noMatch": "No places match these choices. Try another area or kind of support.",
+    "clear": "Show all places",
+    "openFailed": "This could not be opened on this device. You can contact the place another way, or use Get help."
+  },
+  "coach": {
+    "title": "Coping coach",
+    "intro": "A gentle chat for hard moments. The coach can listen, encourage you and suggest a coping skill to try.",
+    "notTherapist": "The coach is a computer program, not a therapist, doctor or counsellor. It cannot give medical advice, and it can get things wrong.",
+    "whatIsSent": "What leaves this phone",
+    "sentList": "Only the message you send, the last few messages of this chat and your app language. They go to the coach service on your laptop, which keeps nothing.",
+    "notSentList": "Never your nickname, check-ins, slips, notes or anything else in the app. Chats are not saved: leaving this screen clears the chat.",
+    "crisisFirst": "If you type words about being in danger, help opens straight away and nothing is sent.",
+    "turnOn": "Turn on the coach",
+    "unavailable": "The coach is not set up on this version of the app.",
+    "empty": "Say whatever is on your mind. For example: \"I'm having a craving\" or \"I feel lonely tonight\".",
+    "inputLabel": "Your message",
+    "inputHint": "Up to {{count}} characters",
+    "send": "Send",
+    "thinking": "The coach is thinking…",
+    "you": "You",
+    "coach": "Coach",
+    "crisis": "It sounds like you may be in danger. You deserve help from a real person right now.",
+    "openHelp": "Get help now",
+    "openSos": "Try a coping exercise",
+    "refusal": {
+      "dosing": "I can't help with amounts of any medicine or drug. A doctor or pharmacist can answer that safely. If you feel unwell now, please get help.",
+      "medical": "That's a question for a doctor or your treatment team. They know your health and can answer it safely. If this feels urgent, or someone is very unwell, get help now.",
+      "withdrawal": "Withdrawal can be risky, and it is safest with medical support. Please talk to a doctor or treatment service, or get help now if you feel unwell.",
+      "drug_use": "I can't help with using or getting drugs. I can stay with you through this moment, though. Would you like to tell me what's making it hard right now?",
+      "rules": "I can only be a coping coach: kind support and coping skills. I'm happy to keep going with that. What's on your mind today?"
+    },
+    "fallback": "I'm not able to answer that well. Would one of these help instead?",
+    "reachOut": "I'm glad our chats help. People who know you, like your support circle or a counsellor, can be there in ways I can't.",
+    "errors": {
+      "offline": "The coach can't be reached right now. You can still use these:",
+      "busy": "The coach needs a short break. Please try again in a minute. Meanwhile:",
+      "unavailable": "The coach isn't running right now. You can still use these:",
+      "server": "Something went wrong with the coach. You can still use these:"
+    },
+    "clear": "Clear this chat",
+    "turnOff": "Turn off the coach",
+    "paused": "The coach is paused for now. Right now a real person can help more than a chat can. Please reach out using Get help.",
+    "unencrypted": "Test setup: this connection to the coach is not encrypted, so others on the same Wi-Fi could read your messages. Do not use it for real conversations."
+  },
+  "about": {
+    "title": "About and privacy",
+    "privacyTitle": "Your privacy",
+    "points": {
+      "phone": "No sign-up: no name, email or phone number. What you enter is stored encrypted on this phone and is not backed up to the cloud.",
+      "leave": "Only two features send anything to a server, and only after you turn them on: the support circle and the coping coach.",
+      "circle": "Your support circle only learns that, and when, you asked them to check in. Never your check-ins, cravings, slips or places. It uses a random ID, not your name.",
+      "coach": "The coping coach gets only this chat (your message and the last few turns), not your other data, and the coach service does not save it. If the app spots crisis words, the message is not sent and help opens instead.",
+      "calls": "Calling a number or opening a website hands it to your phone's own apps, which may keep it in their call log or history.",
+      "tracking": "No ads, no analytics and no tracking.",
+      "control": "You can lock the app, hide it with one tap, and delete everything from Settings. Anything on the support circle server is removed the next time the app is online."
+    },
+    "appName": "On your home screen and in notifications, this app is called \"{{name}}\", so it does not stand out.",
+    "version": "Version {{version}}"
   }
 }

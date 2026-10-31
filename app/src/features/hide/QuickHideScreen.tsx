@@ -16,6 +16,8 @@ export function QuickHideScreen() {
     <ScreenLayout title={t('hide.title')} testID="hidden-screen">
       <Pressable
         testID="hidden-return"
+        accessibilityRole="button"
+        accessibilityLabel={t('hide.returnAction')}
         accessibilityHint={t('hide.returnHint')}
         accessibilityActions={[{ name: 'longpress', label: t('hide.returnAction') }]}
         onAccessibilityAction={unhide}

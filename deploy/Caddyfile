@@ -1,0 +1,23 @@
+# HTTPS in front of the support-circle API (docker-compose.tls.yml).
+# Caddy gets and renews a certificate for API_DOMAIN by itself.
+# Caddy writes no access log unless asked. Its own logs are discarded too, because
+# error lines can contain client addresses and request paths.
+{
+	log {
+		output discard
+	}
+}
+
+{$API_DOMAIN} {
+	request_body {
+		max_size 16KB
+	}
+	# Caddy sets X-Forwarded-For to the real client and ignores any value the client
+	# sent (no trusted_proxies here), so it cannot be spoofed.
+	reverse_proxy server:8000
+	header {
+		Strict-Transport-Security "max-age=31536000"
+		X-Content-Type-Options nosniff
+		-Server
+	}
+}

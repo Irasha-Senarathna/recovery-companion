@@ -10,4 +10,5 @@ RUN useradd --create-home appuser
 USER appuser
 EXPOSE 8000
 # Migrations first, then the API. No access log: request paths and addresses are not kept.
-CMD ["sh", "-c", "/srv/.venv/bin/alembic upgrade head && exec /srv/.venv/bin/uvicorn app.main:app --host 0.0.0.0 --port 8000 --no-access-log"]
+# Proxy headers are handled by the app (SERVER_TRUSTED_PROXIES), not uvicorn.
+CMD ["sh", "-c", "/srv/.venv/bin/alembic upgrade head && exec /srv/.venv/bin/uvicorn app.main:app --host 0.0.0.0 --port 8000 --no-access-log --no-proxy-headers"]

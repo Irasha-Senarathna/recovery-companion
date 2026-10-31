@@ -19,6 +19,7 @@ treatment and support finder · optional AI coping coach (strict guardrails).
 ## Folder structure
 - `app/`        Expo mobile app
 - `server/`     FastAPI backend for support-circle signals
+- `coach/`      stateless AI coach service (safety layer in front of Ollama)
 - `ml/`         synthetic data generator, risk model, model evaluation
 - `content/`    coping exercises, `helplines.json`, `disclaimer.md`
 - `evals/`      safety test cases for the AI coach + runner

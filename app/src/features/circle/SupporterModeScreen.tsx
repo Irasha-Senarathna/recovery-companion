@@ -3,6 +3,7 @@ import { Platform, StyleSheet, Text } from 'react-native';
 import { useTranslation } from 'react-i18next';
 import { ActionButton } from '../../components/ActionButton';
 import { BodyText } from '../../components/BodyText';
+import { EmptyState } from '../../components/EmptyState';
 import { Card } from '../../components/Card';
 import { SafeTextInput } from '../../components/SafeTextInput';
 import { ScreenLayout } from '../../components/ScreenLayout';
@@ -60,7 +61,9 @@ function Supporting({ circle }: { circle: Circle }) {
       <NotifyToggle circle={circle} />
 
       <SectionHeading>{t('supporter.people')}</SectionHeading>
-      {circle.links.length === 0 ? <BodyText>{t('supporter.none')}</BodyText> : null}
+      {circle.links.length === 0 ? (
+        <EmptyState testID="supporter-people-empty" message={t('supporter.none')} />
+      ) : null}
       {circle.links.map((link) => (
         <Person key={link.id} link={link} circle={circle} />
       ))}
@@ -70,7 +73,9 @@ function Supporting({ circle }: { circle: Circle }) {
 
 function Requests({ circle }: { circle: Circle }) {
   const { t } = useTranslation();
-  if (circle.signals.length === 0) return <BodyText>{t('supporter.noRequests')}</BodyText>;
+  if (circle.signals.length === 0) {
+    return <EmptyState testID="supporter-requests-empty" message={t('supporter.noRequests')} />;
+  }
   const names = new Map(circle.links.map((link) => [link.id, link.label]));
   return (
     <>

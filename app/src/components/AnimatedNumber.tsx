@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { Animated, Text, type TextStyle } from 'react-native';
+import { DISPLAY_TEXT_MAX_SCALE } from '../theme';
 import { useReducedMotion } from './useReducedMotion';
 
 type Props = {
@@ -12,7 +13,8 @@ type Props = {
 /**
  * A number that counts up to its value with a calm spring. Digits are
  * tabular, so the width stays steady while it counts. Screen readers and
- * reduced motion get the final value straight away.
+ * reduced motion get the final value straight away. It is display text
+ * (32 sp and up), so it stops growing at DISPLAY_TEXT_MAX_SCALE and stays inside its ring.
  */
 export function AnimatedNumber({ value, style, format = String, testID }: Props) {
   const reduced = useReducedMotion();
@@ -39,6 +41,7 @@ export function AnimatedNumber({ value, style, format = String, testID }: Props)
     <Text
       testID={testID}
       accessibilityLabel={format(value)}
+      maxFontSizeMultiplier={DISPLAY_TEXT_MAX_SCALE}
       style={[{ fontVariant: ['tabular-nums'] }, style]}
     >
       {format(reduced ? value : shown)}

@@ -1,0 +1,36 @@
+# Optional HTTPS proxy for a server reachable from the internet.
+#   API_DOMAIN=api.example.org docker compose -f docker-compose.yml -f deploy/docker-compose.tls.yml up -d
+# The domain's DNS must point at this machine, with ports 80 and 443 open.
+services:
+  server:
+    # Reachable only through the proxy, not on port 8000.
+    ports: !reset []
+    environment:
+      # Trust X-Forwarded-For only from the proxy, so per-address limits see each client.
+      SERVER_TRUSTED_PROXIES: 172.30.0.10
+
+  proxy:
+    image: caddy:2.11-alpine
+    environment:
+      API_DOMAIN: ${API_DOMAIN:?set API_DOMAIN to the API's domain name}
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./deploy/Caddyfile:/etc/caddy/Caddyfile:ro
+      - caddy-data:/data
+    networks:
+      default:
+        ipv4_address: 172.30.0.10
+    depends_on:
+      - server
+
+# A fixed subnet so the proxy has a known address.
+networks:
+  default:
+    ipam:
+      config:
+        - subnet: 172.30.0.0/24
+
+volumes:
+  caddy-data:

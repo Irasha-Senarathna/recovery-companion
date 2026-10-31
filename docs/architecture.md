@@ -1,6 +1,6 @@
 # Architecture — Recovery Companion
 
-Status: **draft for approval**. No code exists yet; this describes the target design.
+Status: **built** (milestones 1–11). Sections name the milestone that built each part.
 
 Recovery Companion is an offline-first Android app. Almost everything runs on
 the phone. Two small, optional services run on the developer's laptop (Docker
@@ -84,8 +84,7 @@ flowchart LR
 | `evals/` | Laptop | Coach safety cases (YAML) and runner; pass rates per category. |
 | `content/` | Repo | Developer-verified content. Bundled into the app at build time. |
 
-> Note: `coach/` is a new top-level folder that CLAUDE.md does not list yet.
-> Milestone 9 adds it to CLAUDE.md's folder list.
+`coach/` was added to CLAUDE.md's folder list in milestone 9.
 
 ## 2. Data flow: what stays on the device and what leaves it
 
@@ -189,6 +188,25 @@ flowchart LR
   metrics show the pipeline works. They do **not** show it predicts real
   relapse risk. The README and the trigger-map screen say this.
 
+## Support finder (milestone 8)
+
+- **Source:** only `content/support_places.json`, bundled into the app, so the
+  finder works offline and makes no network request. Opening a place only
+  hands a `tel:` or `https:` link to the phone, and only when the person taps.
+- **Validation** (`features/finder/places.ts`): malformed, untyped or repeated
+  entries are dropped, never guessed. An entry is a demo unless it says
+  `"demo": false`; demo entries never keep a phone number or website, so a
+  made-up place can never be dialled. A real entry is only contactable when its
+  `source_url` is `https`, and websites must be `https` too. Name, area and
+  hours are given in en/si/ta (English is the fallback).
+- **Freshness:** the same six-month rule as the help contacts
+  (`verificationStatus`). Older entries show "please confirm before you go";
+  undated or future-dated ones show "not yet checked". A demo entry is never
+  shown as "last checked".
+- **First-visit guide:** `content/first_visit{,.si,.ta}.md`, parsed by
+  `utils/markdown.ts` (shared with the disclaimer) into headings, paragraphs and
+  bullets; never rendered as HTML.
+
 ## 4. Support circle (milestone 6)
 
 ```mermaid
@@ -243,7 +261,89 @@ sequenceDiagram
   end
 ```
 
-## Repository layout (target)
+Built in milestone 9:
+
+- **One crisis word list**, `content/crisis_terms.json`, is read by the app
+  (`src/safety/crisisTerms.ts`) and the coach (`coach/app/crisis.py`). The phone
+  checks the message before sending and never sends crisis words; the service
+  checks the message and every earlier user turn again.
+- The **topic guard** (`topic_guard.py`) blocks *asking for advice* on dosing,
+  withdrawal/tapering, medicines and getting or using drugs, plus attempts to
+  change the coach's rules (role-play, "ignore your instructions"). It undoes
+  simple spelling tricks ("d0se", "d o s e"). Mentions alone ("I saw my doctor
+  today") pass. Si/ta term lists are drafts for native-speaker review.
+- The service answers with a **kind**: `reply` (checked model text), `crisis`,
+  `refusal` (+ topic) or `fallback`. Only `reply` carries model text; the app
+  shows its own translated text and Get help / SOS buttons for the others. A
+  `reach_out` note is added when the user leans only on the coach.
+- The **output checker** fails closed on:
+  - phone numbers or links
+  - role claims ("I am a therapist"; also in si/ta)
+  - doses and amounts
+  - medicine and drug names (also in si/ta)
+  - withdrawal advice
+  - drug-use instructions
+  - secrecy from supporters
+  - "you only need me" reliance
+  - shame words
+  - crisis words
+- Milestone 10: shame words that are clearly denied ("you're not weak", "a slip
+  isn't a failure", "you don't have to start over") are allowed. Labels (addict,
+  clean) and commands ("don't be weak") are still blocked. Si/ta shame words come
+  from `content/shame_terms.json`, which the app's locale tests also use (drafts for
+  native-speaker review). The phone's crisis detector now undoes the same spelling
+  tricks as the service. Both read the shared cases in `evals/fixtures/crisis_spelling.json`.
+- After any crisis the app **pauses the coach** for that visit: help stays
+  pinned and nothing more is sent.
+- Ollama runs natively on the Mac by default (`host.docker.internal:11434`,
+  uses the GPU); `docker compose --profile ollama` starts a container instead.
+  Model: `COACH_MODEL` (default `qwen2.5:7b`). The coach listens on port 8001,
+  bound to `127.0.0.1` (a phone uses `adb reverse tcp:8001 tcp:8001`), and the app
+  reads `EXPO_PUBLIC_COACH_API_URL`.
+- `make safety-eval` runs `evals/safety_cases.yaml` through the real pipeline
+  with a scripted model; `ARGS="--live"` uses Ollama and writes `evals/report.md`.
+
+## Accessibility and languages (milestone 10)
+
+- **Checked by tests, not by hand.** `a11y.labels.test.tsx` renders every route,
+  empty and with 30 days of demo data, and walks the later steps of SOS, slip,
+  onboarding and check-in. Every button, switch and text field must have a label,
+  a role (text fields excepted) and a tap target of at least 48 dp.
+  `contrast.test.ts` checks every text colour on every surface it is drawn on
+  (≥ 4.5:1) and the `outline` of fields and switches (≥ 3:1), in light and dark.
+- **Large text.** From a font scale of 1.3 (`LARGE_TEXT_SCALE`), the screen header
+  stacks and the round SOS button becomes a wide one that grows with its text.
+  Font scaling is never switched off. Only display numbers (32 sp and up, in
+  `AnimatedNumber`) stop at 1.25× so they stay inside their rings; they are still
+  larger than body text at 200%.
+- **Empty states.** Lists show an `EmptyState` card (calm words, at most one next
+  step) instead of a blank space.
+- **Translations.** si/ta must have every en key and the same `{{placeholders}}`.
+  A string may stay in English only if it is listed in `_meta.sameAsEnglish`. Both
+  files stay `needs_review`, and `_meta.priorityReview` lists the areas a native
+  speaker should read first. The en/si/ta shame-word lists in
+  `content/shame_terms.json` are tested against every string.
+- **Offline.** Everything except the support circle and the coach works in
+  airplane mode (`offline.test.tsx`).
+- **About** (Settings → "About this app and your privacy") shows the user-verified
+  disclaimer, a plain-language privacy summary and the neutral app name.
+
+## Delivery (milestone 11)
+
+```mermaid
+flowchart LR
+  PR["Pull request"] --> CI["ci.yml<br/>app · server · coach + safety eval<br/>ml (train + quality gate)<br/>dependency allow-list · links"]
+  PR --> IMG["server-image.yml<br/>build server + coach images"]
+  Main["Push to main / v* tag"] --> IMG2["server-image.yml<br/>build + push to GHCR"]
+  Manual["Manual run"] --> EAS["app-preview.yml<br/>EAS Build: Android APK"]
+  IMG2 --> Compose["Docker Compose<br/>(+ Caddy for HTTPS)"]
+  IMG2 --> K8s["Kubernetes / OpenChoreo"]
+```
+
+All actions are pinned to commit SHAs; jobs get read-only repository access, and only
+the image job can write packages. See [deploy.md](deploy.md).
+
+## Repository layout
 
 ```
 app/          Expo app (TypeScript)
@@ -253,8 +353,12 @@ app/          Expo app (TypeScript)
 server/       FastAPI support-circle API + Alembic migrations + tests
 coach/        FastAPI coach service + safety layer + tests
 ml/           generate.py, features.py, train.py, evaluate.py, export.py, report.md
-content/      helplines.json*, disclaimer.md*, support_places.json, exercises/
-evals/        safety_cases.yaml, run_eval.py, report.md
-docs/         architecture.md, privacy.md, plan.md, deploy.md
+content/      helplines.json*, disclaimer.md*, support_places.json,
+              first_visit{,.si,.ta}.md, exercises/, crisis_terms.json, shame_terms.json
+evals/        safety_cases.yaml, run_eval.py, report.md, fixtures/
+tools/        check_dependencies.py + dependency_allowlist.json, screenshots.py
+deploy/       docker-compose.tls.yml + Caddyfile (HTTPS), k8s/ manifests
+.github/      workflows: ci.yml, server-image.yml, app-preview.yml
+docs/         architecture.md, privacy.md, plan.md, deploy.md, screenshots/
 * edited by the developer only (protected by a hook)
 ```

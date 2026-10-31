@@ -1,0 +1,11 @@
+# Markdown link check (CI `links` job and `make links`).
+include_fragments = "full"
+max_retries = 3
+accept = "200..=299, 429"
+exclude_all_private = true
+exclude = [
+  # Placeholder hosts in examples.
+  '^https?://api\.example\.org',
+  # The CI badge only exists once the workflow has run on main.
+  '^https://github\.com/Irasha-Senarathna/recovery-companion/actions',
+]

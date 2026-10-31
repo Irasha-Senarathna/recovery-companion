@@ -24,6 +24,8 @@ export type AppSettings = {
   journeyStart: string | null;
   /** What the user used to spend a day, in rupees, for "money saved" (optional). */
   moneyPerDay: number | null;
+  /** Optional AI coach (off until the user turns it on); chats are never stored. */
+  coachEnabled: boolean;
 };
 
 export type SettingKey = keyof AppSettings;
@@ -44,6 +46,7 @@ export const DEFAULT_SETTINGS: AppSettings = {
   circleNotify: false,
   journeyStart: null,
   moneyPerDay: null,
+  coachEnabled: false,
 };
 
 /** A whole number in [0, max), or the fallback. */
@@ -101,6 +104,7 @@ export async function loadSettings(db: Database): Promise<AppSettings> {
     circleNotify: raw.get('circleNotify') === 'true',
     journeyStart: parseDay(raw.get('journeyStart')),
     moneyPerDay: parseMoney(raw.get('moneyPerDay')),
+    coachEnabled: raw.get('coachEnabled') === 'true',
   };
 }
 

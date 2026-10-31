@@ -4,6 +4,7 @@ import { StyleSheet, Text } from 'react-native';
 import { useTranslation } from 'react-i18next';
 import { ActionButton } from '../../components/ActionButton';
 import { BodyText } from '../../components/BodyText';
+import { EmptyState } from '../../components/EmptyState';
 import { Card } from '../../components/Card';
 import { ScreenLayout } from '../../components/ScreenLayout';
 import { findPatterns, slipContext, type PatternResult } from '../../ml/patterns';
@@ -62,12 +63,12 @@ function TriggerMap({ db }: { db: Database }) {
       {today?.harder ? <HarderDayCard testID="today-harder" reasons={today.reasons} /> : null}
 
       {result && !result.ready ? (
-        <Card>
-          <Text testID="triggers-progress" style={[styles.big, { color: theme.text }]}>
-            {t('triggers.notReady', { count: result.count, needed: result.needed })}
-          </Text>
-          <BodyText>{t('triggers.notReadyInfo')}</BodyText>
-        </Card>
+        <EmptyState
+          testID="triggers-empty"
+          titleTestID="triggers-progress"
+          title={t('triggers.notReady', { count: result.count, needed: result.needed })}
+          message={t('triggers.notReadyInfo')}
+        />
       ) : null}
 
       {result?.ready ? (
@@ -80,7 +81,9 @@ function TriggerMap({ db }: { db: Database }) {
               <BodyText>{t(`triggers.hardestTime.${result.hardestTime}`)}</BodyText>
             </Card>
           ) : null}
-          {result.patterns.length === 0 ? <BodyText>{t('triggers.noPatterns')}</BodyText> : null}
+          {result.patterns.length === 0 ? (
+            <EmptyState testID="triggers-no-patterns" message={t('triggers.noPatterns')} />
+          ) : null}
           {result.patterns.map((pattern) => (
             <Card key={pattern.id}>
               <Text testID={`pattern-${pattern.id}`} style={[styles.big, { color: theme.text }]}>

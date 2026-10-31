@@ -1,0 +1,31 @@
+# Files EAS Build must never upload. When an .easignore exists EAS uses it instead of
+# .gitignore, so every .gitignore pattern is repeated here. Patterns without a slash
+# match at any depth, so they also cover the repository root in this monorepo.
+# Check with: npx eas-cli build:inspect --platform android --profile preview --stage archive --output /tmp/eas-archive
+.env
+.env.*
+!.env.example
+google-services.json
+*.keystore
+node_modules/
+.expo/
+/app/dist/
+/app/web-build/
+/app/android/
+/app/ios/
+/app/expo-env.d.ts
+.venv/
+__pycache__/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.DS_Store
+# Folders the app build does not need (anchored to the repository root).
+/ml/
+/server/
+/coach/
+/evals/
+/tools/
+/deploy/
+/docs/
+/.github/

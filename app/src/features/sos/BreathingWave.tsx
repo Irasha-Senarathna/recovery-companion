@@ -101,7 +101,7 @@ export function BreathingWave({ animation, seconds }: Props) {
 }
 
 const styles = StyleSheet.create({
-  stage: { height: 260, alignItems: 'center', justifyContent: 'center', overflow: 'hidden' },
+  stage: { minHeight: 260, alignItems: 'center', justifyContent: 'center', overflow: 'hidden' },
   ring: { position: 'absolute', width: 200, height: 200, borderRadius: 999 },
   circle: { position: 'absolute', width: 160, height: 160, borderRadius: 999 },
   label: { fontSize: 22, fontWeight: '700' },

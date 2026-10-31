@@ -1,6 +1,23 @@
-# Files EAS Build must never upload
+# Files EAS Build must never upload. When an .easignore exists EAS uses it instead of
+# .gitignore, so every .gitignore pattern is repeated here. Patterns without a slash
+# match at any depth, so they also cover the repository root in this monorepo.
+# Check with: npx eas-cli build:inspect --platform android --profile preview --stage archive --output /tmp/eas-archive
 .env
-../.env
+.env.*
+!.env.example
 google-services.json
+*.keystore
 node_modules/
 .expo/
+/dist/
+/web-build/
+/android/
+/ios/
+/expo-env.d.ts
+.venv/
+__pycache__/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.DS_Store
+/data/

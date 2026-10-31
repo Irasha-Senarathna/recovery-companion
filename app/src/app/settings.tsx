@@ -1,5 +1,7 @@
+import { useRouter } from 'expo-router';
 import { Platform, StyleSheet, Text } from 'react-native';
 import { useTranslation } from 'react-i18next';
+import { ActionButton } from '../components/ActionButton';
 import { BodyText } from '../components/BodyText';
 import { DeleteAllButton } from '../components/DeleteAllButton';
 import { DevMenu } from '../dev/DevMenu';
@@ -18,6 +20,7 @@ import { useTheme } from '../theme';
 export default function SettingsScreen() {
   const { t, i18n } = useTranslation();
   const theme = useTheme();
+  const router = useRouter();
   const { settings, updateSettings, biometricsAvailable, db } = useSession();
   const heading = [styles.heading, { color: theme.text }];
 
@@ -84,6 +87,12 @@ export default function SettingsScreen() {
         {t('settings.data')}
       </Text>
       <BodyText>{t('settings.dataInfo')}</BodyText>
+      <ActionButton
+        testID="open-about"
+        tone="soft"
+        label={t('settings.about')}
+        onPress={() => router.push('/about')}
+      />
       <DeleteAllButton />
       {__DEV__ && db ? <DevMenu db={db} /> : null}
     </ScreenLayout>

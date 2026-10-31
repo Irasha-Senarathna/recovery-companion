@@ -1,9 +1,12 @@
 """Train the risk model on synthetic data, evaluate it and export it to the app.
 
 python train.py            # reads ml/data/, writes ml/report.md and app/src/ml/*.json
+
+Exits with 1, without updating the app files, if the model fails the quality gate.
 """
 
 import argparse
+import sys
 from collections.abc import Sequence
 from dataclasses import dataclass
 from pathlib import Path
@@ -95,6 +98,7 @@ def train(splits: Splits) -> Trained:
 
 
 def main(argv: Sequence[str] | None = None) -> None:
+    import evaluate as evaluate_module
     from evaluate import evaluate, write_report
     from export import write_app_files
 
@@ -109,6 +113,11 @@ def main(argv: Sequence[str] | None = None) -> None:
     trained = train(splits)
     report = evaluate(trained, splits)
     write_report(report, args.report)
+    problems = evaluate_module.quality_problems(report)
+    if problems:
+        # The report is kept so the reason is visible; the app keeps its last good model.
+        print("Quality gate failed, app model not updated:\n- " + "\n- ".join(problems))
+        sys.exit(1)
     write_app_files(trained, data, args.app_dir)
     lr = report.models["logistic_regression"]
     print(f"PR-AUC {lr.pr_auc:.3f}, Brier {lr.brier:.3f} → {args.report}, {args.app_dir}")
