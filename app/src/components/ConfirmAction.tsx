@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { ActionButton } from '../../components/ActionButton';
-import { BodyText } from '../../components/BodyText';
+import { ActionButton } from './ActionButton';
+import { BodyText } from './BodyText';
 
 type Props = {
   label: string;

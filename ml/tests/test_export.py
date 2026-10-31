@@ -41,6 +41,6 @@ def test_fixtures_hold_raw_history_features_and_score(trained: Trained, tmp_path
     cases = fixtures(model, generate(users=3, days=20, seed=5), count=12)
     assert len(cases) == 12
     case = cases[0]
-    assert set(case) == {"today", "previous", "features", "score"}
+    assert set(case) == {"today", "previous", "slips", "features", "score"}
     assert len(case["features"]) == len(FEATURES)
     assert case["score"] == pytest.approx(predict(model, case["features"]), abs=1e-12)

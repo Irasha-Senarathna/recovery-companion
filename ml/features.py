@@ -31,6 +31,7 @@ FEATURES: tuple[str, ...] = (
     "poor_sleep_high_stress_weekend",
     "craving_recent",
     "stress_recent",
+    "slip_recent",
     *(f"tag_{tag}" for tag in CHECKIN_TAGS),
 )
 
@@ -53,7 +54,14 @@ def _recent_mean(today: CheckIn, previous: Sequence[CheckIn], measure: str) -> f
     return sum(window) / len(window) if window else float(getattr(today, measure))
 
 
-def feature_vector(today: CheckIn, previous: Sequence[CheckIn]) -> list[float]:
+def _slip_recent(today: CheckIn, slip_days: Sequence[date]) -> bool:
+    """A slip in the RECENT_DAYS days before today (today's own is the label, not a feature)."""
+    return any(today.day - timedelta(days=RECENT_DAYS) <= d < today.day for d in slip_days)
+
+
+def feature_vector(
+    today: CheckIn, previous: Sequence[CheckIn], slip_days: Sequence[date] = ()
+) -> list[float]:
     poor_sleep = today.sleep <= 1
     high_stress = today.stress >= 3
     weekend = today.day.weekday() >= 5
@@ -68,6 +76,7 @@ def feature_vector(today: CheckIn, previous: Sequence[CheckIn]) -> list[float]:
         float(poor_sleep and high_stress and weekend),
         _recent_mean(today, previous, "craving"),
         _recent_mean(today, previous, "stress"),
+        float(_slip_recent(today, slip_days)),
         *(float(tag in today.tags) for tag in CHECKIN_TAGS),
     ]
 
@@ -81,12 +90,15 @@ def build_rows(data: Dataset) -> Rows:
     by_user: dict[str, list[CheckIn]] = defaultdict(list)
     for c in data.checkins:
         by_user[c.user_id].append(c)
+    slips_by_user: dict[str, list[date]] = defaultdict(list)
+    for s in data.slips:
+        slips_by_user[s.user_id].append(s.day)
 
     rows = Rows(x=[], y=[], day_index=[], user_id=[])
     for user_id, checkins in by_user.items():
         checkins.sort(key=lambda c: c.day)
         for i, today in enumerate(checkins):
-            rows.x.append(feature_vector(today, checkins[:i]))
+            rows.x.append(feature_vector(today, checkins[:i], slips_by_user[user_id]))
             rows.y.append(int((user_id, today.day) in hard_days))
             rows.day_index.append((today.day - data.start).days)
             rows.user_id.append(user_id)

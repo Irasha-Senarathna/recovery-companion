@@ -1,1 +1,1 @@
-export { ProgressScreen as default } from '../features/sos/ProgressScreen';
+export { ProgressScreen as default } from '../features/progress/ProgressScreen';

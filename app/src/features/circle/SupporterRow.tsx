@@ -9,7 +9,7 @@ import { checkCode } from '../../net/circleClient';
 import { useTheme } from '../../theme';
 import { useSession } from '../session/SessionProvider';
 import { MAX_LABEL_LENGTH, removeLabel, saveLabel } from './circleRepo';
-import { ConfirmAction } from './ConfirmAction';
+import { ConfirmAction } from '../../components/ConfirmAction';
 import type { Circle, CircleLink } from './useCircle';
 
 /** One supporter, as the member sees them: approve a newcomer, or remove someone. */

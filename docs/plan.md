@@ -302,7 +302,7 @@ around the pending-deletion queue, a guard against double account creation, and 
 "this connection has ended" note for supporters. iOS Keychain survives uninstall
 (not built for iOS).
 
-## M7 — Shame-free slips, rebuild goals, progress · TODO
+## M7 — Shame-free slips, rebuild goals, progress · DONE
 
 **Goal:** slips never erase progress. Goals and small wins are celebrated.
 
@@ -320,6 +320,37 @@ around the pending-deletion queue, a guard against double account creation, and 
 - **Tests pass:** `progress.test.ts` (slips never reset the totals),
   `slipFlow.test.tsx` (all questions skippable; suggests reaching out),
   `goalsRepo.test.ts`, `moneySaved.test.ts`, `shameLanguage.test.ts`. The safety-reviewer reports no Critical or High findings.
+
+**Result (M7):** 1070 app tests, 67 server tests and 24 ml tests pass; ESLint, tsc,
+ruff and mypy clean; web bundle builds. **Strong days** = finished days since the
+start without a slip: a slip removes only its own day, a slip today never lowers
+the number, longest stretch never goes down. `/slip`: care first (with "if you or
+someone with you feels unwell or may have taken too much, get help now", opening
+Help with the urgent message), then "You have 45 strong days. They are still
+yours." on a spring-filled ring, 3 optional tap-only questions (each skippable,
+or all at once), and reaching out (support person, help, circle, plan); a mistaken
+entry can be undone. `/progress`: animated ring between milestones, a 4-week
+journey strip (slip days are hollow neutral dots, never red), stat tiles, the
+start day ("counting from", movable back), removing a mistaken slip. `/goals`:
+sleep, health, work/study, family, money; idea chips or own words; one small win
+a day with milestone celebrations (spring + success haptic); "money towards your
+life" = daily amount × strong days. Design (apple-design skill): critically damped
+springs that start from the current value, press feedback on touch-down, tabular
+numbers with tight display tracking, every animation off with reduced motion.
+Model: `slip_recent` (a slip in the 3 days before) on both sides, model v2, test
+PR-AUC 0.53 → 0.54; slip answers map to check-in tags and feed the trigger map
+("Around your slips", counted once per day, only things noted on 2+ days).
+Review fixes: urgent-help routing, overdose-risk wording, no dead end if saving
+fails, no big zero on day one, present tense ("still yours"), "a hard moment
+recently" as the home reason, slip count only in the screen-reader summary,
+Sinhala "පසුබෑම" and Tamil "சறுக்கல்" for "slip", single slips removable, day only
+(no exact time), demo rows never set the start day.
+Needs from the user: verify `content/helplines.json` — the only "emergency" entry
+is NDDCB 1927; add the ambulance number (e.g. 1990 Suwa Seriya) as `emergency`
+after checking it, because the slip flow's urgent-help button leads there.
+Carry-overs: **M10** native-speaker and clinician review of the slip wording
+(en/si/ta), especially the overdose-risk line; a "mark goal as done" that keeps its
+wins; demo slips in the dev menu.
 
 ## M8 — Treatment & support finder · TODO
 

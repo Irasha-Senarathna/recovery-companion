@@ -6,11 +6,12 @@ import { ActionButton } from '../../components/ActionButton';
 import { BodyText } from '../../components/BodyText';
 import { Card } from '../../components/Card';
 import { ScreenLayout } from '../../components/ScreenLayout';
-import { findPatterns, type PatternResult } from '../../ml/patterns';
+import { findPatterns, slipContext, type PatternResult } from '../../ml/patterns';
 import type { Database } from '../../storage/types';
 import { useTheme } from '../../theme';
 import { listCheckIns } from '../checkin/checkinRepo';
 import { useSession } from '../session/SessionProvider';
+import { listSlips } from '../slip/slipRepo';
 import { listSessions } from '../sos/sosRepo';
 import { assessToday, type Today } from './earlyWarning';
 import { HarderDayCard } from './HarderDayCard';
@@ -32,17 +33,20 @@ function TriggerMap({ db }: { db: Database }) {
   const router = useRouter();
   const [result, setResult] = useState<PatternResult | null>(null);
   const [today, setToday] = useState<Today | null>(null);
+  const [aroundSlips, setAroundSlips] = useState<{ tag: string; count: number }[]>([]);
 
   useEffect(() => {
     let mounted = true;
     (async () => {
-      const [checkIns, sessions, assessed] = await Promise.all([
+      const [checkIns, sessions, assessed, slips] = await Promise.all([
         listCheckIns(db),
         listSessions(db),
         assessToday(db),
+        listSlips(db),
       ]);
       if (!mounted) return;
       setResult(findPatterns(checkIns, sessions));
+      setAroundSlips(slipContext(slips));
       setToday(assessed);
     })();
     return () => {
@@ -87,6 +91,19 @@ function TriggerMap({ db }: { db: Database }) {
           ))}
           {result.usesDemo ? <BodyText>{t('triggers.usesDemo')}</BodyText> : null}
         </>
+      ) : null}
+
+      {aroundSlips.length > 0 ? (
+        <Card testID="around-slips">
+          <Text accessibilityRole="header" style={[styles.big, { color: theme.text }]}>
+            {t('triggers.aroundSlips')}
+          </Text>
+          {aroundSlips.map(({ tag, count }) => (
+            <BodyText key={tag}>
+              {t('triggers.aroundSlipsItem', { thing: t(`triggers.reasons.tag_${tag}`), count })}
+            </BodyText>
+          ))}
+        </Card>
       ) : null}
 
       <ActionButton

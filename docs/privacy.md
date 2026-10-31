@@ -41,8 +41,9 @@ for diagrams.
 | Support person: name and phone number | Craving SOS | High (third-party data; reveals a confidant) | No. Tapping "Call" hands the number to the phone app, so the call appears in the OS call log | Until removed | Remove button in Settings / delete-all |
 | Temporary unencrypted media: `cache/Audio` (recording), `cache/rc-voice` (playback copy), `cache/ImagePicker` (picker copy) | Craving SOS | High | No | Seconds: deleted right after use, swept at every launch | Immediately / launch sweep / delete-all |
 | Microphone and photo-library access | Craving SOS | — (OS permission, no stored data) | The Android system photo picker sees which photo is chosen | Until revoked in OS settings | OS settings |
-| Slips + gentle-question answers | Slips | Very high | No | Until deleted | Per item / delete-all |
-| Goals, money saved, progress | Goals | Medium | No | Until deleted | Delete-all |
+| Slips (`slips`: the day only, never the exact time, and the optional answers as fixed option ids: place, feelings, what came before; no free text) | Slips | Very high | No. Never sent, never in a notification; slip days feed the on-device model (`slip_recent`) and the trigger map's "Around your slips" card (only things noted on 2+ days) | Until removed | Undo right after saving / "Remove a slip logged by mistake" on Progress / delete-all (`secure_delete` overwrites) |
+| Goals (`goals`: area, the user's own title ≤ 80 chars typed in SafeTextInput) and small wins (`goal_wins`: one row per goal per day) | Goals | Medium (titles may be personal) | No | Until removed | Remove goal (also removes its wins) / delete-all |
+| Journey start day `journeyStart` and money per day `moneyPerDay` (settings) | Progress, goals | Medium | No. Strong days, longest stretch and money kept are **computed when a screen opens, never stored**. Demo rows never set the start day | Until changed | Progress screen (start day) / Goals "Stop counting money" / delete-all |
 | Coping plan: early signs, what helps, who to contact (free text, ≤ 1000 chars each, crisis words open help) | Early warning | High (may name people) | No | Until changed | Delete-all |
 | Risk score, reasons, trigger patterns | Trigger map | High | No. Computed on the phone from the user's own check-ins | **Not stored**: recomputed when a screen opens | Nothing to delete |
 | Heads-up settings: on/off, time of today's heads-up | Early warning | Medium (the time hints at a harder day) | No | Until changed | Delete-all |
@@ -172,5 +173,6 @@ whom) · A4 coach conversations · A5 the integrity of the help-resources conten
 | Push token fetched only after opt-in; removed on switch-off, leave and delete-all | 6 |
 | Push text is the app's reviewed, banned-term-tested notification text | 6 |
 | Signals older than 7 days are purged | 6 |
+| Slips, goals and wins in the encrypted DB; unknown slip option ids dropped; slip day only (today or yesterday), no exact time; one slip removable; goal title ≤ 80 chars via SafeTextInput; ≤ 6 goals; removing a goal removes its wins; model v2 parity incl. `slip_recent`, synthetic data only | 7 |
 | Coach service never logs request bodies | 9 |
 | No analytics or ad packages in `package.json` | 11 (CI) |

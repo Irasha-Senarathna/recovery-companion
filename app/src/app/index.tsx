@@ -79,10 +79,22 @@ export default function HomeScreen() {
           onPress={() => router.push('/progress')}
         />
         <ActionButton
+          testID="open-goals-home"
+          tone="soft"
+          label={t('home.goals')}
+          onPress={() => router.push('/goals')}
+        />
+        <ActionButton
           testID="open-settings"
           tone="plain"
           label={t('home.settings')}
           onPress={() => router.push('/settings')}
+        />
+        <ActionButton
+          testID="open-slip-home"
+          tone="plain"
+          label={t('home.slip')}
+          onPress={() => router.push('/slip')}
         />
       </View>
     </ScreenLayout>

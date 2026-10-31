@@ -7,6 +7,7 @@ import { cancelNudge, scheduleNudge } from '../../platform/notifications';
 import type { AppSettings } from '../../storage/settings';
 import type { Database } from '../../storage/types';
 import { getCheckIn, listCheckIns, localDay } from '../checkin/checkinRepo';
+import { slipDays } from '../slip/slipRepo';
 import { listSessions } from '../sos/sosRepo';
 
 export type Today = { score: number; harder: boolean; reasons: Reason[] };
@@ -16,7 +17,7 @@ export async function assessToday(db: Database, now = Date.now()): Promise<Today
   const today = await getCheckIn(db, localDay(now));
   if (!today) return null;
   const previous = (await listCheckIns(db)).filter((c) => c.day < today.day);
-  const features = buildFeatures(today, previous);
+  const features = buildFeatures(today, previous, await slipDays(db));
   const score = predictRisk(features);
   const harder = isHarderDay(score);
   return { score, harder, reasons: harder ? explain(features) : [] };

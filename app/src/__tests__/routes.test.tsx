@@ -33,6 +33,8 @@ const SESSION_FOR_ROUTE: Record<string, Partial<Session>> = {
   circle: { status: 'unlocked' },
   'circle-invite': { status: 'unlocked' },
   supporter: { status: 'unlocked' },
+  slip: { status: 'unlocked' },
+  goals: { status: 'unlocked' },
 };
 
 describe('every screen', () => {

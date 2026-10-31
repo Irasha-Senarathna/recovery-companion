@@ -50,6 +50,29 @@ export const MIGRATIONS: readonly string[] = [
      role    TEXT NOT NULL CHECK (role IN ('member', 'supporter')),
      label   TEXT NOT NULL
    );`,
+  // M7: slips (answers are fixed option ids, never free text) and rebuild goals.
+  `CREATE TABLE slips (
+     id         INTEGER PRIMARY KEY AUTOINCREMENT,
+     day        TEXT NOT NULL,
+     created_at INTEGER NOT NULL,
+     place      TEXT,
+     feelings   TEXT NOT NULL DEFAULT '[]',
+     before     TEXT NOT NULL DEFAULT '[]',
+     demo       INTEGER NOT NULL DEFAULT 0
+   );
+   CREATE TABLE goals (
+     id         INTEGER PRIMARY KEY AUTOINCREMENT,
+     area       TEXT NOT NULL CHECK (area IN ('sleep', 'health', 'work', 'family', 'money')),
+     title      TEXT NOT NULL,
+     created_at INTEGER NOT NULL
+   );
+   CREATE TABLE goal_wins (
+     id         INTEGER PRIMARY KEY AUTOINCREMENT,
+     goal_id    INTEGER NOT NULL REFERENCES goals(id) ON DELETE CASCADE,
+     day        TEXT NOT NULL,
+     created_at INTEGER NOT NULL,
+     UNIQUE (goal_id, day)
+   );`,
 ];
 
 /** Brings the schema up to date, tracking the version in PRAGMA user_version. */

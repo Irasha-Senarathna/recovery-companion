@@ -71,6 +71,12 @@ days versus about **2%** on other days; the tests check it is more than 4×.
 and predicts a **hard day**: a slip that day, or a strong craving (intensity
 ≥ 3) from 17:00 on.
 
+- **Slips as a feature (M7):** `slip_recent` is 1 when the user logged a slip in
+  the 3 days before the check-in (never the same day: that is the label). It
+  matches the planted "3 days after a slip" pattern above and is explained in the
+  app as "a slip in the last few days". The plan said "days since last slip"; a
+  3-day flag was chosen because the risk in the data is a short step, which a
+  linear model fits better as a flag than as a count. Model version 2.
 - **Split by day:** days 0–119 train, 120–149 validation (threshold = best F1),
   150–179 test. No row from a later day is ever used to predict an earlier one.
 - **Models:** logistic regression (shipped, explainable) vs a small gradient-boosted

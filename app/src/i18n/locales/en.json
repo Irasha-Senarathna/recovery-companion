@@ -43,7 +43,9 @@
     "checkinChange": "Change today's check-in",
     "checkinDone": "Today's check-in is saved.",
     "triggers": "Your patterns",
-    "circle": "Your support circle"
+    "circle": "Your support circle",
+    "goals": "Your goals",
+    "slip": "Had a slip? Let’s look after you"
   },
   "hide": {
     "button": "Hide",
@@ -221,7 +223,35 @@
     "gotThrough": "Cravings you got through: {{count}}",
     "empty": "Each time a craving passes, it will show here. Opening SOS is already a step.",
     "typical_one": "For you, cravings have often eased within about {{count}} minute.",
-    "typical_other": "For you, cravings have often eased within about {{count}} minutes."
+    "typical_other": "For you, cravings have often eased within about {{count}} minutes.",
+    "strongDays": "strong days",
+    "ringLabel_one": "{{count}} strong day. Next milestone: {{next}}.",
+    "ringLabel_other": "{{count}} strong days. Next milestone: {{next}}.",
+    "firstDay": "Your first strong day is happening now. It counts once today is done.",
+    "nextMilestone_one": "Next milestone: {{count}} day",
+    "nextMilestone_other": "Next milestone: {{count}} days",
+    "lastWeeks": "The last 4 weeks",
+    "legendStrong": "Strong day",
+    "legendSlip": "Slip",
+    "legendToday": "Today",
+    "longest": "longest stretch, in days",
+    "gotThroughShort": "cravings you got through",
+    "checkIns": "check-ins",
+    "moneyKept": "towards your life",
+    "goals": "Your goals and small wins",
+    "countingFrom": "Counting from {{date}}",
+    "countingFromInfo": "If you began before you had this app, move the date back. A slip only ever takes away its own day.",
+    "weekEarlier": "1 week earlier",
+    "dayEarlier": "1 day earlier",
+    "dayLater": "1 day later",
+    "logSlip": "Had a slip? Log it gently",
+    "logSlipHint": "Your strong days stay. Only that one day is set aside.",
+    "stripLabel_one": "{{count}} strong day in the last 4 weeks",
+    "stripLabel_other": "{{count}} strong days in the last 4 weeks",
+    "stripA11y": "In the last 4 weeks: {{strong}} strong days, {{slips}} slip days.",
+    "removeSlip": "Remove a slip logged by mistake ({{day}})",
+    "removeSlipConfirm": "Remove the slip logged for {{day}}?",
+    "removeSlipYes": "Yes, remove it"
   },
   "vault": {
     "title": "Your reasons",
@@ -361,7 +391,8 @@
       "tag_payday": "payday",
       "tag_celebration": "a party or celebration",
       "tag_old_routine": "people from your old routine",
-      "tag_risky_place": "being near a place that's hard for you"
+      "tag_risky_place": "being near a place that's hard for you",
+      "recent_slip": "a hard moment recently"
     },
     "notReady": "{{count}} of {{needed}} check-ins so far",
     "notReadyInfo": "Patterns show up once there are enough check-ins to mean something. Keep going at your own pace.",
@@ -399,7 +430,10 @@
     "honesty": "These patterns come only from your own check-ins on this phone. They show what tended to go together, not what causes what. The heads-up is a rough guess from a simple model built on made-up data. It can be wrong both ways: a hard day can come without a heads-up. If today feels hard, trust that and use your plan or the help button. This is not medical advice.",
     "cardNote": "A rough guess from a simple model. You know your day best.",
     "talk": "Talk to someone",
-    "listSeparator": ", "
+    "listSeparator": ", ",
+    "aroundSlips": "Around your slips, you noted",
+    "aroundSlipsItem_one": "{{thing}} ({{count}} time)",
+    "aroundSlipsItem_other": "{{thing}} ({{count}} times)"
   },
   "plan": {
     "title": "My plan",
@@ -511,5 +545,132 @@
     "today": "today at {{time}}",
     "yesterday": "yesterday at {{time}}",
     "daysAgo": "{{count}} days ago"
+  },
+  "slip": {
+    "title": "It’s okay",
+    "welcomeTitle": "Thank you for being honest with yourself.",
+    "welcomeBody": "A slip is one moment, not the whole story. Everything you have built is still yours. Let’s take this one small step at a time.",
+    "unwell": "If you or someone with you feels unwell, very drowsy or confused, finds it hard to breathe, or may have taken too much, get emergency help now. After a break, the risk of overdose is higher, so please don’t wait.",
+    "unwellButton": "Get help now",
+    "when": "When was it?",
+    "today": "Today",
+    "yesterday": "Yesterday",
+    "save": "Save it on this phone",
+    "notNow": "Not now",
+    "stillCounts_one": "You have {{count}} strong day. It is still yours.",
+    "stillCounts_other": "You have {{count}} strong days. They are still yours.",
+    "firstDay": "Logging this already counts. Tomorrow can be a strong day.",
+    "longest_one": "Your longest stretch: {{count}} day. That is yours to keep.",
+    "longest_other": "Your longest stretch: {{count}} days. That is yours to keep.",
+    "notTheEnd": "Nothing is reset. Tomorrow is simply another day to count.",
+    "continue": "Continue",
+    "skipQuestions": "Skip the questions",
+    "questionOf": "Question {{n}} of 3",
+    "questions": {
+      "place": "Where were you?",
+      "feelings": "How were you feeling?",
+      "before": "What happened just before?"
+    },
+    "optional": "Only if you want to. Answers stay on this phone and help your patterns.",
+    "options": {
+      "home": "At home",
+      "friends": "With old friends",
+      "risky_place": "Near a hard place for me",
+      "work": "At work or study",
+      "out": "Out somewhere",
+      "elsewhere": "Somewhere else",
+      "stressed": "Stressed",
+      "lonely": "Lonely",
+      "low": "Low",
+      "bored": "Bored",
+      "tired": "Tired",
+      "angry": "Angry",
+      "celebrating": "Celebrating",
+      "argument": "An argument",
+      "money": "Money worries",
+      "payday": "Payday",
+      "old_routine": "Saw people from my old routine",
+      "party": "A party",
+      "work_pressure": "Work or study pressure",
+      "nothing": "Nothing I noticed"
+    },
+    "next": "Next",
+    "skip": "Skip",
+    "reachTitle": "Would it help to reach out?",
+    "reachBody": "You don’t have to carry this alone. A short call or message is enough.",
+    "askCircle": "Ask my circle to check in",
+    "openPlan": "Open my plan",
+    "done": "Done for now",
+    "saveError": "This could not be saved just now. That’s okay. You can still reach out below.",
+    "undo": "Remove this entry",
+    "undoConfirm": "Remove this entry? Use this if it was logged by mistake.",
+    "undoYes": "Yes, remove it"
+  },
+  "goals": {
+    "title": "Your goals",
+    "intro": "Small steps rebuild a life. Choose one or two things that matter to you, and notice the small wins.",
+    "areas": {
+      "sleep": "Sleep",
+      "health": "Health",
+      "work": "Work or study",
+      "family": "Family",
+      "money": "Money"
+    },
+    "areaLabel": "Which part of life?",
+    "addFirst": "Start with one goal",
+    "addAnother": "Add another goal",
+    "ideasLabel": "Some ideas, or write your own:",
+    "ideas": {
+      "sleep": {
+        "one": "In bed by 11 pm",
+        "two": "Phone away an hour before sleep",
+        "three": "Same wake-up time each day"
+      },
+      "health": {
+        "one": "A 15-minute walk",
+        "two": "Drink more water",
+        "three": "Eat a proper breakfast"
+      },
+      "work": {
+        "one": "Send one job application",
+        "two": "Study for 30 minutes",
+        "three": "Ask about a course"
+      },
+      "family": {
+        "one": "Call someone at home",
+        "two": "Eat a meal together",
+        "three": "Help with one thing at home"
+      },
+      "money": {
+        "one": "Save for something I want",
+        "two": "Pay back a small debt",
+        "three": "Keep a simple spending note"
+      }
+    },
+    "titleLabel": "Your goal, in your own words",
+    "add": "Add goal",
+    "enough": "That’s plenty for now. Removing one makes room for another.",
+    "wins_one": "{{count}} small win",
+    "wins_other": "{{count}} small wins",
+    "winsOf": "{{count}} of {{next}} small wins towards the next milestone",
+    "logWin": "I did a small step today",
+    "doneToday": "Today’s step is logged",
+    "undo": "Undo today",
+    "milestone_one": "{{count}} small win. That’s a real start.",
+    "milestone_other": "{{count}} small wins. Each one is real.",
+    "remove": "Remove this goal",
+    "removeConfirm": "Remove this goal and its small wins? Goals can change, and that is fine.",
+    "removeYes": "Yes, remove",
+    "moneyTitle": "Money towards your life",
+    "moneyInfo": "Optional. About how much did a usual day cost you before? Each strong day, we count that amount as money going towards your life and your goals. It stays on this phone.",
+    "moneyLabel": "Amount per day (Rs)",
+    "moneyHint": "A whole number, like {{example}}",
+    "moneyInvalid": "Please enter a whole number above 0.",
+    "moneySave": "Save",
+    "moneyRemove": "Stop counting money",
+    "moneyKept": "Put towards your life so far",
+    "amount": "Rs {{amount}}",
+    "moneyNext": "Next milestone: Rs {{amount}}",
+    "moneyChange": "Change the daily amount"
   }
 }

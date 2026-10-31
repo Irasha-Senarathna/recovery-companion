@@ -14,7 +14,7 @@ import { useTheme } from '../../theme';
 import { useSession } from '../session/SessionProvider';
 import { MAX_LABEL_LENGTH, removeLabel, saveLabel } from './circleRepo';
 import { CircleErrorText, formatWhen, SectionHeading } from './CircleText';
-import { ConfirmAction } from './ConfirmAction';
+import { ConfirmAction } from '../../components/ConfirmAction';
 import { useCircle, type Circle, type CircleLink } from './useCircle';
 
 /** The same app, used by someone who supports a person in recovery. */

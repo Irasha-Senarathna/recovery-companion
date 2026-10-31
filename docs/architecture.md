@@ -180,8 +180,11 @@ flowchart LR
   `content/checkin.json`; the planted patterns are listed in `ml/README.md`.
 - **Features** (M5): mood, sleep, stress, craving (0–4), poor-sleep and
   high-stress flags, weekend, the sleep + stress + weekend combination,
-  3-day craving and stress averages, and one flag per tag. Days since the last
-  slip arrives with slips in M7.
+  3-day craving and stress averages, a slip in the 3 days before (`slip_recent`,
+  M7), and one flag per tag.
+- **Slip answers (M7)** are fixed choices mapped to check-in tags
+  (`features/slip/questions.ts`); after two or more slips the trigger map lists
+  what was noted around them. They are not model features.
 - **Honesty note**: the model is trained and tested on synthetic data. Its
   metrics show the pipeline works. They do **not** show it predicts real
   relapse risk. The README and the trigger-map screen say this.

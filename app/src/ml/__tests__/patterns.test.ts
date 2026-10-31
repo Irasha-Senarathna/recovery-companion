@@ -1,6 +1,6 @@
 import type { CheckIn } from '../../features/checkin/checkinRepo';
 import type { SosSession } from '../../features/sos/sosRepo';
-import { findPatterns, MIN_CHECKINS } from '../patterns';
+import { findPatterns, MIN_CHECKINS, slipContext } from '../patterns';
 
 let nextId = 1;
 function day(n: number) {
@@ -68,4 +68,33 @@ describe('trigger map patterns', () => {
     const result = findPatterns(withDemo, []);
     expect(result.ready && result.usesDemo).toBe(true);
   });
+});
+
+describe('slip context (answers to the slip questions feed the trigger map)', () => {
+  const slip = (feelings: string[], before: string[]) =>
+    ({ place: null, feelings, before }) as never;
+
+  it('names what was noted around at least two slips, most often first', () => {
+    const result = slipContext([
+      slip(['lonely'], ['argument']),
+      slip(['angry'], ['payday']),
+      slip(['lonely'], ['nothing']),
+    ]);
+    expect(result).toEqual([
+      { tag: 'alone', count: 2 },
+      { tag: 'conflict', count: 2 },
+    ]);
+  });
+
+  it('says nothing from a single slip', () => {
+    expect(slipContext([slip(['lonely'], ['argument'])])).toEqual([]);
+  });
+});
+
+it('counts what was noted around slips once per day', () => {
+  const slip = (day: string) => ({ day, place: null, feelings: ['lonely'], before: [] }) as never;
+  expect(slipContext([slip('2026-10-01'), slip('2026-10-01')])).toEqual([]);
+  expect(slipContext([slip('2026-10-01'), slip('2026-10-02')])).toEqual([
+    { tag: 'alone', count: 2 },
+  ]);
 });

@@ -9,12 +9,12 @@ describe('the app computes exactly what Python computed (ml/export.py fixtures)'
   });
 
   it.each(fixtures.map((f, i) => [i, f] as const))('fixture %i: features match', (_, f) => {
-    const features = buildFeatures(f.today, f.previous);
+    const features = buildFeatures(f.today, f.previous, f.slips);
     features.forEach((value, i) => expect(value).toBeCloseTo(f.features[i], 9));
   });
 
   it.each(fixtures.map((f, i) => [i, f] as const))('fixture %i: score within 1e-6', (_, f) => {
-    const score = predictRisk(buildFeatures(f.today, f.previous));
+    const score = predictRisk(buildFeatures(f.today, f.previous, f.slips));
     expect(Math.abs(score - f.score)).toBeLessThan(1e-6);
   });
 
@@ -28,5 +28,13 @@ describe('the app computes exactly what Python computed (ml/export.py fixtures)'
     const weekend = FEATURES.indexOf('weekend');
     expect(buildFeatures({ ...base, day: '2026-10-31' }, [])[weekend]).toBe(1); // Saturday
     expect(buildFeatures({ ...base, day: '2026-11-02' }, [])[weekend]).toBe(0); // Monday
+  });
+
+  it('flags a slip in the 3 days before today, never today or later', () => {
+    const base = { mood: 2, sleep: 2, stress: 2, craving: 1, tags: [], day: '2026-10-10' };
+    const i = FEATURES.indexOf('slip_recent');
+    expect(buildFeatures(base, [], ['2026-10-07'])[i]).toBe(1);
+    expect(buildFeatures(base, [], ['2026-10-06'])[i]).toBe(0);
+    expect(buildFeatures(base, [], ['2026-10-10', '2026-10-11'])[i]).toBe(0);
   });
 });

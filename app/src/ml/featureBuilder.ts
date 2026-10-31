@@ -15,6 +15,7 @@ export const FEATURES: readonly string[] = [
   'poor_sleep_high_stress_weekend',
   'craving_recent',
   'stress_recent',
+  'slip_recent',
   ...TAGS.map((tag) => `tag_${tag}`),
 ];
 
@@ -57,8 +58,24 @@ function recentMean(
   return window.length ? window.reduce((a, b) => a + b, 0) / window.length : today[measure];
 }
 
-/** `previous` may contain any of the user's check-ins; later days are ignored. */
-export function buildFeatures(today: CheckInLike, previous: readonly CheckInLike[]): number[] {
+/** A slip in the 3 days before today (today's own slip is what is predicted, not a feature). */
+function slipRecent(today: CheckInLike, slipDays: readonly string[]): boolean {
+  const now = dayNumber(today.day);
+  return slipDays.some((day) => {
+    const n = dayNumber(day);
+    return n >= now - RECENT_DAYS && n < now;
+  });
+}
+
+/**
+ * `previous` may contain any of the user's check-ins and `slipDays` any slip
+ * days ("YYYY-MM-DD"); later days are ignored.
+ */
+export function buildFeatures(
+  today: CheckInLike,
+  previous: readonly CheckInLike[],
+  slipDays: readonly string[] = [],
+): number[] {
   const poorSleep = today.sleep <= 1;
   const highStress = today.stress >= 3;
   const weekend = isWeekend(today.day);
@@ -74,6 +91,7 @@ export function buildFeatures(today: CheckInLike, previous: readonly CheckInLike
     flag(poorSleep && highStress && weekend),
     recentMean(today, previous, 'craving'),
     recentMean(today, previous, 'stress'),
+    flag(slipRecent(today, slipDays)),
     ...TAGS.map((tag) => flag(today.tags.includes(tag))),
   ];
 }

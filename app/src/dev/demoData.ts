@@ -79,4 +79,7 @@ export async function loadDemoData(
 export async function clearDemoData(db: Database): Promise<void> {
   await db.run('DELETE FROM check_ins WHERE demo = 1');
   await db.run('DELETE FROM sos_sessions WHERE demo = 1');
+  await db.run('DELETE FROM slips WHERE demo = 1');
+  // The start day may have been taken from demo rows; it is set again on next use.
+  await db.run("DELETE FROM settings WHERE key = 'journeyStart'");
 }

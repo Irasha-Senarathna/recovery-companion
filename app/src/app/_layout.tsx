@@ -58,6 +58,8 @@ function AppStack() {
           <Stack.Screen name="circle" />
           <Stack.Screen name="circle-invite" />
           <Stack.Screen name="supporter" />
+          <Stack.Screen name="slip" />
+          <Stack.Screen name="goals" />
         </Stack.Protected>
         <Stack.Protected redirectTo={redirectTo} guard={hidden}>
           <Stack.Screen name="hidden" />

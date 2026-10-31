@@ -4,6 +4,7 @@ import json
 import math
 import random
 from collections import defaultdict
+from datetime import date
 from pathlib import Path
 from typing import Any
 
@@ -12,7 +13,7 @@ from generate import Dataset, generate
 from schema import CheckIn
 from train import Trained
 
-MODEL_VERSION = 1
+MODEL_VERSION = 2  # 2: adds slip_recent (M7)
 FIXTURE_COUNT = 40
 
 
@@ -60,20 +61,26 @@ def fixtures(model: dict[str, Any], data: Dataset, count: int) -> list[dict[str,
     by_user: dict[str, list[CheckIn]] = defaultdict(list)
     for c in data.checkins:
         by_user[c.user_id].append(c)
+    slips_by_user: dict[str, list[date]] = defaultdict(list)
+    for s in data.slips:
+        slips_by_user[s.user_id].append(s.day)
     candidates = []
-    for checkins in by_user.values():
+    for user_id, checkins in by_user.items():
         checkins.sort(key=lambda c: c.day)
         for i, today in enumerate(checkins):
             previous = checkins[max(0, i - 5) : i]
-            candidates.append((today, previous))
+            # Only nearby slips, so fixtures stay small; earlier ones cannot matter.
+            near = [d for d in slips_by_user[user_id] if abs((d - today.day).days) <= 5]
+            candidates.append((today, previous, near))
     picked = random.Random(0).sample(candidates, count)
     cases = []
-    for today, previous in picked:
-        x = feature_vector(today, previous)
+    for today, previous, slips in picked:
+        x = feature_vector(today, previous, slips)
         cases.append(
             {
                 "today": _checkin_json(today),
                 "previous": [_checkin_json(c) for c in previous],
+                "slips": [d.isoformat() for d in slips],
                 "features": x,
                 "score": predict(model, x),
             }

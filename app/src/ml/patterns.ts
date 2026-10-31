@@ -1,5 +1,6 @@
 import type { CheckIn } from '../features/checkin/checkinRepo';
 import { TAGS } from '../features/checkin/tags';
+import { tagsFor, type SlipAnswers } from '../features/slip/questions';
 import type { SosSession } from '../features/sos/sosRepo';
 
 /** Patterns from fewer check-ins than this would mostly be chance. */
@@ -102,4 +103,34 @@ export function findPatterns(
     hardestTime: hardestTime(sessions),
     usesDemo: checkIns.some((c) => c.demo),
   };
+}
+
+/** Answers about slips need at least this many slips before anything is named. */
+const MIN_SLIPS = 2;
+
+/**
+ * "Around your slips, you noted: an argument or conflict (2 times)". From the
+ * optional slip questions, as check-in tags; only things noted at least twice.
+ */
+export function slipContext(
+  slips: readonly (SlipAnswers & { day?: string })[],
+  limit = 3,
+): { tag: string; count: number }[] {
+  if (slips.length < MIN_SLIPS) return [];
+  // Counted once per day, so logging twice on one day never doubles it.
+  const seen = new Set<string>();
+  const counts = new Map<string, number>();
+  slips.forEach((slip, index) => {
+    for (const tag of tagsFor(slip)) {
+      const key = `${slip.day ?? index}:${tag}`;
+      if (seen.has(key)) continue;
+      seen.add(key);
+      counts.set(tag, (counts.get(tag) ?? 0) + 1);
+    }
+  });
+  return [...counts.entries()]
+    .filter(([tag, count]) => count >= MIN_SLIPS && tag !== 'pain')
+    .sort((a, b) => b[1] - a[1])
+    .slice(0, limit)
+    .map(([tag, count]) => ({ tag, count }));
 }

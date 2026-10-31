@@ -20,6 +20,10 @@ export type AppSettings = {
   lastNudgeAt: number | null;
   /** Supporter mode: a push when someone asks for a check-in (off until opted in). */
   circleNotify: boolean;
+  /** The day strong days are counted from ("YYYY-MM-DD"); set on first use, changeable. */
+  journeyStart: string | null;
+  /** What the user used to spend a day, in rupees, for "money saved" (optional). */
+  moneyPerDay: number | null;
 };
 
 export type SettingKey = keyof AppSettings;
@@ -38,12 +42,24 @@ export const DEFAULT_SETTINGS: AppSettings = {
   nudgesEnabled: false,
   lastNudgeAt: null,
   circleNotify: false,
+  journeyStart: null,
+  moneyPerDay: null,
 };
 
 /** A whole number in [0, max), or the fallback. */
 function parseInRange(value: string | undefined, max: number, fallback: number): number {
   const n = Number(value);
   return Number.isInteger(n) && n >= 0 && n < max ? n : fallback;
+}
+
+/** Same bound as the goals screen allows (1,000,000 a day). */
+function parseMoney(value: string | undefined): number | null {
+  const n = Number(value);
+  return value !== undefined && Number.isSafeInteger(n) && n > 0 && n <= 1_000_000 ? n : null;
+}
+
+function parseDay(value: string | undefined): string | null {
+  return value && /^\d{4}-\d{2}-\d{2}$/.test(value) ? value : null;
 }
 
 function parseTime(value: string | undefined): number | null {
@@ -83,6 +99,8 @@ export async function loadSettings(db: Database): Promise<AppSettings> {
     nudgesEnabled: raw.get('nudgesEnabled') === 'true',
     lastNudgeAt: parseTime(raw.get('lastNudgeAt')),
     circleNotify: raw.get('circleNotify') === 'true',
+    journeyStart: parseDay(raw.get('journeyStart')),
+    moneyPerDay: parseMoney(raw.get('moneyPerDay')),
   };
 }
 

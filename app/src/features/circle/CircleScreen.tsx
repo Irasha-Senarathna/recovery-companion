@@ -6,7 +6,7 @@ import { BodyText } from '../../components/BodyText';
 import { ScreenLayout } from '../../components/ScreenLayout';
 import { MAX_SUPPORTERS } from './limits';
 import { CircleErrorText, SectionHeading, SharingSummary } from './CircleText';
-import { ConfirmAction } from './ConfirmAction';
+import { ConfirmAction } from '../../components/ConfirmAction';
 import { ConsentSheet } from './ConsentSheet';
 import { SupporterRow } from './SupporterRow';
 import { useCircle, type Circle } from './useCircle';

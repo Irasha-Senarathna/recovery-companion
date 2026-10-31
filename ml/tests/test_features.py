@@ -89,3 +89,36 @@ def test_label_is_slip_or_strong_evening_craving_that_day() -> None:
     assert rows.y == [1, 1, 0, 0]
     assert rows.day_index == [0, 1, 2, 3]
     assert len(rows.x[0]) == len(FEATURES)
+
+
+def test_slip_recent_flags_a_slip_in_the_three_days_before_today() -> None:
+    today = MONDAY + timedelta(days=10)
+    for days_ago, expected in [(1, 1), (3, 1), (4, 0), (0, 0)]:
+        slips = [today - timedelta(days=days_ago)]
+        f = named(feature_vector(ci(today), [], slips))
+        assert f["slip_recent"] == expected, days_ago
+
+
+def test_slip_recent_never_peeks_at_today_or_later() -> None:
+    today = MONDAY + timedelta(days=5)
+    later = [today, today + timedelta(days=1)]
+    assert feature_vector(ci(today), [], later) == feature_vector(ci(today), [])
+
+
+def test_rows_use_each_users_own_slips() -> None:
+    days = [MONDAY + timedelta(days=i) for i in range(3)]
+    other = CheckIn("v", days[1], 2, 2, 2, 1, ())
+    data = Dataset(
+        start=MONDAY,
+        users=[],
+        checkins=[ci(d) for d in days] + [other],
+        cravings=[],
+        slips=[Slip("u", days[0])],
+    )
+    rows = build_rows(data)
+    recent = FEATURES.index("slip_recent")
+    by_user = {
+        (u, d): x[recent] for u, d, x in zip(rows.user_id, rows.day_index, rows.x, strict=True)
+    }
+    assert by_user[("u", 1)] == 1
+    assert by_user[("v", 1)] == 0

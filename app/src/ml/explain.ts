@@ -10,6 +10,7 @@ export type Reason =
   | 'strong_craving'
   | 'recent_cravings'
   | 'recent_stress'
+  | 'recent_slip'
   | `tag_${string}`;
 
 /** Tags that are never offered as a reason ("in pain" would invite medical framing). */
@@ -30,6 +31,7 @@ const REASONS: Record<string, [Reason, (value: number) => boolean]> = {
   craving: ['strong_craving', (v) => v >= 3],
   craving_recent: ['recent_cravings', (v) => v >= 2.5],
   stress_recent: ['recent_stress', (v) => v >= 3],
+  slip_recent: ['recent_slip', (v) => v === 1],
 };
 
 function reasonFor(feature: string, value: number): Reason | null {
